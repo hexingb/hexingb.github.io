@@ -1,0 +1,102 @@
+/*TOC inspired by https://orgmode.org/worg/ */
+#table-of-contents {
+    /* Place the toc in the top right corner */
+    position: fixed; right: 0em; top: 0em;
+    margin-top: 120px; /* offset from the top of the screen */
+
+    /* It shrinks and grows as necessary */
+    padding: 0em !important;
+    width: auto !important;
+    min-width: auto !important;
+    max-width: 20%;
+
+    font-size: 10pt;
+    background: white;
+    line-height: 12pt;
+    text-align: center;
+
+    box-shadow: 0 0 1em #777777;
+    -webkit-box-shadow: 0 0 1em #777777;
+    -moz-box-shadow: 0 0 1em #777777;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+
+    /* Ensure doesn't flow off the screen when expanded */
+    max-height: 80%;
+    overflow: auto;}
+
+/* How big is the text “Table of Contents” and space around it */
+#table-of-contents h2 {
+    box-shadow: 0px 0px 0px #FFF;
+    font-size: 13pt;
+    max-width: 9em;
+    border: 0;
+    font-weight: normal;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.05em;
+    padding-bottom: 0.05em;
+}
+
+/* Intially have the TOC folded up; show it if the mouse hovers it */
+#table-of-contents #text-table-of-contents {
+    display: none;
+    text-align: left;
+}
+
+#table-of-contents:hover #text-table-of-contents {
+    display: block;
+    padding: 0.5em;
+    margin-top: -1.5em;
+}
+
+#content {
+    padding: 0px 30px 0px 30px; /* top, right, bottom, left */
+    font-size: 1.2rem;
+}
+
+h2, h3, h4, h5, h6, h7 {
+    box-shadow: 0px 10px 10px #CCC;
+    /* text-decoration: underline; */
+    border-radius: 2px;
+    width:auto;
+    display:inline-block;
+}
+
+.timestamp-wrapper {
+    display: block;
+}
+
+#postamble {
+    text-align: center;
+    padding: 0px 30px 0px 30px;
+}
+
+table td {
+    border:2px solid #08F;
+}
+
+table th {
+    background-color: #CCC;
+    border:2px solid;
+}
+
+blockquote {
+    box-shadow: 0px 10px 10px #CCC;
+    border-radius: 8px;
+    padding: 8px 20px 8px 20px;
+    width:auto;
+    display:inline-block;
+}
+
+.org-src-container {
+    width:auto;
+    display:inline-block;
+}
+
+pre.src {
+    box-shadow: 0px 10px 10px #CCC;
+    border-radius: 8px;
+    padding: 10px 40px 10px 20px;
+    line-height: 16pt;
+}

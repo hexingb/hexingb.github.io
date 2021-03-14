@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-03-14 Sun 01:29 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>翻译 Say hello to x86_64 Assembly [part 1]</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Bao Hexing" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="/css/style.css" type="text/css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">翻译 Say hello to x86_64 Assembly [part 1]</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgaac3c51">1. 介绍</a></li>
+<li><a href="#orgff81d60">2. 准备工作</a></li>
+<li><a href="#org9746352">3. nasm 汇编器语法</a></li>
+<li><a href="#org67cd7b9">4. 第一个汇编程序 Hello World</a></li>
+</ul>
+</div>
+</div>
+<p>
+简单意译。原文在： <a href="https://0xax.github.io/asm_1/">https://0xax.github.io/asm_1/</a>
+</p>
+
+<div id="outline-container-orgaac3c51" class="outline-2">
+<h2 id="orgaac3c51"><span class="section-number-2">1</span> 介绍</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+我们有许多的开发者。我们每天写很多的代码，甚至能写出很多不错的代码 ：）。我们每个人都能够轻松写出下面的代码。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #0072b2;">#include</span> <span style="color: #ff00ff;">&lt;stdio.h&gt;</span>
+
+<span style="color: #56b4e9;">int</span> <span style="color: #56b4e9;">main</span>() {
+  <span style="color: #56b4e9;">int</span> <span style="color: #00ff00;">x</span> = 10;
+  <span style="color: #56b4e9;">int</span> <span style="color: #00ff00;">y</span> = 100;
+  printf(<span style="color: #ff00ff;">"x + y = %d"</span>, x + y);
+  <span style="color: #f8ec59;">return</span> 0;
+}
+</pre>
+</div>
+
+<p>
+我们每个人都知道这段 C 语言代码是干什么的。然而，这段代码，在底层究竟是如何运作的呢？我想，不是所有人都能够回答这个问题，包括我。虽然我能用 Haskell， Erlang， Go 等高级编程语言编写程序，但是显然我不清楚这些代码编译成低级语言后是如何运作的。因此我决定深入学习一下底层汇编语言，并记录下该过程。希望该过程对你我都是有趣的。大概5、6年前我用汇编写过简单的程序。那时候还是在大学时，用的是 Turbo 汇编和 DOS 操作系统。而现在我用 Linux X86 64位操作系统。这其中肯定有很大差别。那么我们开始吧。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgff81d60" class="outline-2">
+<h2 id="orgff81d60"><span class="section-number-2">2</span> 准备工作</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+开始前，我们需要先做一些准备工作。我写这个的时候，是使用的 Ubuntu （Ubuntu 14.04.1 LTS 64位），因此我的文章都是基于此的。不同的 CPU 支持不同的指令集。我用的 CPU 是 Core i7 870，and all code will be written processor<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. 我用 nasm 汇编器，你可以这样安装它：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">sudo apt-get install nasm
+</pre>
+</div>
+
+<p>
+nasm 的版本需要在 2.0.0 或以上。我用的是2013年12月29日编译的2.10.09版本。最后你还需要一个编辑器来写汇编代码。我用 Emacs 和 nasm-mode.el。这不是必须的，你可以用自己喜欢的编辑器。如果你像我一样用 Emacs，你可以下载 nasm-mode.el 并像这样配置：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(load <span style="color: #ff00ff;">"~/.emacs.d/lisp/nasm.el"</span>)
+(<span style="color: #f8ec59;">require</span> '<span style="color: #cc79a7;">nasm-mode</span>)
+(add-to-list 'auto-mode-alist '(<span style="color: #ff00ff;">"\\.</span><span style="color: #ff00ff; font-weight: bold;">\\</span><span style="color: #ff00ff; font-weight: bold;">(</span><span style="color: #ff00ff;">asm</span><span style="color: #ff00ff; font-weight: bold;">\\</span><span style="color: #ff00ff; font-weight: bold;">|</span><span style="color: #ff00ff;">s</span><span style="color: #ff00ff; font-weight: bold;">\\</span><span style="color: #ff00ff; font-weight: bold;">)</span><span style="color: #ff00ff;">$"</span> . nasm-mode))
+</pre>
+</div>
+
+<p>
+现在我们就需要这些。其他工具在之后的文章里说明。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9746352" class="outline-2">
+<h2 id="org9746352"><span class="section-number-2">3</span> nasm 汇编器语法</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+这里我不会描述所有的汇编语法，只提及文章中使用的部分。通常 nasm 程序分为多个段。本文中我们使用下面两个段：
+</p>
+
+<ul class="org-ul">
+<li>数据段</li>
+<li>代码段</li>
+</ul>
+
+<p>
+数据段用来声明常量，这些常量在运行时保持不变。你可以在数据段声明各种数学或其他常量。语法如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span style="color: #56b4e9;">section</span> .data
+</pre>
+</div>
+
+<p>
+代码段则用来保存代码。这个段必须以 <code>global _start</code> 开头，这个告诉内核从哪里开始执行程序。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span style="color: #56b4e9;">section</span> .text
+<span style="color: #56b4e9;">global</span> _start
+<span style="color: #56b4e9;">_start</span>:
+<span style="color: #d55e00; font-style: italic;">;; </span><span style="color: #d55e00; font-style: italic;">your code goes here bellow</span>
+</pre>
+</div>
+
+<p>
+注释以 ";" 开始。每行 NASM 代码包含下面四个域的组合：
+</p>
+
+<blockquote>
+<p>
+[label:] instruction [operands] [; comment]
+</p>
+</blockquote>
+
+<p>
+被方括号包含起来的域是可选的。一条基本的 NASM 指令包含两部分。第一部分是被执行的指令的名称，第二部分是这个指令的操作数。例如：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span style="color: #56b4e9;">MOV</span> <span style="color: #f8ec59;">COUNT</span>, 48 <span style="color: #d55e00; font-style: italic;">; </span><span style="color: #d55e00; font-style: italic;">&#25226;&#20540;48&#25918;&#21040;&#21464;&#37327; COUNT &#37324;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org67cd7b9" class="outline-2">
+<h2 id="org67cd7b9"><span class="section-number-2">4</span> 第一个汇编程序 Hello World</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+让我们用汇编语言写下经典的 Hello World 程序，如下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-asm"><span style="color: #56b4e9;">section</span> .data
+    <span style="color: #f8ec59;">msg</span> db      <span style="color: #ff00ff;">"hello, world!"</span>
+
+<span style="color: #56b4e9;">section</span> .text
+    <span style="color: #f8ec59;">global</span> _start
+<span style="color: #56b4e9;">_start</span>:
+    <span style="color: #f8ec59;">mov</span>     rax, 1
+    <span style="color: #f8ec59;">mov</span>     rdi, 1
+    <span style="color: #f8ec59;">mov</span>     rsi, msg
+    <span style="color: #f8ec59;">mov</span>     rdx, 13
+    <span style="color: #f8ec59;">syscall</span>
+    <span style="color: #f8ec59;">mov</span>    rax, 60
+    <span style="color: #f8ec59;">mov</span>    rdi, 0
+    <span style="color: #f8ec59;">syscall</span>
+</pre>
+</div>
+
+<p>
+看起来不像 <code>printf("hello world")</code> 哈。让我们理解一下这些都是什么，如何运行。先看前两行，我们定义了数据段并放置了一个叫做 msg 的常量，其值是 "hello, world!"。现在我们可以在代码里使用这个常量了。接下来是定义代码段和程序入口。程序从第7行开始执行。接下来是最有意思的部分了。我们已经知道 <code>mov</code> 指令是什么，它接受两个操作数，把第二个的值赋值给第一个。但是 <code>rax</code> ， <code>rdi</code> 都是什么？我们可以从维基百科上了解一下：
+</p>
+
+<blockquote>
+<p>
+中央处理器（CPU）是计算机系统中的硬件，它执行系统中，运算算数运算、逻辑运算和输入输出等操作等代码指令。
+</p>
+</blockquote>
+
+<p>
+好， CPU 执行一些运算如算数等，但是它从哪里获取这些运算操作需要的数据呢？我们首先想到的是内存。然而，从内存中直接读写数据，会拖慢处理器的速度，因为这涉及到向控制总线发送数据请求等一系列复杂的过程。因此， CPU 拥有自己内部的内存储器，叫做寄存器：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">64位寄存器</th>
+<th scope="col" class="org-left">低32位</th>
+<th scope="col" class="org-left">低16位</th>
+<th scope="col" class="org-left">低8位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">rax</td>
+<td class="org-left">eax</td>
+<td class="org-left">ax</td>
+<td class="org-left">al</td>
+</tr>
+
+<tr>
+<td class="org-left">rbx</td>
+<td class="org-left">ebx</td>
+<td class="org-left">bx</td>
+<td class="org-left">bl</td>
+</tr>
+
+<tr>
+<td class="org-left">rcx</td>
+<td class="org-left">ecx</td>
+<td class="org-left">cx</td>
+<td class="org-left">cl</td>
+</tr>
+
+<tr>
+<td class="org-left">rdx</td>
+<td class="org-left">edx</td>
+<td class="org-left">dx</td>
+<td class="org-left">dl</td>
+</tr>
+
+<tr>
+<td class="org-left">rsi</td>
+<td class="org-left">esi</td>
+<td class="org-left">si</td>
+<td class="org-left">sil</td>
+</tr>
+
+<tr>
+<td class="org-left">rdi</td>
+<td class="org-left">edi</td>
+<td class="org-left">di</td>
+<td class="org-left">dil</td>
+</tr>
+
+<tr>
+<td class="org-left">rbp</td>
+<td class="org-left">ebp</td>
+<td class="org-left">bp</td>
+<td class="org-left">bpl</td>
+</tr>
+
+<tr>
+<td class="org-left">rsp</td>
+<td class="org-left">esp</td>
+<td class="org-left">sp</td>
+<td class="org-left">spl</td>
+</tr>
+
+<tr>
+<td class="org-left">r8</td>
+<td class="org-left">r8d</td>
+<td class="org-left">r8w</td>
+<td class="org-left">r8l</td>
+</tr>
+
+<tr>
+<td class="org-left">r9</td>
+<td class="org-left">r9d</td>
+<td class="org-left">r9w</td>
+<td class="org-left">r9l</td>
+</tr>
+
+<tr>
+<td class="org-left">r10</td>
+<td class="org-left">r10d</td>
+<td class="org-left">r10w</td>
+<td class="org-left">r10l</td>
+</tr>
+
+<tr>
+<td class="org-left">r11</td>
+<td class="org-left">r11d</td>
+<td class="org-left">r11w</td>
+<td class="org-left">r11l</td>
+</tr>
+
+<tr>
+<td class="org-left">r12</td>
+<td class="org-left">r12d</td>
+<td class="org-left">r12w</td>
+<td class="org-left">r12l</td>
+</tr>
+
+<tr>
+<td class="org-left">r13</td>
+<td class="org-left">r13d</td>
+<td class="org-left">r13w</td>
+<td class="org-left">r13l</td>
+</tr>
+
+<tr>
+<td class="org-left">r14</td>
+<td class="org-left">r14d</td>
+<td class="org-left">r14w</td>
+<td class="org-left">r14l</td>
+</tr>
+
+<tr>
+<td class="org-left">r15</td>
+<td class="org-left">r15d</td>
+<td class="org-left">r15w</td>
+<td class="org-left">r15l</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+所以，当我们写 <code>mov rax, 1</code> 时，意味着将1放入到 <code>rax</code> 这个寄存器里。现在我们知道了 <code>rax</code> ， <code>rdi</code> ， <code>rbx</code> 这些都是寄存器，但是还需要知道什么时候使用 <code>rax</code> ，什么时候使用 <code>rsi</code> 等。
+</p>
+
+<ul class="org-ul">
+<li><code>rax</code> 临时寄存器；调用系统调用时， <code>rax</code> 保存系统调用号</li>
+<li><code>rdx</code> 用来传递第三个函数参数</li>
+<li><code>rdi</code> 用来传递第一个函数参数</li>
+<li><code>rsi</code> 用来传递第二个函数参数</li>
+</ul>
+
+<p>
+换句话说，我们只是调用了一下 <code>sys_write</code> 这个系统调用。看一下这个系统调用：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #56b4e9;">size_t</span> <span style="color: #56b4e9;">sys_write</span>(<span style="color: #56b4e9;">unsigned</span> <span style="color: #56b4e9;">int</span> <span style="color: #00ff00;">fd</span>, <span style="color: #f8ec59;">const</span> <span style="color: #56b4e9;">char</span> * <span style="color: #00ff00;">buf</span>, <span style="color: #56b4e9;">size_t</span> <span style="color: #00ff00;">count</span>);
+</pre>
+</div>
+
+<p>
+它需要三个参数：
+</p>
+
+<ul class="org-ul">
+<li><code>fd</code> 文件描述符，可以是0, 1, 2 表示标准输入，标准输出和标准错误</li>
+<li><code>buf</code> 指向字符串数组的指针，字符串数组里的内容会被输出到 <code>fd</code> 指向的文件<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup></li>
+<li><code>count</code> 指明向文件中写入的，字符串数组中字符字节数</li>
+</ul>
+
+<p>
+现在我们知道了 <code>sys_write</code> 系统调用需要三个参数，并且其在系统调用表中的号码是1。让我们回头看看 hello world 的实现。我们把1放入 <code>rax</code> 寄存器，表示我们要调用 <code>sys_write</code> 。下一行，我们把1放入 <code>rdi</code> 寄存器，这是 <code>sys_write</code> 的第一个参数，值为1表示标准输出。然后我们用 <code>rsi</code> 寄存器保存 <code>msg</code> 的地址，这是 <code>sys_write</code> 的第二个参数。接下来我们把 <code>sys_write</code> 的第三个参数（最后一个）放入 <code>rdx</code> 寄存器，表示字符串的长度。现在我们有了所有的参数，就可以像11行那样调用 <code>sys_write</code> 这个系统调用了。打印完 “Hello world” 之后，我们还需要正确地退出程序。我们传递60到 <code>rax</code> 寄存器，它表示 <code>exit</code> 的系统调用号，并且传递0给 <code>rdi</code> 寄存器，它表示出错代码，其值0表示成功。这就是所有的 “Hello world” 程序的内容了。相当简单吧。:) 下面我们构建我们的程序。假设我们把这段代码存如文件 hello.asm ，然后执行下面的命令：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">nasm -f elf64 -o hello.o hello.asm
+ld -o hello hello.o
+</pre>
+</div>
+
+<p>
+之后我们就会得到 hello 这个可执行文件。执行它即可得到 “Hello world” 这个字符串输出了。
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+这里不知道如何翻译
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+感觉这里写错了
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<br/><hr/><p class="postamble">2021-03-14 Sun 01:29 Last Updated by Bao Hexing (<a href="mailto:HexingB@qq.com">HexingB@qq.com</a>)</p><br/><br/><br/>
+</div>
+</body>
+</html>

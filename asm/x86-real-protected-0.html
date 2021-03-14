@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-03-14 Sun 11:49 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>《x86汇编语言从实模式到保护模式》读书笔记（部分）</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Bao Hexing" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="/css/style.css" type="text/css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">《x86汇编语言从实模式到保护模式》读书笔记（部分）</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgc7abf91">1. 进制转换</a></li>
+<li><a href="#org5342a8c">2. 程序重定位问题</a></li>
+<li><a href="#org1d3ee7e">3. 计算机的启动过程</a></li>
+<li><a href="#org885153a">4. 磁盘的工作原理</a></li>
+<li><a href="#org12a3c7a">5. 显卡的工作原理</a></li>
+<li><a href="#org007c0f4">6. 一些指令</a></li>
+</ul>
+</div>
+</div>
+<p>
+读了一多半的《x86汇编语言从实模式到保护模式》。下面是一些笔记。
+</p>
+<div id="outline-container-orgc7abf91" class="outline-2">
+<h2 id="orgc7abf91"><span class="section-number-2">1</span> 进制转换</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+第一章讲了一些进制转换。比较简单。在实现大数运算的时候用到了这些知识。
+</p>
+</div>
+</div>
+<div id="outline-container-org5342a8c" class="outline-2">
+<h2 id="org5342a8c"><span class="section-number-2">2</span> 程序重定位问题</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+用户级程序的启动，无法确定内存位置，如何在访问数据的时候确定数据的内存地址？
+</p>
+
+<p>
+使用段地址：偏移地址的方式来确定内存地址。 <code>CS</code> 寄存器和 <code>DS</code> 寄存器用于保存代码段和数据段的地址。 <code>ES</code> 是附加数据段寄存器， <code>SS</code> 是栈段地址寄存器。
+</p>
+
+<p>
+真实地址 = 段地址 &lt;&lt; 4 + 偏移地址，构造20位地址。所以分段需要16字节对齐。
+</p>
+</div>
+</div>
+<div id="outline-container-org1d3ee7e" class="outline-2">
+<h2 id="org1d3ee7e"><span class="section-number-2">3</span> 计算机的启动过程</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+CPU 顺序执行指令，那么CPU的第一条指令的地址在哪里？
+</p>
+
+<p>
+Intel 8086 加电时， <code>CS</code> 寄存器被初始化位 0xFFFF，其他寄存器被初始化位0。
+</p>
+</div>
+</div>
+<div id="outline-container-org885153a" class="outline-2">
+<h2 id="org885153a"><span class="section-number-2">4</span> 磁盘的工作原理</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+每个扇区512字节。从外向内，最外面的柱面位0，扇区从1开始标号。一个盘两个面，从0开始。0面0柱1扇区被称为主引导扇区 Master Boot Record (MBR) 。BIOS-ROM 内的程序代码，读取该扇区，并放置到内存地址 0x0000:0x7c00 也就是物理地址 0x07C00 处。最后 BIOS-ROM 内的层序执行 <code>jmp 0x0000:0x7c00</code> 开始执行主引导扇区内的代码。在主引导扇区程序内部，访问数据需要从 0x7c00 开始，或者将段寄存器修改为 0x7c00。
+</p>
+
+<p>
+主引导扇区的标志是，最后两个字节必须是 0x55 和 0xAA 。
+</p>
+</div>
+</div>
+<div id="outline-container-org12a3c7a" class="outline-2">
+<h2 id="org12a3c7a"><span class="section-number-2">5</span> 显卡的工作原理</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+显卡有两种工作模式，文本模式和图形模式。图形模式用像素来绘图。3个字节表示一个像素。文本模式下，则用 ASCII 码来显示字符。
+</p>
+
+<p>
+8086 能够访问 1M 的地址空间。其中 0x00000 ~ 0x9FFFF 的地址由内存提供，0xF0000 ~ 0xFFFFF 的地址由 BIOS-ROM 提供。中间的地址，由外围设备使用。其中显卡使用的地址范围是 0xB8000 ～ 0xBFFFF。
+</p>
+
+<p>
+文本模式下，显示一个字符使用两个字节，一个字节是 ASCII 码，另一个字节里，3比特表示前景色 RGB 值，3特比表示背景色 RGB 值，1比特表示是否闪烁，1比特表示是否高亮。
+</p>
+</div>
+</div>
+<div id="outline-container-org007c0f4" class="outline-2">
+<h2 id="org007c0f4"><span class="section-number-2">6</span> 一些指令</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li><code>movsb</code> <code>movsw</code> 批量拷贝数据，从 <code>DS:SI</code> 到 <code>ES:DI</code> 。拷贝的数量由 <code>CX</code> 指定。拷贝的方向（ <code>SI</code> 、 <code>DI</code> 增加还是减少）由 FLAGS <code>DF</code> 指定。</li>
+<li><code>cbw</code> <code>cwd</code> 扩展字符位。 <code>cbw</code> 将 <code>AL</code> 中的有符号数扩展到 <code>AX</code> 中； <code>cwd</code> 将 <code>AX</code> 中的有符号数扩展到 <code>AX:DX</code> 中。</li>
+<li><code>jcxz</code> 如果 <code>CX</code> == 0 则跳转。</li>
+<li>$ 和 $$ 是 nasm 中的标记。$ 表示当前汇编地址； $$ 表示当前段开始的汇编地址。</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<br/><hr/><p class="postamble">2021-03-14 Sun 11:49 Last Updated by Bao Hexing (<a href="mailto:HexingB@qq.com">HexingB@qq.com</a>)</p><br/><br/><br/>
+</div>
+</body>
+</html>
