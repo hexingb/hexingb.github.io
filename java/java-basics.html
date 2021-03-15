@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-15 Mon 22:53 -->
+<!-- 2021-03-15 Mon 22:52 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Programming Notes</title>
+<title>java basics: maven</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="Bao Hexing" />
 <style type="text/css">
@@ -243,47 +243,94 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Programming Notes</h1>
+<h1 class="title">java basics: maven</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org806937a">java and spring</a></li>
-<li><a href="#org06c9644">emacs configuration, usage, notes</a></li>
-<li><a href="#orgd704db8">assembly language</a></li>
+<li><a href="#org75e151c">1. maven usage</a></li>
 </ul>
 </div>
+</div>
+<div id="outline-container-org75e151c" class="outline-2">
+<h2 id="org75e151c"><span class="section-number-2">1</span> maven usage</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Create project by this:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">mvn archetype:generate -DgroupId=your.group.id -DartifactId=your.artifact.id -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+</pre>
 </div>
 
-<div id="outline-container-org806937a" class="outline-2">
-<h2 id="org806937a">java and spring</h2>
-<div class="outline-text-2" id="text-org806937a">
-<ul class="org-ul">
-<li><a href="java/java-basics.html">java basics: maven</a></li>
-</ul>
+<p>
+for web projects, do this:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">mvn archetype:generate -DgroupId=your.group.id -DartifactId=your.artifact.id -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=false
+</pre>
 </div>
+
+<p>
+Want to execute it? try this:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">mvn exec:java -Dexec.mainClass=<span style="color: #ff00ff;">"your.main.class"</span>
+</pre>
 </div>
-<div id="outline-container-org06c9644" class="outline-2">
-<h2 id="org06c9644">emacs configuration, usage, notes</h2>
-<div class="outline-text-2" id="text-org06c9644">
-<ul class="org-ul">
-<li><a href="emacs/emacs-config.html">emacs configuration</a></li>
-<li><a href="emacs/emacs-notes.html">some tricks, issues and solutions</a></li>
-</ul>
+
+<p>
+Or this if you have options and/or command parameters specified:
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">mvn exec:exec -Dexec.executable=<span style="color: #ff00ff;">"java"</span> -Dexec.args=<span style="color: #ff00ff;">"-classpath %classpath -Xdebug your.main.class parameter.0 parameter.1"</span>
+</pre>
 </div>
+
+<p>
+for spring projects, add these lines in pom.xml:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #56b4e9;">build</span>&gt;
+  &lt;<span style="color: #56b4e9;">plugins</span>&gt;
+    &lt;<span style="color: #56b4e9;">plugin</span>&gt;
+      &lt;<span style="color: #56b4e9;">groupId</span>&gt;org.springframework.boot&lt;/<span style="color: #56b4e9;">groupId</span>&gt;
+      &lt;<span style="color: #56b4e9;">artifactId</span>&gt;spring-boot-maven-plugin&lt;/<span style="color: #56b4e9;">artifactId</span>&gt;
+    &lt;/<span style="color: #56b4e9;">plugin</span>&gt;
+  &lt;/<span style="color: #56b4e9;">plugins</span>&gt;
+&lt;/<span style="color: #56b4e9;">build</span>&gt;
+</pre>
 </div>
-<div id="outline-container-orgd704db8" class="outline-2">
-<h2 id="orgd704db8">assembly language</h2>
-<div class="outline-text-2" id="text-orgd704db8">
-<ul class="org-ul">
-<li><a href="asm/x86-real-protected-0.html">《x86汇编语言从实模式到保护模式》读书笔记</a></li>
-<li><a href="asm/hello-asm-0.html">"Say hello to x86_64 Assembly [part 1]" 简单意译</a></li>
-</ul>
+
+
+<p>
+you can get a detailed pom.xml by <code>"mvn help:effective-pom"</code>.
+</p>
+
+<p>
+<code>"mvn exec:help -Ddetail=true"</code> for more usages.
+</p>
+
+<p>
+if maven complains something like that "Source option 5 is no longer supported. Use 6 or later", Add these lines in your pom.xml
+</p>
+<div class="org-src-container">
+<pre class="src src-xml">&lt;<span style="color: #56b4e9;">properties</span>&gt;
+  &lt;<span style="color: #56b4e9;">maven.compiler.source</span>&gt;1.8&lt;/<span style="color: #56b4e9;">maven.compiler.source</span>&gt;
+  &lt;<span style="color: #56b4e9;">maven.compiler.target</span>&gt;1.8&lt;/<span style="color: #56b4e9;">maven.compiler.target</span>&gt;
+&lt;/<span style="color: #56b4e9;">properties</span>&gt;
+</pre>
+</div>
+
+<p>
+Sometimes you'll encounter this error: <code>The parameters 'mainClass' for goal org.codehaus.mojo:exec-maven-plugin:1.6.0:java are missing or invalid</code>. This error may appears when execute "mvn exec:java -Dexec.mainClass=&#x2026;", even the mainClass is rightly provided. After some search I found <a href="http://www.4e00.com/blog/java/2018/04/06/exec-maven-plugin-run-spring-boot.html">this</a>. You can use "-Dstart-main" instead. It may be related with spring boot version as this error don't arise for <code>&lt;version&gt;2.4.3&lt;/version&gt;</code> but it does for <code>&lt;version&gt;2.1.2.RELEASE&lt;/version&gt;</code>.
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<br/><hr/><p class="postamble">2021-03-15 Mon 22:53 Last Updated by Bao Hexing (<a href="mailto:HexingB@qq.com">HexingB@qq.com</a>)</p><br/><br/><br/>
+<br/><hr/><p class="postamble">2021-03-15 Mon 22:52 Last Updated by Bao Hexing (<a href="mailto:HexingB@qq.com">HexingB@qq.com</a>)</p><br/><br/><br/>
 </div>
 </body>
 </html>
