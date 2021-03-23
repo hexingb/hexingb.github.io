@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-23 Tue 14:14 -->
+<!-- 2021-03-23 Tue 21:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>some tricks</title>
@@ -248,15 +248,23 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0e9c312">1. Mac OS 设置显卡</a></li>
+<li><a href="#org0ea388c">1. select integrated video card or external video card on Mac OS</a></li>
+<li><a href="#org42eda6d">2. xclip</a></li>
+<li><a href="#org2c091d6">3. xrandr</a></li>
+<li><a href="#orgb100580">4. no audio after a minimal installation of Debian</a></li>
+<li><a href="#org0a23dab">5. install and use fcitx in English environment</a></li>
+<li><a href="#orgce7009d">6. ext4 disk fragments check and clean up</a></li>
+<li><a href="#org51b70dc">7. benchmark program performance by CPU profiler</a></li>
+<li><a href="#org667d2c0">8. list fonts in linux</a></li>
+<li><a href="#orgcd49b24">9. get latest id in MySQL</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org0e9c312" class="outline-2">
-<h2 id="org0e9c312"><span class="section-number-2">1</span> Mac OS 设置显卡</h2>
+<div id="outline-container-org0ea388c" class="outline-2">
+<h2 id="org0ea388c"><span class="section-number-2">1</span> select integrated video card or external video card on Mac OS</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-强制使用核显：
+Use integrated video card:
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">sudo pmset -a GPUSwitch 0
@@ -264,7 +272,7 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-强制使用独显：
+Use external video card:
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">sudo pmset -a GPUSwitch 1
@@ -272,7 +280,7 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-自动切换显卡：
+Auto:
 </p>
 <div class="org-src-container">
 <pre class="src src-shell">sudo pmset -a GPUSwitch 2
@@ -280,13 +288,140 @@ for the JavaScript code in this tag.
 </div>
 
 <p>
-注意当使用核显时，外接显示器无信号。
+Note that when integrated video card is used, external screen will get no signal.
 </p>
+</div>
+</div>
+
+<div id="outline-container-org42eda6d" class="outline-2">
+<h2 id="org42eda6d"><span class="section-number-2">2</span> xclip</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+To save file content into XA_PRIMARY:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat file | xclip
+</pre>
+</div>
+
+<p>
+To capture the screen and save it into file and copy the filename into clipboard:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">scort <span style="color: #ff00ff;">'%Y-%m-%d_%H%M%S.png'</span> -e <span style="color: #ff00ff;">'echo $f | xclip -selection clipboard'</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2c091d6" class="outline-2">
+<h2 id="org2c091d6"><span class="section-number-2">3</span> xrandr</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+You can use xrandr to specify the video mode(display resolution). Without any arguments, it prints out the current available outputs such as VGA-1, HDMI-1 etc.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">xrandr --output HDMI-1 --same-as LVDS-1 --mode 1920x1080
+</pre>
+</div>
+
+<p>
+Use following command to restore orignal configuration:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">xrandr -s 0
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb100580" class="outline-2">
+<h2 id="orgb100580"><span class="section-number-2">4</span> no audio after a minimal installation of Debian</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+<pre class="src src-shell">sudo aptitude install alsa-utils
+sudo alsactl init
+alsamixer
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0a23dab" class="outline-2">
+<h2 id="org0a23dab"><span class="section-number-2">5</span> install and use fcitx in English environment</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+<pre class="src src-shell">sudo aptitude install fcitx fcitx-ui-light fcitx-googlepinyin fcitx-pinyin fcitx-sunpinyin
+cat &gt;&gt; .bashrc &lt;&lt; END
+<span style="color: #ffff00; font-weight: bold;">export LC_CTYPE=zh_CN.UTF-8</span>
+<span style="color: #ffff00; font-weight: bold;">export LANG=en_US.UTF-8</span>
+<span style="color: #ffff00; font-weight: bold;">export LC_ALL=</span>
+<span style="color: #ffff00; font-weight: bold;">export XMODIFIERS="@im=fcitx"</span>
+<span style="color: #ffff00; font-weight: bold;">END</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgce7009d" class="outline-2">
+<h2 id="orgce7009d"><span class="section-number-2">6</span> ext4 disk fragments check and clean up</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #d55e00; font-style: italic;"># </span><span style="color: #d55e00; font-style: italic;">check</span>
+sudo e4defrag / -c 
+<span style="color: #d55e00; font-style: italic;"># </span><span style="color: #d55e00; font-style: italic;">clean up</span>
+sudo e4defrag /
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org51b70dc" class="outline-2">
+<h2 id="org51b70dc"><span class="section-number-2">7</span> benchmark program performance by CPU profiler</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+google CPU profiler is a good choice for performance benchmark.
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">sudo aptitude install google-perftools
+env <span style="color: #00ff00;">LD_PRELOAD</span>=/usr/lib/libprofiler.so.0 <span style="color: #00ff00;">CPUPROFILE</span>=gprof.log your_program
+google-pprof --text your_program gprof.log
+</pre>
+</div>
+<p>
+Note that signal SIGPROF will not be catched by <code>your_program</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org667d2c0" class="outline-2">
+<h2 id="org667d2c0"><span class="section-number-2">8</span> list fonts in linux</h2>
+<div class="outline-text-2" id="text-8">
+<div class="org-src-container">
+<pre class="src src-shell">fc-list
+fc-list :<span style="color: #00ff00;">lang</span>=zh
+fc-list :outline -f <span style="color: #ff00ff;">"%{family}\n"</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcd49b24" class="outline-2">
+<h2 id="orgcd49b24"><span class="section-number-2">9</span> get latest id in MySQL</h2>
+<div class="outline-text-2" id="text-9">
+<div class="org-src-container">
+<pre class="src src-mysql">select last_insert_id();
+</pre>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<br/><hr/><p class="postamble">2021-03-23 Tue 14:14 Last Updated by Bao Hexing (<a href="mailto:HexingB@qq.com">HexingB@qq.com</a>)</p><br/><br/><br/>
+<br/><hr/><p class="postamble">2021-03-23 Tue 21:09 Last Updated by Bao Hexing (<a href="mailto:HexingB@qq.com">HexingB@qq.com</a>)</p><br/><br/><br/>
 </div>
 </body>
 </html>
