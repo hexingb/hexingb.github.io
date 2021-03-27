@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-23 Tue 21:09 -->
+<!-- 2021-03-27 Sat 17:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>some tricks</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -52,7 +52,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" href="/css/style.css" type="text/css"/>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -248,20 +224,20 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0ea388c">1. select integrated video card or external video card on Mac OS</a></li>
-<li><a href="#org42eda6d">2. xclip</a></li>
-<li><a href="#org2c091d6">3. xrandr</a></li>
-<li><a href="#orgb100580">4. no audio after a minimal installation of Debian</a></li>
-<li><a href="#org0a23dab">5. install and use fcitx in English environment</a></li>
-<li><a href="#orgce7009d">6. ext4 disk fragments check and clean up</a></li>
-<li><a href="#org51b70dc">7. benchmark program performance by CPU profiler</a></li>
-<li><a href="#org667d2c0">8. list fonts in linux</a></li>
-<li><a href="#orgcd49b24">9. get latest id in MySQL</a></li>
+<li><a href="#orga63c02b">1. select integrated video card or external video card on Mac OS</a></li>
+<li><a href="#orgff5ac2d">2. xclip</a></li>
+<li><a href="#org6b74cb3">3. xrandr</a></li>
+<li><a href="#org9c2f613">4. no audio after a minimal installation of Debian</a></li>
+<li><a href="#org21422e8">5. install and use fcitx in English environment</a></li>
+<li><a href="#orgee4de1d">6. ext4 disk fragments check and clean up</a></li>
+<li><a href="#orgc992799">7. benchmark program performance by CPU profiler</a></li>
+<li><a href="#org4b86c35">8. list fonts in linux</a></li>
+<li><a href="#org2772bd8">9. get latest id in MySQL</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org0ea388c" class="outline-2">
-<h2 id="org0ea388c"><span class="section-number-2">1</span> select integrated video card or external video card on Mac OS</h2>
+<div id="outline-container-orga63c02b" class="outline-2">
+<h2 id="orga63c02b"><span class="section-number-2">1</span> select integrated video card or external video card on Mac OS</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Use integrated video card:
@@ -293,8 +269,8 @@ Note that when integrated video card is used, external screen will get no signal
 </div>
 </div>
 
-<div id="outline-container-org42eda6d" class="outline-2">
-<h2 id="org42eda6d"><span class="section-number-2">2</span> xclip</h2>
+<div id="outline-container-orgff5ac2d" class="outline-2">
+<h2 id="orgff5ac2d"><span class="section-number-2">2</span> xclip</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 To save file content into XA_PRIMARY:
@@ -316,8 +292,8 @@ To capture the screen and save it into file and copy the filename into clipboard
 </div>
 </div>
 
-<div id="outline-container-org2c091d6" class="outline-2">
-<h2 id="org2c091d6"><span class="section-number-2">3</span> xrandr</h2>
+<div id="outline-container-org6b74cb3" class="outline-2">
+<h2 id="org6b74cb3"><span class="section-number-2">3</span> xrandr</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 You can use xrandr to specify the video mode(display resolution). Without any arguments, it prints out the current available outputs such as VGA-1, HDMI-1 etc.
@@ -339,8 +315,8 @@ Use following command to restore orignal configuration:
 </div>
 </div>
 
-<div id="outline-container-orgb100580" class="outline-2">
-<h2 id="orgb100580"><span class="section-number-2">4</span> no audio after a minimal installation of Debian</h2>
+<div id="outline-container-org9c2f613" class="outline-2">
+<h2 id="org9c2f613"><span class="section-number-2">4</span> no audio after a minimal installation of Debian</h2>
 <div class="outline-text-2" id="text-4">
 <div class="org-src-container">
 <pre class="src src-shell">sudo aptitude install alsa-utils
@@ -351,8 +327,8 @@ alsamixer
 </div>
 </div>
 
-<div id="outline-container-org0a23dab" class="outline-2">
-<h2 id="org0a23dab"><span class="section-number-2">5</span> install and use fcitx in English environment</h2>
+<div id="outline-container-org21422e8" class="outline-2">
+<h2 id="org21422e8"><span class="section-number-2">5</span> install and use fcitx in English environment</h2>
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
 <pre class="src src-shell">sudo aptitude install fcitx fcitx-ui-light fcitx-googlepinyin fcitx-pinyin fcitx-sunpinyin
@@ -367,8 +343,8 @@ cat &gt;&gt; .bashrc &lt;&lt; END
 </div>
 </div>
 
-<div id="outline-container-orgce7009d" class="outline-2">
-<h2 id="orgce7009d"><span class="section-number-2">6</span> ext4 disk fragments check and clean up</h2>
+<div id="outline-container-orgee4de1d" class="outline-2">
+<h2 id="orgee4de1d"><span class="section-number-2">6</span> ext4 disk fragments check and clean up</h2>
 <div class="outline-text-2" id="text-6">
 <div class="org-src-container">
 <pre class="src src-shell"><span style="color: #d55e00; font-style: italic;"># </span><span style="color: #d55e00; font-style: italic;">check</span>
@@ -380,8 +356,8 @@ sudo e4defrag /
 </div>
 </div>
 
-<div id="outline-container-org51b70dc" class="outline-2">
-<h2 id="org51b70dc"><span class="section-number-2">7</span> benchmark program performance by CPU profiler</h2>
+<div id="outline-container-orgc992799" class="outline-2">
+<h2 id="orgc992799"><span class="section-number-2">7</span> benchmark program performance by CPU profiler</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 google CPU profiler is a good choice for performance benchmark.
@@ -398,8 +374,8 @@ Note that signal SIGPROF will not be catched by <code>your_program</code>.
 </div>
 </div>
 
-<div id="outline-container-org667d2c0" class="outline-2">
-<h2 id="org667d2c0"><span class="section-number-2">8</span> list fonts in linux</h2>
+<div id="outline-container-org4b86c35" class="outline-2">
+<h2 id="org4b86c35"><span class="section-number-2">8</span> list fonts in linux</h2>
 <div class="outline-text-2" id="text-8">
 <div class="org-src-container">
 <pre class="src src-shell">fc-list
@@ -410,18 +386,18 @@ fc-list :outline -f <span style="color: #ff00ff;">"%{family}\n"</span>
 </div>
 </div>
 
-<div id="outline-container-orgcd49b24" class="outline-2">
-<h2 id="orgcd49b24"><span class="section-number-2">9</span> get latest id in MySQL</h2>
+<div id="outline-container-org2772bd8" class="outline-2">
+<h2 id="org2772bd8"><span class="section-number-2">9</span> get latest id in MySQL</h2>
 <div class="outline-text-2" id="text-9">
 <div class="org-src-container">
-<pre class="src src-mysql">select last_insert_id();
+<pre class="src src-sql"><span style="color: #f8ec59;">select</span> last_insert_id();
 </pre>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<br/><hr/><p class="postamble">2021-03-23 Tue 21:09 Last Updated by Bao Hexing (<a href="mailto:HexingB@qq.com">HexingB@qq.com</a>)</p><br/><br/><br/>
+<br/><hr/><p class="postamble">2021-03-27 Sat 17:14 Last Updated by Bao Hexing (<a href="mailto:HexingB@qq.com">HexingB@qq.com</a>)</p><br/><br/><br/>
 </div>
 </body>
 </html>

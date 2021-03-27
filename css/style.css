@@ -8,7 +8,7 @@
     padding: 0em !important;
     width: auto !important;
     min-width: auto !important;
-    max-width: 20%;
+    max-width: 18%;
 
     font-size: 10pt;
     background: white;
@@ -23,7 +23,8 @@
 
     /* Ensure doesn't flow off the screen when expanded */
     max-height: 80%;
-    overflow: auto;}
+    overflow: auto;
+}
 
 /* How big is the text “Table of Contents” and space around it */
 #table-of-contents h2 {
@@ -53,6 +54,7 @@
 #content {
     padding: 0px 30px 0px 30px; /* top, right, bottom, left */
     font-size: 1.2rem;
+    width: 80%;
 }
 
 h2, h3, h4, h5, h6, h7 {
@@ -84,19 +86,20 @@ table th {
 blockquote {
     box-shadow: 0px 10px 10px #CCC;
     border-radius: 8px;
-    padding: 8px 20px 8px 20px;
-    width:auto;
-    display:inline-block;
-}
-
-.org-src-container {
-    width:auto;
-    display:inline-block;
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 10px 20px 10px 20px;
 }
 
 pre.src {
     box-shadow: 0px 10px 10px #CCC;
     border-radius: 8px;
-    padding: 10px 40px 10px 20px;
     line-height: 16pt;
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+pre.src:before {
+    background-color: #A0A;
+    color: #FFFFFF;
 }
