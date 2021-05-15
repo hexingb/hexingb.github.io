@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-03-23 Tue 14:14 -->
+<!-- 2021-05-15 Sat 11:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Programming Notes</title>
@@ -40,7 +40,7 @@
   }
   pre.src {
     position: relative;
-    overflow: visible;
+    overflow: auto;
     padding-top: 1.2em;
   }
   pre.src:before {
@@ -52,7 +52,7 @@
     padding: 3px;
     border: 1px solid black;
   }
-  pre.src:hover:before { display: inline;}
+  pre.src:hover:before { display: inline; margin-top: 14px;}
   /* Languages per Org manual */
   pre.src-asymptote:before { content: 'Asymptote'; }
   pre.src-awk:before { content: 'Awk'; }
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" href="/css/style.css" type="text/css"/>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -248,46 +224,46 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org91626e5">java and spring</a></li>
-<li><a href="#org82859bc">emacs configuration, usage, notes</a></li>
-<li><a href="#org194b14c">assembly language</a></li>
-<li><a href="#org8d0a69c">messy notes</a></li>
+<li><a href="#org78d4b50">1. java and spring</a></li>
+<li><a href="#org9dba332">2. emacs configuration, usage, notes</a></li>
+<li><a href="#org5bb6410">3. assembly language</a></li>
+<li><a href="#org42a3fea">4. messy notes</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org91626e5" class="outline-2">
-<h2 id="org91626e5">java and spring</h2>
-<div class="outline-text-2" id="text-org91626e5">
+<div id="outline-container-org78d4b50" class="outline-2">
+<h2 id="org78d4b50"><span class="section-number-2">1</span> java and spring</h2>
+<div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><a href="java/java-basics.html">java basics: maven</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org82859bc" class="outline-2">
-<h2 id="org82859bc">emacs configuration, usage, notes</h2>
-<div class="outline-text-2" id="text-org82859bc">
+<div id="outline-container-org9dba332" class="outline-2">
+<h2 id="org9dba332"><span class="section-number-2">2</span> emacs configuration, usage, notes</h2>
+<div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li><a href="emacs/emacs-config.html">emacs configuration</a></li>
 <li><a href="emacs/emacs-notes.html">some tricks, issues and solutions</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org194b14c" class="outline-2">
-<h2 id="org194b14c">assembly language</h2>
-<div class="outline-text-2" id="text-org194b14c">
+<div id="outline-container-org5bb6410" class="outline-2">
+<h2 id="org5bb6410"><span class="section-number-2">3</span> assembly language</h2>
+<div class="outline-text-2" id="text-3">
 <ul class="org-ul">
 <li><a href="asm/x86-real-protected-0.html">《x86汇编语言从实模式到保护模式》读书笔记</a></li>
 <li><a href="asm/hello-asm-0.html">"Say hello to x86_64 Assembly [part 1]" 简单意译</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org8d0a69c" class="outline-2">
-<h2 id="org8d0a69c"><a href="messy/tricks.html">messy notes</a></h2>
+<div id="outline-container-org42a3fea" class="outline-2">
+<h2 id="org42a3fea"><span class="section-number-2">4</span> <a href="messy/tricks.html">messy notes</a></h2>
 </div>
 </div>
 <div id="postamble" class="status">
-<br/><hr/><p class="postamble">2021-03-23 Tue 14:14 Last Updated by Bao Hexing (<a href="mailto:HexingB@qq.com">HexingB@qq.com</a>)</p><br/><br/><br/>
+<br/><hr/><p class="postamble">2021-05-15 Sat 11:46 Last Updated by Bao Hexing (<a href="mailto:HexingB@qq.com">HexingB@qq.com</a>)</p><br/><br/><br/>
 </div>
 </body>
 </html>
