@@ -1,0 +1,340 @@
+/* -*- tab-width: 4 -*- */
+/* @import url("https://fonts.googleapis.com/css?family=Noto+Sans+Mono|Sofia&display=swap"); */
+/* or use this: https://npm.elemecdn.com/lxgw-wenkai-webfont/style.css */
+@import url("https://npm.elemecdn.com/lxgw-wenkai-webfont/lxgwwenkaimono-regular.css?display=swap");
+
+@font-face {
+	font-family: "EnglishFont";
+	/* noto sans mono, latin-ext */
+	src: url(https://fonts.gstatic.com/s/notosansmono/v30/BngrUXNETWXI6LwhGYvaxZikqZqK6fBq6kPvUce2oAZcdthSBUsYck4-_FNJ09PdU2YVP8c9MMEL.woff)
+		format("woff");
+	unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
+		U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+	font-family: "NumberFont";
+	/* latin Sofia */
+	src: url(https://fonts.gstatic.com/s/sofia/v14/8QIHdirahM3j_su5uI0Orbjl.woff2)
+		format("woff2");
+	unicode-range: U+30-39;
+}
+
+:root {
+	--color-background: white;
+	--color-text: black;
+	--color-secondary: #333;
+	--color-shadow: #eee;
+	--color-link: #0000bb;
+	--color-link-active: #223fbf;
+	--border-width: 2px;
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--color-background: #ffffff;
+		--color-text: #000000;
+		--color-secondary: #333;
+		--color-shadow: #eee;
+		--color-link: #0000bb;
+		--color-link-active: #223fbf;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-background: #000000;
+		--color-text: #ffffff;
+		--color-secondary: #eee;
+		--color-shadow: #333;
+		--color-link: #00bcff;
+		--color-link-active: #79a8ff;
+	}
+}
+
+body {
+	font-size: 110%;
+	margin: 0 auto;
+	padding: 2em 1em;
+	max-width: 90vw;
+	color: var(--color-text);
+	/* I got this background from https://www.digitalocean.com/community/tutorials/how-to-apply-background-styles-to-html-elements-with-css */
+	/* for animated backgrounds, see https://alvarotrigo.com/blog/animated-backgrounds-css/ */
+	background-image: linear-gradient(
+		175deg,
+		navy 0%,
+		dodgerblue 35%,
+		skyblue 50%,
+		gold 50%,
+		orange 51%,
+		saddlebrown 100%
+	);
+	background-attachment: fixed;
+	background-size: cover;
+	font-family: "NumberFont", "EnglishFont", "LXGW WenKai Mono", serif;
+	text-shadow: 1px 1px 1px #d9d9d9;
+	line-height: 1.8;
+}
+
+p {
+	line-height: 150%;
+}
+
+code {
+	background-color: #eeeeee;
+	font-style: italic;
+	font-family: monospace, serif;
+}
+
+#content {
+	max-width: calc(90vw);
+	min-height: calc(90vh);
+	padding: calc(2vh) calc(6vw);
+	background-color: #ffffff;
+}
+
+#postamble {
+	max-width: calc(90vw);
+	text-align: center;
+	margin: auto;
+}
+
+#org-div-home-and-up {
+	max-width: 56rem;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: flex-end;
+	position: sticky;
+	top: 0px;
+	float: left;
+}
+
+#org-div-home-and-up a {
+	font-size: 1.4em;
+	margin: 0 0.5ex;
+	padding: 0.2ex 0.4ex;
+	text-decoration: none;
+	text-transform: uppercase;
+	background: var(--color-background);
+	border: var(--border-width) solid var(--color-text);
+	border-top: 0;
+}
+
+#updated {
+	font-size: 90%;
+	color: var(--color-secondary);
+	padding: 1.5em 1em 0.75em;
+	border-bottom: 1px dotted var(--color-secondary);
+	float: right;
+}
+
+.content p {
+	margin-left: 5px;
+}
+
+.outline-2 {
+	margin-left: 5px;
+}
+
+.outline-3 {
+	margin-left: 10px;
+}
+
+.outline-4 {
+	margin-left: 15px;
+}
+
+.outline-5 {
+	margin-left: 20px;
+}
+
+.title {
+	font-size: 2.8em;
+	max-width: 80rem;
+}
+
+a:link,
+a:visited {
+	color: var(--color-link);
+}
+
+a:hover,
+a:active {
+	color: var(--color-link-active);
+	text-decoration: none;
+}
+
+figure {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#content img {
+	/* border: var(--border-width) solid var(--color-text);  */
+	max-width: 90vw;
+}
+
+blockquote {
+	border-left-style: solid;
+	padding-left: 1em;
+}
+
+li {
+	padding-bottom: 0.3em;
+}
+
+table {
+	margin: auto;
+	border-collapse: collapse;
+	border: var(--border-width) solid var(--color-text);
+	box-shadow: 4px 4px 6px var(--color-shadow);
+}
+
+th {
+	color: var(--color-background);
+	background-color: var(--color-text);
+	border: 1px solid var(--color-background);
+	padding: 0.25em;
+}
+
+td {
+	border: 1px solid var(--color-text);
+	padding: 0.25em;
+}
+
+.todo {
+	color: red;
+}
+
+.ON_GOING {
+	color: purple;
+}
+
+.done {
+	color: green;
+}
+
+.tag {
+	background-color: #eee;
+	padding: 2px;
+	font-size: 80%;
+	font-weight: normal;
+}
+
+.timestamp {
+	color: var(--color-secondary);
+}
+
+.published {
+	font-size: 1.3em;
+	color: var(--color-secondary);
+}
+
+.footdef {
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+.footpara {
+	display: inline;
+}
+
+footer {
+	margin: auto;
+	font-size: 80%;
+	line-height: 1.5em;
+}
+
+.copyright-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: 0 0.5ex;
+}
+
+.banner {
+	text-align: center;
+	max-width: 100%;
+	padding: 1ex 0.5ex;
+}
+
+.banner img {
+	max-width: 90vw;
+}
+
+.generated {
+	text-align: center;
+}
+
+@media (min-width: 43em) {
+	.profile-pic {
+		float: right;
+	}
+}
+
+.gtd-post-container {
+	display: grid;
+	grid:
+		"header header"
+		"task task"
+		"inbox finished";
+	grid-column-gap: 25px;
+	grid-row-gap: 25px;
+}
+
+.task-entries {
+	border: 1px solid var(--color-secondary);
+	padding: 25px;
+	grid-area: task;
+}
+
+.inbox-entries {
+	border: 1px solid var(--color-secondary);
+	padding: 25px;
+	grid-area: inbox;
+}
+
+.finished-entries {
+	border: 1px solid var(--color-secondary);
+	padding: 25px;
+	grid-area: finished;
+}
+
+header {
+	text-align: center;
+	grid-area: header;
+}
+
+body > header {
+	position: fixed;
+	top: calc(20vh);
+	right: calc(6vw); /* keep consistent with #content */
+}
+
+#arrow-up {
+	background-image: url("/images/arrow-up.svg");
+	background-repeat: no-repeat;
+	width: 16pt;
+	height: 16pt;
+}
+
+#home {
+	background-image: url("/images/home.svg");
+	background-repeat: no-repeat;
+	width: 16pt;
+	height: 16pt;
+}
+
+#link {
+	background-image: url("/images/link.svg");
+	background-repeat: no-repeat;
+	width: 16pt;
+	height: 16pt;
+}
+
+.org-svg {
+	width: 40vw;
+}
