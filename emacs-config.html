@@ -1,0 +1,2095 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- Jun 24, 2024 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>我的 Emacs 配置</title>
+<meta name="author" content="Bao Hexing" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel='icon' type='image/x-icon' href='/images/favicon.ico'/>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<link rel='stylesheet' href='/css/style.css' type='text/css'/>
+<link rel='stylesheet' href='/css/syntax-coloring.css' type='text/css'/>
+</head>
+<body>
+<header id="top" class="status">
+<nav><a href="#"><div id="arrow-up"></div></a><br>
+     <a href="/index.html"><div id="home"></div></a><br>
+     <a href="/about.html"><div id="link"></div></a></nav>
+</header>
+<main id="content" class="content">
+<header>
+<h1 class="title">我的 Emacs 配置</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org06e05ef">配置 <code>use-package</code></a></li>
+<li><a href="#org55ee62c">基本配置</a></li>
+<li><a href="#orgc232879">工具类包</a></li>
+<li><a href="#orgf90043f">编程</a>
+<ul>
+<li><a href="#orgc179ae7">关于 tree-sitter</a></li>
+<li><a href="#orgbeee074">关于 copilot</a></li>
+</ul>
+</li>
+<li><a href="#org9cb7ee8">Org Mode</a>
+<ul>
+<li><a href="#org4f61bad">Basic Org Mode Configuration and Appearance</a></li>
+<li><a href="#org4333768">Org Mode Babel</a></li>
+<li><a href="#orgcf2b71d">Org Mode Export</a></li>
+<li><a href="#org599d851">Getting Things Done</a></li>
+</ul>
+</li>
+<li><a href="#org7c04d58">一些有用的工具</a></li>
+<li><a href="#orgff1b342">ERC and Gnus</a></li>
+<li><a href="#org4b6b023">其他有用的包</a></li>
+<li><a href="#org3b1f8ea"><span class="todo TODO">TODO</span> 添加更多配置</a></li>
+<li><a href="#orged54e3d">遇到的问题</a>
+<ul>
+<li><a href="#org98f98d7">org 文件导出的时候，无法将生成的 html 文件，转移到一个指定的目录去</a></li>
+<li><a href="#orgab6c024">org 文件导出为 markdown 的时候，会生成一些奇奇怪怪的 id，如何去掉这些 id ?</a></li>
+<li><a href="#orgf6caa08">org 文件导出为 markdown 的时候，a.md 文件里链接了 b.md， export a.md 的时候，生成的 a.html 里的链接仍是 b.md 而不是 b.html</a></li>
+<li><a href="#orgb7acf8f">重新配置 emacs 下载了最新版本的 magit-20231014.1408，结果和 emacs 28.2 不适配，导致 magit 切换分支不成功，查看 log 有乱码</a></li>
+</ul>
+</li>
+<li><a href="#org72e1b41">References</a></li>
+</ul>
+</div>
+</nav>
+<p>
+我用 Emacs 作为自己的开发工具已经有十多年，但是配置其实不复杂，大多是自己从网络上东拼西凑得来。这些配置都写在一个 org 文件里，通过 org babel 源码块得到 el 配置文件。这样，在 <code>~/.emacs.d/init.el</code> 里只要写 <code>(org-babel-load-file "/path/to/this/file")</code> 即可。一些不再用的，或仅做示例的配置通过 <code>:tangle no</code> 禁掉即可。
+</p>
+
+<section id="outline-container-org06e05ef" class="outline-2">
+<h2 id="org06e05ef">配置 <code>use-package</code></h2>
+<div class="outline-text-2" id="text-org06e05ef">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">package</span>)
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(setq package-archives '(("gnu"    . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")</span>
+<span class="org-comment-delimiter">;;                          </span><span class="org-comment">("nongnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/nongnu/")</span>
+<span class="org-comment-delimiter">;;                          </span><span class="org-comment">("melpa"  . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))</span>
+(add-to-list 'package-archives '(<span class="org-string">"melpa"</span> . <span class="org-string">"https://melpa.org/packages/"</span>) t)
+(package-initialize)
+(<span class="org-keyword">when</span> (not package-archive-contents)
+  (package-refresh-contents))
+(<span class="org-keyword">unless</span> (package-installed-p 'use-package)
+  (package-install 'use-package))
+
+(<span class="org-keyword">require</span> '<span class="org-constant">use-package</span>)
+(<span class="org-keyword">setq</span> use-package-always-ensure t)
+(<span class="org-keyword">setq</span> use-package-always-defer t)
+(<span class="org-keyword">setq</span> use-package-expand-minimally t)
+(<span class="org-keyword">use-package</span> <span class="org-constant">use-package-ensure-system-package</span>)
+</pre>
+</div>
+</div>
+</section>
+
+<section id="outline-container-org55ee62c" class="outline-2">
+<h2 id="org55ee62c">基本配置</h2>
+<div class="outline-text-2" id="text-org55ee62c">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">benchmark-init</span>
+  <span class="org-builtin">:config</span>
+  <span class="org-builtin">:hook</span>
+  (after-init . benchmark-init/deactivate))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">emacs</span>
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> gc-cons-threshold 10000000)
+  <span class="org-builtin">:hook</span>
+  (after-init . (<span class="org-keyword">lambda</span> ()
+                  (message <span class="org-string">"Loaded in %s with %d garbage collections."</span>
+                           (format <span class="org-string">"%.2f seconds"</span> (float-time (time-subtract after-init-time before-init-time)))
+                           gcs-done)
+                  (<span class="org-keyword">setq</span> gc-cons-threshold 1000000)
+                  (message <span class="org-string">"gc-cons-threshold restored to %S"</span>
+                           gc-cons-threshold))))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">emacs</span>
+  <span class="org-builtin">:custom</span>
+  (initial-frame-alist (<span class="org-keyword">quote</span> ((fullscreen . fullscreen))))
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> user-mail-address <span class="org-string">"HexingB@outlook.com"</span>)
+  (<span class="org-keyword">setq</span> user-full-name <span class="org-string">"Bao Hexing"</span>)
+  (<span class="org-keyword">setq</span> inhibit-startup-message t)
+  (<span class="org-keyword">setq</span> initial-scratch-message <span class="org-string">""</span>)
+  (menu-bar-mode nil)
+
+  (<span class="org-keyword">if</span> (display-graphic-p)
+    (<span class="org-keyword">dolist</span>
+        (scroll-bar-mode nil)
+              ))
+
+  (tool-bar-mode nil)
+  (<span class="org-keyword">defalias</span> '<span class="org-function-name">yes-or-no-p</span> 'y-or-n-p)
+  (<span class="org-keyword">setq</span> show-paren-delay 0)
+  (<span class="org-keyword">setq</span> show-paren-style 'expression) <span class="org-comment-delimiter">;; </span><span class="org-comment">or 'parenthesis</span>
+  (global-hl-line-mode nil)
+  (<span class="org-keyword">setq-default</span> make-backup-files nil)
+  (<span class="org-keyword">setq</span> ring-bell-function 'ignore)
+  (<span class="org-keyword">setq</span> indent-tabs-mode nil)
+  (<span class="org-keyword">setq</span> tab-width 4)
+  (<span class="org-keyword">setq</span> custom-file (expand-file-name <span class="org-string">"custom.el"</span> user-emacs-directory))
+  (<span class="org-keyword">if</span> (file-readable-p custom-file)
+      (load custom-file))
+  (prefer-coding-system 'utf-8)
+  (<span class="org-keyword">setq</span> default-buffer-file-coding-system 'utf-8)
+  (<span class="org-keyword">setq</span> locale-coding-system 'utf-8)
+  (set-file-name-coding-system 'utf-8)
+  (set-clipboard-coding-system 'utf-8)
+  (set-buffer-file-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  (set-language-environment 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (<span class="org-keyword">setq</span> system-time-locale <span class="org-string">"C"</span>)
+  (<span class="org-keyword">unless</span> (eq system-type 'windows-nt)
+    (set-selection-coding-system 'utf-8))
+  (setenv <span class="org-string">"LANG"</span> <span class="org-string">"en_US.UTF-8"</span>)
+  (global-visual-line-mode)
+  (column-number-mode)
+  (global-so-long-mode)
+  (global-auto-revert-mode)
+  (electric-pair-mode)
+  (<span class="org-keyword">setq</span> desktop-restore-eager 2
+        desktop-dirname         <span class="org-string">"~/.emacs.d/"</span>
+        desktop-base-file-name      <span class="org-string">"emacs.desktop"</span>
+        desktop-base-lock-name      <span class="org-string">"lock"</span>
+        desktop-path                (list desktop-dirname)
+        desktop-save                t
+        desktop-files-not-to-save   <span class="org-string">"^$"</span> <span class="org-comment-delimiter">;</span><span class="org-comment">reload tramp paths</span>
+        desktop-load-locked-desktop nil
+        desktop-auto-save-timeout   30)
+  (desktop-save-mode)
+  (auto-fill-mode)
+  (which-function-mode))
+</pre>
+</div>
+</div>
+</section>
+
+<section id="outline-container-orgc232879" class="outline-2">
+<h2 id="orgc232879">工具类包</h2>
+<div class="outline-text-2" id="text-orgc232879">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">exec-path-from-shell</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:if</span> (memq window-system '(mac ns))
+  <span class="org-builtin">:custom</span> (exec-path-from-shell-check-startup-files nil)
+  <span class="org-builtin">:config</span> (exec-path-from-shell-initialize))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">mwim</span>
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-a"</span> . mwim-beginning-of-code-or-line)
+         (<span class="org-string">"C-e"</span> . mwim-end-of-code-or-line)))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">keyfreq</span>
+    <span class="org-builtin">:hook</span>
+    (after-init . (keyfreq-mode keyfreq-autosave-mode)))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">recentf</span>
+  <span class="org-builtin">:defer</span> 3
+  <span class="org-builtin">:custom</span>
+  (recentf-auto-cleanup 432000)
+  (recentf-max-saved-items 128)
+  (recentf-save-file (concat user-emacs-directory <span class="org-string">"/recentf"</span>))
+  <span class="org-builtin">:hook</span> (after-init . recentf-mode)
+  )
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">crux</span>
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-k"</span> . crux-smart-kill-line)
+         (<span class="org-string">"C-c f"</span> . crux-recentf-find-file)
+         (<span class="org-string">"C-c r"</span> . crux-rename-file-and-buffer)))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">vlf</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">require</span> '<span class="org-constant">vlf-setup</span>))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">projectile</span>
+  <span class="org-builtin">:defer</span> 1
+  <span class="org-builtin">:hook</span>
+  (after-init . projectile-global-mode)
+  <span class="org-builtin">:custom</span>
+  (projectile-enable-caching t)
+  (projectile-indexing-method 'hybrid projectile-enable-caching t)
+  <span class="org-builtin">:config</span>
+  (add-to-list 'projectile-globally-ignored-directories <span class="org-string">".cache"</span>)
+  <span class="org-builtin">:bind</span>
+  (<span class="org-builtin">:map</span> projectile-mode-map
+   (<span class="org-string">"C-x p p"</span> . projectile-switch-project)
+   (<span class="org-string">"C-x p k"</span> . projectile-kill-buffers)
+   (<span class="org-string">"C-x p f"</span> . projectile-find-file)
+   (<span class="org-string">"C-x p r"</span> . projectile-replace-regexp)
+   (<span class="org-string">"C-x p C-b"</span> . projectile-ibuffer)
+   (<span class="org-string">"C-x p C-r"</span> . projectile-remove-known-project)
+   (<span class="org-string">"C-x p o"</span> . projectile-find-other-file)
+   (<span class="org-string">"C-x p v"</span> . projectile-vc)
+   (<span class="org-string">"C-x p c"</span> . project-compile))
+  )
+</pre>
+</div>
+
+<p>
+疑问：如何在 use-package :map 中设置 projectile 的键映射，但是不带 "C-x p" 而是使用 projectile-keymap-prefix？但是 projectile-keymap-prefix 是 nil 啊，那为什么我可以按 C-x p 时弹出 projectile 的操作界面？
+</p>
+
+<p>
+在 <code>.dir-locals.el</code> 中, 可以给这些变量设置合适的值来执行编译和测试：
+</p>
+
+<ul class="org-ul">
+<li><code>projectile-project-compilation-cmd</code> 设置编译命令</li>
+<li><code>projectile-project-test-cmd</code> 设置测试命令</li>
+<li><code>projectile-project-run-cmd</code> 设置运行命令</li>
+<li><code>projectile-project-compilation-dir</code> 设置执行编译的目录</li>
+</ul>
+
+<p>
+如下例：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">((nil . ((projectile-project-compilation-dir . <span class="org-string">"."</span>)
+         (projectile-project-compilation-cmd . <span class="org-string">"make"</span>))))
+</pre>
+</div>
+
+<p>
+文档里写可以通过 <code>projectile-edit-dir-locals</code> 命令编写 <code>.dir-locals.el</code> ，但我不知道写完后如何终止退出。所有我用 <code>add-dir-local-variable</code> 命令写 <code>compile-command</code> 变量。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">swiper</span>
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-s"</span> .
+          (<span class="org-keyword">lambda</span> () (<span class="org-keyword">interactive</span>)
+            (swiper (format <span class="org-string">"%s"</span> (<span class="org-keyword">let</span> ((sym (thing-at-point 'symbol)))
+                                   (<span class="org-keyword">if</span> sym sym <span class="org-string">""</span>))))))))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">counsel</span>
+  <span class="org-builtin">:config</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(setq counsel-ag-base-command "ag --nocolor --group %s")</span>
+  (<span class="org-keyword">setq</span> counsel-ag-command <span class="org-string">"rg --vimgrep %s"</span>)
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"M-x"</span> . counsel-M-x) <span class="org-comment-delimiter">;; </span><span class="org-comment">Gives M-x command counsel features</span>
+         (<span class="org-string">"M-p"</span> . counsel-yank-pop) <span class="org-comment-delimiter">;; </span><span class="org-comment">pop all yank, or "pop paste" for remember</span>
+         (<span class="org-string">"C-x C-f"</span> . counsel-find-file)
+         (<span class="org-string">"M-g i"</span> . counsel-imenu) <span class="org-comment-delimiter">;; </span><span class="org-comment">I don't know why imenu command don't jump to correct position</span>
+         (<span class="org-string">"C-c s"</span> .
+          (<span class="org-keyword">lambda</span> () (<span class="org-keyword">interactive</span>)
+            (counsel-rg (format <span class="org-string">"%s"</span> (<span class="org-keyword">let</span> ((sym (thing-at-point 'symbol)))
+                                       (<span class="org-keyword">if</span> sym sym <span class="org-string">""</span>))))))))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">ivy</span>
+  <span class="org-builtin">:hook</span>
+  (after-init . ivy-mode)
+  <span class="org-builtin">:config</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">changes the format of the number of results</span>
+  (<span class="org-keyword">setq</span> ivy-count-format <span class="org-string">"(%d/%d) "</span>)
+  (<span class="org-keyword">setq</span> ivy-use-virtual-buffers t)
+  (<span class="org-keyword">setq</span> ivy-use-selectable-prompt t)
+  (<span class="org-keyword">setq</span> enable-recursive-minibuffers t)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">number of result lines to display</span>
+  (<span class="org-keyword">setq</span> ivy-height 36)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">no regexp by default</span>
+  (<span class="org-keyword">setq</span> ivy-initial-inputs-alist nil)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">configure regexp engine.</span>
+  (<span class="org-keyword">setq</span> ivy-re-builders-alist
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">allow input not in order</span>
+        '((t . ivy--regex-ignore-order))))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">ivy-rich</span>
+  <span class="org-builtin">:custom</span>
+  (ivy-virtual-abbreviate 'full)
+  (ivy-rich-switch-buffer-align-virtual-buffer nil)
+  (ivy-rich-path-style 'full)
+  <span class="org-builtin">:config</span>
+  (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+  <span class="org-builtin">:hook</span> (after-init . ivy-rich-mode)
+  )
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">hi-lock</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> hi-lock-face-defaults '(<span class="org-string">"hi-yellow"</span> <span class="org-string">"hi-pink"</span> <span class="org-string">"hi-green"</span> <span class="org-string">"hi-salmon"</span> <span class="org-string">"hi-aquamarine"</span> <span class="org-string">"hi-red-b"</span> <span class="org-string">"hi-green-b"</span> <span class="org-string">"hi-black-hb"</span>)))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">smart-mode-line</span>
+  <span class="org-builtin">:defer</span> 2
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> sml/theme 'automatic)
+  (<span class="org-keyword">setq</span> sml/no-confirm-load-theme t)
+  (<span class="org-keyword">setq</span> sml/mode-width 0)
+  (<span class="org-keyword">setq</span> sml/name-width '(16 . 48))
+  <span class="org-builtin">:config</span>
+  (sml/setup)
+  <span class="org-builtin">:custom</span>
+  (rm-blacklist
+        (format <span class="org-string">"^ </span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">%s</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">$"</span>
+                (mapconcat #'identity
+                           '(<span class="org-string">"Projectile.*"</span> <span class="org-string">"company.*"</span> <span class="org-string">"AcePY"</span> <span class="org-string">"ws"</span> <span class="org-string">"hs"</span> <span class="org-string">"Wrap"</span> <span class="org-string">"Abbrev"</span> <span class="org-string">"ElDoc"</span> <span class="org-string">"Ind"</span> <span class="org-string">"Flymake.*"</span> <span class="org-string">"ELDOC-BOX"</span>
+                             <span class="org-string">"Undo-Tree"</span> <span class="org-string">"counsel"</span> <span class="org-string">"ivy"</span> <span class="org-string">"yas"</span> <span class="org-string">"WK"</span> <span class="org-string">"GG"</span> <span class="org-string">"Hi"</span> <span class="org-string">"Apheleia"</span>)
+                           <span class="org-string">"</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">"</span>)))
+  (sml/replacer-regexp-list
+   '((<span class="org-string">"^~/\\.emacs\\.d/"</span>  <span class="org-string">":EMACS:"</span>)
+     (<span class="org-string">"^~/work/*"</span>         <span class="org-string">"[work]"</span>)
+     )))
+</pre>
+</div>
+
+<p>
+如下配置界面。但我最后还是直接使用了自带主题。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">emacs</span>
+  <span class="org-builtin">:after</span> smart-mode-line
+  <span class="org-builtin">:config</span>
+  (set-face-attribute 'mode-line nil
+                      <span class="org-builtin">:underline</span> <span class="org-string">"Green"</span>
+                      <span class="org-builtin">:overline</span> <span class="org-string">"Green"</span>
+                      <span class="org-builtin">:background</span> (face-background 'default)
+                      <span class="org-builtin">:foreground</span> (face-foreground 'default)
+                      )
+  (set-face-attribute 'mode-line-inactive nil
+                      <span class="org-builtin">:underline</span> t
+                      <span class="org-builtin">:overline</span> t
+                      <span class="org-builtin">:background</span> (face-background 'default)
+                      <span class="org-builtin">:foreground</span> (face-foreground 'default)
+                      )
+  (set-background-color <span class="org-string">"#1A2421"</span>) <span class="org-comment-delimiter">;; </span><span class="org-comment">Dark Jungle Green(#1a2421) or Deep Jungle Green(#004b49)</span>
+  (set-foreground-color <span class="org-string">"#F2F0EB"</span>) <span class="org-comment-delimiter">;; </span><span class="org-comment">Snow White(#F2F0EB) or Angel Blue(#96AED0)</span>
+  )
+</pre>
+</div>
+
+<p>
+左右两侧会有白边，如下消除：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">emacs</span>
+  <span class="org-builtin">:if</span> (display-graphic-p)
+  <span class="org-builtin">:config</span>
+  (set-fringe-mode '(0 . 0))
+  )
+</pre>
+</div>
+
+<p>
+简单的字体配置：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">emacs</span>
+  <span class="org-builtin">:if</span> (display-graphic-p)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">when</span> (eq system-type 'darwin)
+    (<span class="org-keyword">setq</span> fonts '(<span class="org-string">"Noto Sans Mono"</span> <span class="org-string">"LXGW WenKai Mono"</span>))
+    (set-fontset-font t 'unicode <span class="org-string">"Apple Color Emoji"</span> nil 'prepend)
+    (set-face-attribute 'default nil <span class="org-builtin">:font</span>
+                        (format <span class="org-string">"%s:pixelsize=%d"</span> (car fonts) 18)))
+
+  (<span class="org-keyword">when</span> (eq system-type 'windows-nt)
+    (<span class="org-keyword">setq</span> fonts '(<span class="org-string">"Consolas"</span> <span class="org-string">"&#24494;&#36719;&#38597;&#40657;"</span>))
+    (set-fontset-font t 'unicode <span class="org-string">"Segoe UI Emoji"</span> nil 'prepend)
+    (set-face-attribute 'default nil <span class="org-builtin">:font</span>
+                        (format <span class="org-string">"%s:pixelsize=%d"</span> (car fonts) 24)))
+
+  (<span class="org-keyword">when</span> (eq system-type 'gnu/linux)
+    (<span class="org-keyword">setq</span> fonts '(<span class="org-string">"Fira Code"</span> <span class="org-string">"Noto Sans Mono CJK SC"</span>))
+    (set-fontset-font t 'unicode <span class="org-string">"Noto Color Emoji"</span> nil 'prepend)
+    (set-face-attribute 'default nil <span class="org-builtin">:font</span>
+                        (format <span class="org-string">"%s:pixelsize=%d"</span> (car fonts) 24)))
+
+  (<span class="org-keyword">if</span> (display-graphic-p)
+      (<span class="org-keyword">dolist</span> (charset '(kana han symbol cjk-misc bopomofo))
+        (set-fontset-font (frame-parameter nil 'font) charset
+                          (font-spec <span class="org-builtin">:family</span> (car (cdr fonts))))))
+  )
+</pre>
+</div>
+
+<p>
+简单的实用命令：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">emacs</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my-insert-date</span> ()
+    (<span class="org-keyword">interactive</span>)
+    (insert (format-time-string <span class="org-string">"%Y-%m-%d %H:%M"</span> (current-time))))
+  (global-set-key (kbd <span class="org-string">"C-c m d"</span>) 'my-insert-date)
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my-insert-calendar</span>()
+    (<span class="org-keyword">interactive</span>)
+    (insert (format-time-string <span class="org-string">"%Y-%m-%d"</span> (current-time))))
+  (global-set-key (kbd <span class="org-string">"C-c m c"</span>) 'my-insert-calendar)
+  (global-set-key (kbd <span class="org-string">"M-SPC"</span>) 'set-mark-command)
+  (global-set-key (kbd <span class="org-string">"C-x k"</span>) 'kill-this-buffer)
+  )
+</pre>
+</div>
+
+<p>
+我用了一段时间 <code>use-package-chords</code> ，并设置 ",," 为快捷键执行 =ace-pinyin-jump-char-2=，但是发现偶尔失效，只好放弃。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">use-package-chords</span>
+  <span class="org-builtin">:demand</span> t
+  <span class="org-builtin">:hook</span>
+  (ater-init . key-chord-mode)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> key-chord-two-keys-delay 0.2)
+  (<span class="org-keyword">setq</span> key-chord-one-key-delay 0.2) <span class="org-comment-delimiter">; </span><span class="org-comment">default 0.2</span>
+  )
+</pre>
+</div>
+
+<p>
+用 <code>C-;</code> 也行。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">ace-pinyin</span>
+  <span class="org-builtin">:hook</span> (after-init . ace-pinyin-global-mode)
+  <span class="org-builtin">:bind</span>
+  (<span class="org-string">"C-;"</span>   . ace-pinyin-jump-char-2)  <span class="org-comment-delimiter">;; </span><span class="org-comment">it was ",," by use-package-chords</span>
+  (<span class="org-string">"C-,"</span>   . ace-pinyin-jump-char))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">display-line-numbers</span>
+  <span class="org-builtin">:hook</span> ((prog-mode yaml-mode) . display-line-numbers-mode)
+  <span class="org-builtin">:custom</span> (display-line-numbers-width-start t))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">which-key</span>
+  <span class="org-builtin">:config</span>
+  (which-key-setup-minibuffer)
+  (which-key-setup-side-window-bottom)
+  <span class="org-builtin">:custom</span>
+  (which-key-enable-extended-define-key t)
+  (which-key-idle-delay 0.5)
+  <span class="org-builtin">:hook</span>
+  (prog-mode . which-key-mode))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">persistent-scratch</span>
+  <span class="org-builtin">:bind</span> (<span class="org-builtin">:map</span> persistent-scratch-mode-map
+              ([remap kill-buffer] . (<span class="org-keyword">lambda</span> (<span class="org-type">&amp;rest</span> _)
+                                       (<span class="org-keyword">interactive</span>)
+                                       (<span class="org-warning">user-error</span> <span class="org-string">"Scratch buffer cannot be killed"</span>)))
+              ([remap revert-buffer] . persistent-scratch-restore)
+              ([remap revert-this-buffer] . persistent-scratch-restore))
+  <span class="org-builtin">:hook</span> ((after-init . persistent-scratch-autosave-mode)
+         (lisp-interaction-mode . persistent-scratch-mode))
+  <span class="org-builtin">:init</span> (<span class="org-keyword">setq</span> persistent-scratch-backup-file-name-format <span class="org-string">"%Y-%m-%d"</span>
+              persistent-scratch-backup-directory
+              (expand-file-name <span class="org-string">"persistent-scratch"</span> user-emacs-directory)))
+</pre>
+</div>
+
+<p>
+切换窗口布局，有如下一些命令：
+</p>
+<ol class="org-ol">
+<li>transpose-frame</li>
+<li>flip-frame</li>
+<li>flop-frame</li>
+<li>rotate-frame</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">transpose-frame</span>)
+</pre>
+</div>
+
+<p>
+我发现这个 autoinsert 和 yasnippet 有点重，所有不常用。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">autoinsert</span>
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> auto-insert-query t)
+  (<span class="org-keyword">setq</span> auto-insert-directory (locate-user-emacs-file <span class="org-string">"templates"</span>))
+  <span class="org-builtin">:hook</span>
+  (find-file-hook . auto-insert)
+  (after-init . auto-insert-mode)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my/autoinsert-yas-expand</span>()
+    <span class="org-doc">"Replace text in yasnippet template."</span>
+    (yas-expand-snippet (buffer-string) (point-min) (point-max)))
+  (define-auto-insert <span class="org-string">"\\.cc?$"</span> [<span class="org-string">"default-cc.cc"</span> my/autoinsert-yas-expand])
+  (define-auto-insert <span class="org-string">"\\.hh?$"</span> [<span class="org-string">"default-hh.hh"</span> my/autoinsert-yas-expand])
+  (define-auto-insert <span class="org-string">"\\.cpp?$"</span> [<span class="org-string">"default-cpp.cpp"</span> my/autoinsert-yas-expand])
+  (define-auto-insert <span class="org-string">"\\.h?$"</span> [<span class="org-string">"default-h.h"</span> my/autoinsert-yas-expand])
+  (define-auto-insert <span class="org-string">"\\.hpp?$"</span> [<span class="org-string">"default-hpp.hpp"</span> my/autoinsert-yas-expand]))
+</pre>
+</div>
+
+<p>
+还是直接用 yasnippet 就好。下面是 <code>c-lang-common/head</code> 的例子：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yasnippet"># -*- mode: snippet -*-
+# name: head
+# key: head
+# --
+/**
+ * $1
+ *
+ * Author: `user-full-name` &lt;`user-mail-address`&gt;
+ * Copyright © `(format-time-string "%Y")`, `user-full-name`, all rights reserved.
+ * Created: `(format-time-string "%e %B %Y")`
+ */
+
+$0
+</pre>
+</div>
+
+<p>
+这是 <code>org-mode/head</code> 的例子：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yasnippet"># -*- mode: snippet -*-
+# name: head
+# key: head
+# --
+#+options: ':t *:t -:t ::t &lt;:t H:3 \n:nil ^:{} arch:headline author:t
+#+options: broken-links:nil c:nil creator:nil d:(not "LOGBOOK")
+#+options: date:t e:t email:nil f:t inline:t num:nil p:nil pri:nil
+#+options: prop:nil stat:t tags:t tasks:t tex:t timestamp:t title:t
+#+options: toc:3 todo:t |:t
+#+title: $1
+#+date: &lt;`(format-time-string "%Y-%m-%d")`&gt;
+#+author: `user-full-name`
+#+email: `user-mail-address`
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs `emacs-major-version`.`emacs-minor-version` (Org mode `org-version`)
+#+cite_export:
+
+$0
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">markdown-mode</span>
+  <span class="org-builtin">:defer</span> 10
+  <span class="org-builtin">:mode</span> (<span class="org-string">"README\\.md\\'"</span> . gfm-mode)
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> markdown-command <span class="org-string">"pandoc --mathjax -t html5 --file-scope=false"</span>)
+  (<span class="org-keyword">setq</span> markdown-display-remote-images t)
+  (<span class="org-keyword">setq</span> markdown-enable-math t))
+</pre>
+</div>
+</div>
+</section>
+
+
+<section id="outline-container-orgf90043f" class="outline-2">
+<h2 id="orgf90043f">编程</h2>
+<div class="outline-text-2" id="text-orgf90043f">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">json-mode</span>)
+(<span class="org-keyword">use-package</span> <span class="org-constant">yaml-mode</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">typescript-mode</span>
+  <span class="org-builtin">:pin</span> nongnu
+  <span class="org-builtin">:mode</span> (<span class="org-string">"\\.tsx?\\'"</span> . typescript-mode)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> typescript-indent-level 2))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">realgud</span>
+  <span class="org-builtin">:pin</span> gnu
+  <span class="org-builtin">:commands</span> (realgud:gdb realgud:pdb))
+(<span class="org-keyword">use-package</span> <span class="org-constant">realgud-lldb</span>
+  <span class="org-builtin">:pin</span> gnu
+  <span class="org-builtin">:commands</span> (realgud--lldb lldb))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">company</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> company-idle-delay 0)
+  (<span class="org-keyword">setq</span> company-minimum-prefix-length 1)
+  (<span class="org-keyword">setq</span> company-tooltip-align-annotations t)
+  (<span class="org-keyword">setq</span> company-selection-wrap-around t)
+  (<span class="org-keyword">setq</span> company-show-numbers t)
+  (<span class="org-keyword">setq</span> company-insertion-on-trigger nil)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">uncomment this if you prefer tab instead of enter key</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(company-tng-configure-default)</span>
+  <span class="org-builtin">:hook</span>
+  (after-init . global-company-mode)
+  )
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">company-quickhelp</span>
+    <span class="org-builtin">:defer</span> t
+    <span class="org-builtin">:init</span> (<span class="org-keyword">with-eval-after-load</span> 'company
+            (company-quickhelp-mode)))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">yasnippet</span>
+  <span class="org-builtin">:defer</span> 2
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> require-final-newline nil)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(setq yas/root-directory "~/.emacs.d/snippets")</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(yas/load-directory yas/root-directory)</span>
+  <span class="org-builtin">:hook</span>
+  ((prog-mode . yas-minor-mode)
+   (org-mode . yas-minor-mode))
+  <span class="org-builtin">:custom</span>
+  (yas-prompt-functions '(yas-completing-prompt))
+  )
+(<span class="org-keyword">use-package</span> <span class="org-constant">yasnippet-snippets</span> <span class="org-builtin">:after</span> yasnippet)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">apheleia</span>
+  <span class="org-builtin">:defer</span> 4
+  <span class="org-builtin">:hook</span>
+  (after-init . apheleia-global-mode))
+</pre>
+</div>
+
+<p>
+有时候，不想要自动格式化，可以添加变量 <code>apheleia-inhibit</code> 到 <code>.dir-locals.el</code> 中，用 <code>add-dir-locale-variable</code> 命令。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">quickrun</span>
+  <span class="org-builtin">:defer</span> 10
+  <span class="org-builtin">:config</span>
+  (quickrun-add-command <span class="org-string">"c++/c1z"</span>
+    '((<span class="org-builtin">:command</span> . <span class="org-string">"g++"</span>)
+      (<span class="org-builtin">:exec</span>    . (<span class="org-string">"%c -std=c++20 %o -o %e %s"</span>
+                   <span class="org-string">"%e %a"</span>))
+      (<span class="org-builtin">:remove</span>  . (<span class="org-string">"%e"</span>)))
+    <span class="org-builtin">:default</span> <span class="org-string">"c++"</span>)
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-c q r"</span> . quickrun)))
+</pre>
+</div>
+
+<p>
+似乎 git 已经一统天下，magit 必不可少。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">magit</span>
+  <span class="org-builtin">:commands</span> (magit-status magit-blame magit-status-fullscreen magit-dispatch magit-checkout)
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">use-package</span> <span class="org-constant">dash</span>)
+  <span class="org-builtin">:custom</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">display magit-status and diff buffer fullscreen</span>
+  (magit-display-buffer-function #'magit-display-buffer-fullcolumn-most-v1)
+  <span class="org-builtin">:config</span>
+  (add-hook 'magit-mode-hook (<span class="org-keyword">lambda</span> ()
+                               (<span class="org-keyword">setq</span> whitespace-mode nil)
+                               <span class="org-comment-delimiter">;; </span><span class="org-comment">force magit-status buffer vertically opened</span>
+                               <span class="org-comment-delimiter">;; </span><span class="org-comment">(setq split-width-threshold 0)</span>
+                               <span class="org-comment-delimiter">;; </span><span class="org-comment">(setq split-height-threshold nil)</span>
+                               )))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">eldoc</span>
+  <span class="org-builtin">:defer</span> 10
+  <span class="org-builtin">:hook</span> (after-init . global-eldoc-mode)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> eldoc-echo-area-use-multiline-p 3
+        eldoc-echo-area-display-truncation-message nil))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">eldoc-box</span>
+  <span class="org-builtin">:custom</span>
+  (eldoc-box-max-pixel-width 720)
+  (eldoc-box-max-pixel-height 900)
+  <span class="org-builtin">:hook</span> (prog-mode . eldoc-box-hover-mode))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">flymake</span>
+  <span class="org-builtin">:defer</span> 15
+  <span class="org-builtin">:hook</span> (prog-mode . flymake-mode)
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-h ."</span> . display-local-help)
+         <span class="org-builtin">:map</span> flymake-mode-map
+         (<span class="org-string">"C-c e n"</span> . flymake-goto-next-error)
+         (<span class="org-string">"C-c e p"</span> . flymake-goto-prev-error)
+         (<span class="org-string">"C-c e b"</span> . flymake-show-diagnostics-buffer)
+))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">emmet-mode</span>
+  <span class="org-builtin">:commands</span> (emmet-mode emmet-expand-line yas/insert-snippet yas-insert-snippet company-complete)
+  <span class="org-builtin">:hook</span> ((sgml-mode css-mode web-mode) . emmet-mode)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> emmet-move-cursor-between-quotes t)
+  (<span class="org-keyword">setq</span> emmet-indent-after-insert nil)
+  (<span class="org-keyword">unbind-key</span> <span class="org-string">"C-M-&lt;left&gt;"</span> emmet-mode-keymap)
+  (<span class="org-keyword">unbind-key</span> <span class="org-string">"C-M-&lt;right&gt;"</span> emmet-mode-keymap)
+  <span class="org-builtin">:bind</span>
+  (<span class="org-string">"C-j"</span> . emmet-expand-line)
+  ((<span class="org-builtin">:map</span> emmet-mode-keymap
+         (<span class="org-string">"C-c ["</span> . emmet-prev-edit-point)
+         (<span class="org-string">"C-c ]"</span> . emmet-next-edit-point)))
+  )
+</pre>
+</div>
+
+<p>
+下面这个似乎不起作用。看 <a href="https://www.emacswiki.org/emacs/IndentingC">这里</a>。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">cc-mode</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my-c-mode-common-hook</span>()
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">(c-toggle-auto-hungry-state 1) ;; hungry-delete and auto-newline</span>
+    (<span class="org-keyword">setq</span> c-macro-shrink-window-flag t)
+    (<span class="org-keyword">setq</span> c-macro-preprocessor <span class="org-string">"cpp"</span>)
+    (<span class="org-keyword">setq</span> c-macro-cppflags <span class="org-string">" "</span>)
+    (<span class="org-keyword">setq</span> c-macro-prompt-flag t)
+    (<span class="org-keyword">setq</span> abbrev-mode t)
+    (<span class="org-keyword">setq-local</span> tab-width 4)
+    (<span class="org-keyword">setq-local</span> c-basic-offset 4)
+    )
+  <span class="org-builtin">:hook</span> (c-mode-hook . my-c-mode-common-hook))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">cc-mode</span>
+  <span class="org-builtin">:custom</span>
+  (c-basic-offset 4))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">python</span>
+  <span class="org-builtin">:defer</span> 3
+  <span class="org-builtin">:custom</span>
+  (python-indent-guess-indent-offset-verbose nil)
+  (python-indent-offset 4)
+  (python-shell-interpreter <span class="org-string">"python3"</span>)
+  (python-shell-interpreter-args <span class="org-string">"-i"</span>)
+  (python-shell-prompt-detect-failure-warning nil)
+  (python-shell-completion-native-enable nil)
+  )
+</pre>
+</div>
+
+<p>
+conda、poetry 和 pyvenv 这三个包，在 emacs 中的配置和使用让我很是迷惑了一段时间。这三者各有自己的功能。管理虚拟环境是他们共有的功能。conda 更重一些，可以创建指定版本的 python 环境，从 conda 仓库安装很多软件包，解决包依赖冲突等。poetry 是一个更侧重于项目管理的工具，除了虚拟环境、包依赖功能，还可以打包发布。pyvenv 则专注于虚拟环境管理。它可以同时支持 conda 和 poetry 创建的虚拟环境。
+</p>
+
+<p>
+因此 conda 更适合作为一个基础系统，不适合放到 emacs 里使用。 poetry 作为自己开发项目的工具。pyvenv 管理 emacs 所用的 python 环境。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">conda</span>
+  <span class="org-builtin">:defer</span> 10
+  <span class="org-builtin">:config</span>
+  (conda-env-initialize-interactive-shells)
+  (conda-env-initialize-eshell)
+  <span class="org-builtin">:commands</span> (conda-env-activate conda-env-deactivate conda-env-list)
+  <span class="org-builtin">:hook</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">set conda-project-env-path in .dir-locals.el then the env will be automatically activated</span>
+  (python-mode . conda-env-autoactivate-mode)
+  )
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">poetry</span> <span class="org-builtin">:defer</span> 12)
+</pre>
+</div>
+
+<p>
+conda 的虚拟环境是统一放在一个目录下的；而我喜欢配置 poetry 将虚拟环境放到项目目录下。通过 <code>pyvenv-workon</code> 可以从 conda 的虚拟环境目录里选择一个来激活；通过 <code>pyvenv-activate</code>  可以让我选择一个包含虚拟环境的目录来激活。这个包含虚拟环境的目录，可以是 <code>poetry-venv-workon</code> 创建的，也可以是 <code>pyvenv-create</code> 创建的。很方便。
+</p>
+
+<p>
+有一点需要特别注意: <code>poetry-shell</code> 使用当前的虚拟环境，如果当前虚拟环境是 conda 创建的，会因为没有 activate.fish 而无法激活。因此需要使用 <code>poetry-venv-workon</code> 来激活虚拟环境。 <b>在执行 <code>poetry shell</code> 前，一定要先激活环境。</b>
+</p>
+
+<p>
+另一个注意事项：pyvenv 切换环境，并不影响在切换前打开的 eshell。因此在 eshell 里需要手工 source activate.fish 进行环境切换。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">pyvenv</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:config</span>
+  (setenv <span class="org-string">"WORKON_HOME"</span> (expand-file-name <span class="org-string">"~/.local/miniconda3/envs"</span>))
+  (pyvenv-mode t))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">pip install jedi flake8 autopep8 black yapf</span>
+(<span class="org-keyword">use-package</span> <span class="org-constant">elpy</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:init</span>
+  (advice-add 'python-mode <span class="org-builtin">:before</span> 'elpy-enable)
+  <span class="org-builtin">:custom</span>
+  (py-split-windows-on-execute-p nil)
+  )
+</pre>
+</div>
+
+<p>
+在编辑 tests 测试文件时， elpy 似乎有些错误。因此我尝试一下 jedi，但是 jedi 的补全看起来挺混乱的，经过测试，发现是 jedi 使用的 auto-complete 和 company-mode 冲突了。只好忍痛弃用。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">jedi</span>
+  <span class="org-builtin">:custom</span>
+  (jedi:complete-on-dot t)
+  <span class="org-builtin">:hook</span>
+  (python-mode . jedi:setup)
+  )
+</pre>
+</div>
+
+<p>
+在 Emacs 中执行 <code>jedi:install-server</code> 来安装 jedi server。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">company-jedi</span>
+  <span class="org-builtin">:defer</span> t
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">defun</span> <span class="org-function-name">enable-jedi</span>()
+    (<span class="org-keyword">setq-local</span> company-backends
+                (append '(company-jedi) company-backends)))
+  (<span class="org-keyword">with-eval-after-load</span> 'company
+    (add-hook 'python-mode-hook 'enable-jedi)))
+</pre>
+</div>
+
+<p>
+emacs-jupyter 模拟 jupyter 环境。但是似乎不支持 markdown cell。命令： <code>jupyter-run-repl</code> 。 有一个问题，在 mitmproxy 源码目录下（非子目录），执行这个 <code>jupyter-run-repl</code> 不成功。另外，这个功能似乎和 <code>run-python</code> 差不多，有些鸡肋。
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">jupyter</span>
+  <span class="org-builtin">:custom</span>
+  (jupyter-repl-echo-eval-p t))
+</pre>
+</div>
+
+<p>
+EIN 提供了一个 jupyter like 的环境。命令： <code>ein:run</code> 和 <code>ein:login</code> 。我只是还不知道如何写 markdown cell。感觉似乎不如 emacs-jupyter 好用。EIN 比 jupyter 依赖少。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">ein</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">go-mode</span>
+  <span class="org-builtin">:mode</span> (<span class="org-string">"\\.go\\'"</span> . go-mode))
+</pre>
+</div>
+
+<p>
+用来用去，我觉得还是 org mode + python babel 比较好。
+</p>
+
+<p>
+下面是 lsp 配置。首先要先安装 lsp server。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span class="org-comment-delimiter"># </span><span class="org-comment">for C/C++ clangd</span>
+brew install llvm
+<span class="org-comment-delimiter"># </span><span class="org-comment">for python</span>
+python3 -m pip install <span class="org-string">"python-lsp-server[all]"</span>
+<span class="org-comment-delimiter"># </span><span class="org-comment">or use pyright</span>
+python3 -m pip install pyright
+<span class="org-comment-delimiter"># </span><span class="org-comment">for golang</span>
+go install golang.org/x/tools/gopls@latest
+</pre>
+</div>
+
+<p>
+<a href="https://hadi.timachi.com/posts/python_IDE_interactions_in_emacs_without_LSP/Python_IDE_interactions_in_emacs_without_a_language_server/">这里</a>说，使用 <code>pyright .</code> 作为 <code>project-compile</code> 的命令，可以做 python 项目的 linting。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">lsp-pyright</span>
+  <span class="org-builtin">:hook</span>
+  (python-mode . (<span class="org-keyword">lambda</span> ()
+                   (<span class="org-keyword">require</span> '<span class="org-constant">lsp-pyright</span>)
+                   (lsp-deferred))))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">eglot</span>
+  <span class="org-builtin">:defer</span> 3
+  <span class="org-builtin">:bind</span> ((<span class="org-string">"C-c e e"</span> . eglot)
+         (<span class="org-string">"C-c e l"</span> . eglot-list-connections)
+         <span class="org-builtin">:map</span> eglot-mode-map
+         (<span class="org-string">"C-c e a"</span> . eglot-code-actions)
+         (<span class="org-string">"C-c e o"</span> . eglot-code-actions-organize-imports)
+         (<span class="org-string">"C-c e r"</span> . eglot-rename)
+         (<span class="org-string">"C-c e d"</span> . eglot-find-declaration)
+         (<span class="org-string">"C-c e f"</span> . eglot-format))
+  <span class="org-builtin">:hook</span>
+  (go-mode . eglot)
+  )
+</pre>
+</div>
+
+<p>
+没有 compile_commands.json 时，clangd 会占用大量的 CPU。因此我一般手动启用 eglot 和关闭。这时候 ggtags 非常有用。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">ggtags</span>
+  <span class="org-builtin">:bind</span> (<span class="org-builtin">:map</span> ggtags-mode-map
+              (<span class="org-string">"C-c g s"</span> . ggtags-find-other-symbol)
+              (<span class="org-string">"C-c g h"</span> . ggtags-view-tag-history)
+              (<span class="org-string">"C-c g r"</span> . ggtags-find-reference)
+              (<span class="org-string">"C-c g c"</span> . ggtags-create-tags)
+              (<span class="org-string">"C-c g u"</span> . ggtags-update-tags)
+              (<span class="org-string">"C-c g ."</span> . ggtags-find-tag-dwim)
+              (<span class="org-string">"C-c g ,"</span> . pop-tag-mark))
+  <span class="org-builtin">:custom</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">smart-mode-line already provides project name on mode line</span>
+  (ggtags-mode-line-project-name nil)
+  )
+</pre>
+</div>
+
+<p>
+dumb-jump 是在缺少 language server 的情况下支持定义跳转的工具。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">dumb-jump</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> dumb-jump-disable-obsolete-warnings t)
+  (<span class="org-keyword">setq</span> dumb-jump-project-denoters '(<span class="org-string">".dumbjump"</span> <span class="org-string">".projectile"</span> <span class="org-string">".git"</span> <span class="org-string">".hg"</span> <span class="org-string">".fslckout"</span> <span class="org-string">".bzr"</span> <span class="org-string">"_darcs"</span> <span class="org-string">".svn"</span> <span class="org-string">"Makefile"</span> <span class="org-string">"PkgInfo"</span> <span class="org-string">"-pkg.el"</span> <span class="org-string">"_FOSSIL_"</span>))
+  (<span class="org-keyword">setq</span> xref-show-definitions-function #'xref-show-definitions-completing-read)
+  (add-hook 'xref-backend-functions  #'dumb-jump-xref-activate)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">:bind (("C-c j g" . dumb-jump-go)</span>
+  <span class="org-comment-delimiter">;;        </span><span class="org-comment">("C-c j b" . dumb-jump-back)</span>
+  <span class="org-comment-delimiter">;;        </span><span class="org-comment">("C-c j j" . dumb-jump-quick-look))</span>
+  )
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgc179ae7" class="outline-3">
+<h3 id="orgc179ae7">关于 tree-sitter</h3>
+<div class="outline-text-3" id="text-orgc179ae7">
+<p>
+<a href="https://emacs.liujiacai.net/post/038-hello-treesitter/">这里</a>有比较详细的配置说明。主要过程是：
+</p>
+<ol class="org-ol">
+<li>使用 <code>(treesite-available-p)</code> 来测试是否可用</li>
+<li>从<a href="https://github.com/emacs-tree-sitter/tree-sitter-langs/releases">这里</a>下载对应平台版本的解析器，解压到 <code>treesit-extra-load-path</code> 或者 <code>~/.emacs.d/tree-sitter</code></li>
+<li>通过这个命令 <code>fd -t f dylib --exclude 'libtree*' --exec mv {} libtree-sitter-{/} \;</code> 把文件重命名</li>
+<li>通过 <code>(treesit-language-available-p 'c)</code> 测试对应语言解析器进行测试</li>
+<li>通过下面的配置，匹配原 major mode 到新的 ts mode</li>
+</ol>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">when</span> (treesit-available-p)
+  (<span class="org-keyword">setq</span> major-mode-remap-alist
+      '((yaml-mode . yaml-ts-mode)
+        (sh-mode . bash-ts-mode)
+        (js-mode . js-ts-mode)
+        (js2-mode . js-ts-mode)
+        (typescript-mode . typescript-ts-mode)
+        (json-mode . json-ts-mode)
+        (css-mode . css-ts-mode)
+        (c-mode . c-ts-mode)
+        (c++-mode . c++-ts-mode)
+        (c-or-c++-mode . c-or-c++-ts-mode)
+        (python-mode . python-ts-mode)
+        (go-mode . go-ts-mode))))
+</pre>
+</div>
+
+<p>
+但是我还不知道 tree-sitter 的具体用法。另外，开启这个 python-mode 到 python-ts-mode 的映射后，elpy 不能正常工作，即使我把 elpy 配置里的 python-mode 换成 python-ts-mode。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbeee074" class="outline-3">
+<h3 id="orgbeee074">关于 copilot</h3>
+<div class="outline-text-3" id="text-orgbeee074">
+<p>
+copilot 不能说好用，只能说很上瘾，尤其是问答的时候。
+</p>
+
+<p>
+首先， <code>git clone git@github.com:zerolfx/copilot.el</code> 到 <code>~/.emacs.d</code> 下。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">s</span>)
+(<span class="org-keyword">use-package</span> <span class="org-constant">dash</span>)
+(<span class="org-keyword">use-package</span> <span class="org-constant">editorconfig</span>)
+(<span class="org-keyword">use-package</span> <span class="org-constant">copilot</span>
+  <span class="org-builtin">:load-path</span> (<span class="org-keyword">lambda</span> () (expand-file-name <span class="org-string">"copilot.el"</span> user-emacs-directory))
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> copilot-max-char -1)
+  (<span class="org-keyword">setq</span> copilot-indent-offset-warning-disable t)
+  <span class="org-builtin">:bind</span>
+  ((<span class="org-string">"s-/"</span> . copilot-accept-completion-by-line)))
+</pre>
+</div>
+
+<p>
+需要执行 <code>M-x copilot-install-server</code> 并 <code>M-x global-copilot-mode</code> 。还需要 <code>M-x copilot-login</code> 。 有一个问题是，重启 Emacs 后，copilot mode  没有启用，直接要执行 global-copilot-mode 也没找到这个命令。只有在执行了一下 "s-/" 也就是 <code>copilot-accept-completion-by-line</code> 后，才有这个命令。我估计是自己的配置问题。
+</p>
+
+<p>
+另外有一个包 <a href="https://github.com/Exafunction/codeium.el">codeium</a> 提供类似功能，不过依赖的不是 github 服务而是一个专有二进制软件。另外还有一个项目叫 <a href="https://github.com/SilasMarvin/lsp-ai">lsp-ai</a>，也是类似的功能。有时间研究一下。
+</p>
+</div>
+</div>
+</section>
+
+<section id="outline-container-org9cb7ee8" class="outline-2">
+<h2 id="org9cb7ee8">Org Mode</h2>
+<div class="outline-text-2" id="text-org9cb7ee8">
+<p>
+这个必不可少。
+</p>
+</div>
+
+<div id="outline-container-org4f61bad" class="outline-3">
+<h3 id="org4f61bad">Basic Org Mode Configuration and Appearance</h3>
+<div class="outline-text-3" id="text-org4f61bad">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">org</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> font-lock-ensure t)
+  (<span class="org-keyword">setq</span> org-log-done 'time)
+  (<span class="org-keyword">setq</span> org-log-into-drawer <span class="org-string">"LOGBOOK"</span>)
+  (<span class="org-keyword">setq-default</span> org-display-custom-times t)
+  (<span class="org-keyword">setq</span> org-time-stamp-custom-formats '(<span class="org-string">"&lt;%Y-%m-%d&gt;"</span> . <span class="org-string">"&lt;%Y-%m-%d %H:%M&gt;"</span>))
+  (<span class="org-keyword">setq</span> org-startup-indented t)
+  (<span class="org-keyword">setq</span> org-return-follows-link t)
+  (<span class="org-keyword">setq</span> org-pretty-entities t)
+  (<span class="org-keyword">setq</span> org-pretty-entities-include-sub-superscripts t)
+  (<span class="org-keyword">setq</span> org-hide-emphasis-markers t)
+  (<span class="org-keyword">setq</span> org-agenda-block-separator <span class="org-string">""</span>)
+  (<span class="org-keyword">setq</span> org-fontify-whole-heading-line t)
+  (<span class="org-keyword">setq</span> org-fontify-done-headline t)
+  (<span class="org-keyword">setq</span> org-fontify-quote-and-verse-blocks t)
+  (<span class="org-keyword">setq</span> org-startup-with-inline-images t)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(setq org-image-actual-width '(500))</span>
+  (<span class="org-keyword">setq</span> org-startup-folded 'showall)
+  (<span class="org-keyword">setq</span> org-edit-src-content-indentation 0)
+  (<span class="org-keyword">setq</span> org-html-link-org-files-as-html t)
+  (<span class="org-keyword">setq</span> org-src-fontify-natively t)
+  (<span class="org-keyword">setq</span> calendar-week-start-day 1)
+
+  (<span class="org-keyword">setq</span> org-src-window-setup 'current-window) <span class="org-comment-delimiter">;; </span><span class="org-comment">or 'split-window-right</span>
+  (<span class="org-keyword">setq</span> org-confirm-babel-evaluate nil)
+
+  (<span class="org-keyword">setq</span> org-directory <span class="org-string">"~/org"</span>)
+  (<span class="org-keyword">setq</span> org-directory-publish <span class="org-string">"~/www"</span>)
+  (<span class="org-keyword">setq</span> my-work-notes-directory <span class="org-string">"~/work/notes"</span>)
+  (<span class="org-keyword">setq</span> my-work-notes-publish-directory <span class="org-string">"~/work/publish"</span>)
+
+  (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">org-bullets</span>
+  <span class="org-builtin">:defer</span> 20
+  <span class="org-builtin">:hook</span> (org-mode . org-bullets-mode)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> org-bullets-bullet-list '(<span class="org-string">"&#9673;"</span> <span class="org-string">"&#8273;"</span> <span class="org-string">"&#8258;"</span> <span class="org-string">"&#10070;"</span> <span class="org-string">"&#10030;"</span> <span class="org-string">"&#10033;"</span> <span class="org-string">"&#10040;"</span>))
+  (<span class="org-keyword">setq</span> org-ascii-bullets '((ascii ?* ?+ ?-) (latin1 ?* ?+ ?-) (utf-8 ?* ?+ ?-))))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">org-appear</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> org-appear-autolinks t)
+  <span class="org-builtin">:hook</span> (org-mode . org-appear-mode))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">it requires emacs 28</span>
+(<span class="org-keyword">use-package</span> <span class="org-constant">org-reverse-datetree</span>)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4333768" class="outline-3">
+<h3 id="org4333768">Org Mode Babel</h3>
+<div class="outline-text-3" id="text-org4333768">
+<p>
+先安装 mermaid：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">npm install -g @mermaid-js/mermaid-cli
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">mermaid-mode</span>
+  <span class="org-builtin">:commands</span> mermaid-mode
+  <span class="org-builtin">:mode</span> <span class="org-string">"\\.mmd\\'"</span>
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> mermaid-output-format <span class="org-string">".svg"</span>)
+  )
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">ob-mermaid</span>
+  <span class="org-builtin">:defer</span> 5
+  <span class="org-builtin">:commands</span>
+  (org-babel-execute:mermaid)
+  <span class="org-builtin">:config</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc")</span>
+  )
+</pre>
+</div>
+
+<p>
+mermaid 生成的 svg 图片正常，但是在 emacs 中展示时，有些文字无法显示出来。这是我在 macOS 下遇到的情形。不知道在 Linux 下是否有这个问题。
+</p>
+
+<p>
+下面是个示例：
+</p>
+
+
+<figure id="orgca338ae">
+<img src="mermaid-demo.png" alt="mermaid-demo.png">
+
+</figure>
+
+<p>
+我总觉得 plantuml 比较慢啊。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">plantuml-mode</span>
+  <span class="org-builtin">:defer</span> 10
+  <span class="org-builtin">:custom</span>
+  (plantuml-default-exec-mode 'executable)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(plantuml-jar-path "/usr/share/plantuml/plantuml.jar")</span>
+  <span class="org-builtin">:mode</span> <span class="org-string">"\\.uml\\'"</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">ob-plantuml</span>
+  <span class="org-builtin">:defer</span> 8
+  <span class="org-builtin">:ensure</span> org-contrib
+  <span class="org-builtin">:commands</span>
+  (org-babel-execute:plantuml)
+  <span class="org-builtin">:custom</span>
+  (org-plantuml-exec-mode 'plantuml)
+  (org-plantuml-executable-path <span class="org-string">"plantuml"</span>)
+  (org-plantuml-executable-args '(<span class="org-string">"-headless"</span> <span class="org-string">"-charset UTF-8"</span>))
+  )
+</pre>
+</div>
+
+<p>
+这是个 plantuml 示例：
+</p>
+
+
+<figure id="org456c861">
+<img src="plantuml-sequence-demo.png" alt="plantuml-sequence-demo.png">
+
+</figure>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">ob-python</span>
+  <span class="org-builtin">:defer</span> 5
+  <span class="org-builtin">:ensure</span> org-contrib
+  <span class="org-builtin">:commands</span>
+  (org-babel-execute:python))
+</pre>
+</div>
+
+<p>
+如果使用 :session ，则需要 return 一个结果；如果不用 :session，则可以直接返回一个顶层变量：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span class="org-keyword">import</span> matplotlib
+<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
+<span class="org-variable-name">fig</span><span class="org-operator">=</span>plt.figure(figsize<span class="org-operator">=</span>(3, 2))
+plt.plot([1, 3, 2, 6])
+fig.tight_layout()
+
+<span class="org-variable-name">fname</span> <span class="org-operator">=</span> <span class="org-string">'python-matplot-demo.jpg'</span>
+plt.savefig(fname)
+<span class="org-keyword">return</span> fname
+</pre>
+</div>
+
+
+<figure id="orgb2e0d58">
+<img src="python-matplot-demo.jpg" alt="python-matplot-demo.jpg">
+
+</figure>
+
+
+<p>
+使用了相同 <code>:session</code> 的代码块，可以共享变量。
+</p>
+
+<p>
+One hint: every time you make any changes to the file, these code blocks are evaluated. It is annoying. If they are good to go, you can avoid further evaluations by adding header arguments like <code>:noeval</code> or <code>:eval no</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcf2b71d" class="outline-3">
+<h3 id="orgcf2b71d">Org Mode Export</h3>
+<div class="outline-text-3" id="text-orgcf2b71d">
+<p>
+我主要把 org 文件导出为 html：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">htmlize</span>
+  <span class="org-builtin">:defer</span> t
+  <span class="org-builtin">:commands</span> (org-export-dispatch))
+</pre>
+</div>
+
+<p>
+按照官方文档以及网上的大多教程，org 文件按照目录组织成项目的形式：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">org</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">defvar</span> <span class="org-variable-name">my-publish-html-head</span>
+    <span class="org-string">"&lt;link rel='</span><span class="org-string"><span class="org-constant">icon</span></span><span class="org-string">' type='</span><span class="org-string"><span class="org-constant">image/x-icon</span></span><span class="org-string">' href='</span><span class="org-string"><span class="org-constant">/images/favicon.ico</span></span><span class="org-string">'/&gt;</span>
+<span class="org-string">&lt;meta name='</span><span class="org-string"><span class="org-constant">viewport</span></span><span class="org-string">' content='width=device-width, initial-scale=1'&gt;</span>
+<span class="org-string">&lt;link rel='</span><span class="org-string"><span class="org-constant">stylesheet</span></span><span class="org-string">' href='</span><span class="org-string"><span class="org-constant">/css/style.css</span></span><span class="org-string">' type='</span><span class="org-string"><span class="org-constant">text/css</span></span><span class="org-string">'/&gt;</span>
+<span class="org-string">&lt;link rel='</span><span class="org-string"><span class="org-constant">stylesheet</span></span><span class="org-string">' href='</span><span class="org-string"><span class="org-constant">/css/syntax-coloring.css</span></span><span class="org-string">' type='</span><span class="org-string"><span class="org-constant">text/css</span></span><span class="org-string">'/&gt;"</span>)
+
+  (<span class="org-keyword">defvar</span> <span class="org-variable-name">my-publish-html-preamble</span>
+    <span class="org-string">"&lt;nav&gt;&lt;a href=\"#\"&gt;&lt;div id=\"arrow-up\"&gt;&lt;/div&gt;&lt;/a&gt;&lt;br&gt;</span>
+<span class="org-string">     &lt;a href=\"/index.html\"&gt;&lt;div id=\"home\"&gt;&lt;/div&gt;&lt;/a&gt;&lt;br&gt;</span>
+<span class="org-string">     &lt;a href=\"/about.html\"&gt;&lt;div id=\"link\"&gt;&lt;/div&gt;&lt;/a&gt;&lt;/nav&gt;"</span>)
+
+  (<span class="org-keyword">defvar</span> <span class="org-variable-name">my-publish-html-postamble</span>
+    (format <span class="org-string">"&lt;br/&gt;&lt;hr/&gt;&amp;copy; 2012-%s All Rights Reserved.&lt;br/&gt;&lt;br/&gt;"</span>
+            (format-time-string <span class="org-string">"%Y"</span>)))
+
+  (<span class="org-keyword">setq</span> org-export-global-macros
+        '((<span class="org-string">"timestamp"</span> . <span class="org-string">"@@html:&lt;span class=\"timestamp\"&gt;[$1]&lt;/span&gt;@@"</span>)))
+
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my-sitemap-date-entry-format</span> (entry style project)
+    <span class="org-doc">"Format ENTRY in org-publish PROJECT Sitemap format ENTRY ENTRY STYLE format that includes date."</span>
+    (<span class="org-keyword">let</span> ((filename (org-publish-find-title entry project)))
+      (<span class="org-keyword">if</span> (= (length filename) 0)
+          (format <span class="org-string">"*%s*"</span> entry)
+        (format <span class="org-string">"{{{timestamp(%s)}}} [[file:%s][%s]]"</span>
+                (format-time-string <span class="org-string">"%Y-%m-%d"</span>
+                                    (org-publish-find-date entry project))
+                entry
+                filename))))
+  (<span class="org-keyword">require</span> '<span class="org-constant">ox-publish</span>)
+  (<span class="org-keyword">require</span> '<span class="org-constant">ox-md</span> nil t) <span class="org-comment-delimiter">;; </span><span class="org-comment">for markdown export</span>
+  (<span class="org-keyword">setq</span> org-html-divs '((preamble <span class="org-string">"header"</span> <span class="org-string">"top"</span>)
+                        (content <span class="org-string">"main"</span> <span class="org-string">"content"</span>)
+                        (postamble <span class="org-string">"footer"</span> <span class="org-string">"postamble"</span>))
+        org-html-container-element <span class="org-string">"section"</span>
+        org-html-metadata-timestamp-format <span class="org-string">"%b %d, %Y"</span>
+        org-html-checkbox-type 'html
+        org-html-html5-fancy t
+        org-html-validation-link t
+        org-html-doctype <span class="org-string">"html5"</span>
+        org-html-htmlize-output-type 'css
+        org-html-mathjax-options
+        '((path <span class="org-string">"/js/mathjax/tex-chtml.js?config=TeX-MML-AM_CHTML"</span>)
+          (align <span class="org-string">"center"</span>)
+          (indent <span class="org-string">"2em"</span>)
+          (mathml nil))
+
+        org-export-with-toc 3
+        org-export-headline-levels 3
+        org-export-with-section-numbers t
+        org-export-with-smart-quotes t
+        org-export-with-sub-superscripts '{}
+        org-export-allow-bind-keywords t <span class="org-comment-delimiter">;; </span><span class="org-comment">it's dangerous to enable this, anyway.</span>
+        )
+
+  (<span class="org-keyword">setq</span> org-publish-project-alist
+        `(
+          (<span class="org-string">"notes"</span>
+           <span class="org-builtin">:base-directory</span> ,org-directory
+           <span class="org-builtin">:base-extension</span> <span class="org-string">"org"</span>
+           <span class="org-builtin">:publishing-directory</span> ,org-directory-publish
+           <span class="org-builtin">:recursive</span> t
+           <span class="org-builtin">:publishing-function</span> org-html-publish-to-html
+           <span class="org-builtin">:auto-sitemap</span> t
+           <span class="org-builtin">:sitemap-title</span> <span class="org-string">"All Posts"</span>
+           <span class="org-builtin">:sitemap-filename</span> <span class="org-string">"posts.org"</span>
+           <span class="org-builtin">:sitemap-style</span> list
+           <span class="org-builtin">:sitemap-sort-files</span> anti-chronologically <span class="org-comment-delimiter">;; </span><span class="org-comment">newer files first</span>
+           <span class="org-builtin">:sitemap-format-entry</span> my-sitemap-date-entry-format
+           <span class="org-builtin">:author</span> ,user-full-name
+           <span class="org-builtin">:email</span> ,user-mail-address
+           <span class="org-builtin">:with-creator</span> t
+           <span class="org-builtin">:exclude</span> ,(regexp-opt '(<span class="org-string">"archive"</span> <span class="org-string">"diary"</span> <span class="org-string">"dotfiles"</span> <span class="org-string">"css"</span> <span class="org-string">"js"</span> <span class="org-string">"images"</span>))
+           <span class="org-builtin">:exclude-tags</span> (<span class="org-string">"noexport"</span> <span class="org-string">"todo"</span>)
+           <span class="org-builtin">:html-preamble</span> ,my-publish-html-preamble
+           <span class="org-builtin">:html-postamble</span> ,my-publish-html-postamble
+           <span class="org-builtin">:html-head</span> ,my-publish-html-head
+           <span class="org-builtin">:html-doctype</span> <span class="org-string">"html5"</span>
+           <span class="org-builtin">:html-html5-fancy</span> t
+           <span class="org-builtin">:html-head-include-scripts</span> nil
+           <span class="org-builtin">:html-head-include-default-style</span> nil
+           )
+          (<span class="org-string">"notes-static"</span>
+           <span class="org-builtin">:base-directory</span> ,org-directory
+           <span class="org-builtin">:base-extension</span> <span class="org-string">"css</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">js</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">svg</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">png</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">jpg</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">gif</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">ico</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">pdf</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">mp3</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">ogg</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">swf"</span>
+           <span class="org-builtin">:publishing-directory</span> ,org-directory-publish
+           <span class="org-builtin">:recursive</span> t
+           <span class="org-builtin">:publishing-function</span> org-publish-attachment
+           <span class="org-builtin">:exclude</span> ,(regexp-opt '(<span class="org-string">"archive"</span> <span class="org-string">"draft"</span> <span class="org-string">"diary"</span> <span class="org-string">"resume"</span> <span class="org-string">"snippets"</span>))
+           )
+          (<span class="org-string">"worklog"</span>
+           <span class="org-builtin">:base-directory</span> ,my-work-notes-directory
+           <span class="org-builtin">:base-extension</span> <span class="org-string">"org"</span>
+           <span class="org-builtin">:publishing-directory</span> ,my-work-notes-publish-directory
+           <span class="org-builtin">:recursive</span> t
+           <span class="org-builtin">:with-drawers</span> t
+           <span class="org-builtin">:publishing-function</span> org-html-publish-to-html
+           <span class="org-builtin">:auto-sitemap</span> t
+           <span class="org-builtin">:sitemap-title</span> <span class="org-string">"Work Logs"</span>
+           <span class="org-builtin">:sitemap-filename</span> <span class="org-string">"index.org"</span>
+           <span class="org-builtin">:sitemap-style</span> list
+           <span class="org-builtin">:author</span> ,user-full-name
+           <span class="org-builtin">:email</span> ,user-mail-address
+           <span class="org-builtin">:with-creator</span> t
+           )
+          (<span class="org-string">"worklog-static"</span>
+           <span class="org-builtin">:base-directory</span> ,my-work-notes-directory
+           <span class="org-builtin">:base-extension</span> <span class="org-string">"css</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">js</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">svg</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">png</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">jpg</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">gif</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">pdf</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">mp3</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">ogg</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">swf"</span>
+           <span class="org-builtin">:publishing-directory</span> ,my-work-notes-publish-directory
+           <span class="org-builtin">:recursive</span> t
+           <span class="org-builtin">:publishing-function</span> org-publish-attachment
+           )
+          (<span class="org-string">"gtd"</span> <span class="org-builtin">:components</span> (<span class="org-string">"notes"</span> <span class="org-string">"notes-static"</span>))
+          (<span class="org-string">"work"</span> <span class="org-builtin">:components</span> (<span class="org-string">"worklog"</span> <span class="org-string">"worklog-static"</span>))
+          ))
+  )
+</pre>
+</div>
+
+<p>
+我不太喜欢这种方式，因为文件必须在特定目录下，或者新添加 project。我喜欢用 hook 保存时自动 export（就是下面的配置）。两种方式各有利弊。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">org</span>
+  <span class="org-builtin">:config</span>
+
+  (<span class="org-keyword">setq</span> org-html-preamble t)
+  (<span class="org-keyword">setq</span> org-html-postamble t)
+  (<span class="org-keyword">setq</span> org-html-preamble-format '((<span class="org-string">"en"</span> <span class="org-string">"&lt;nav&gt;&lt;a href=\"#\"&gt;&lt;div id=\"arrow-up\"&gt;&lt;/div&gt;&lt;/a&gt;&lt;br&gt;</span>
+<span class="org-string">     &lt;a href=\"/index.html\"&gt;&lt;div id=\"home\"&gt;&lt;/div&gt;&lt;/a&gt;&lt;br&gt;</span>
+<span class="org-string">     &lt;a href=\"/about.html\"&gt;&lt;div id=\"link\"&gt;&lt;/div&gt;&lt;/a&gt;&lt;/nav&gt;"</span>)))
+  (<span class="org-keyword">setq</span> org-html-postamble-format `((<span class="org-string">"en"</span>
+                                     ,(format <span class="org-string">"&lt;br/&gt;&lt;hr/&gt;&amp;copy; 2012-%s All Rights Reserved.&lt;br/&gt;&lt;br/&gt;"</span>
+                                              (format-time-string <span class="org-string">"%Y"</span>))
+                                     )))
+  (<span class="org-keyword">setq</span> org-html-head
+        <span class="org-string">"&lt;link rel='</span><span class="org-string"><span class="org-constant">icon</span></span><span class="org-string">' type='</span><span class="org-string"><span class="org-constant">image/x-icon</span></span><span class="org-string">' href='</span><span class="org-string"><span class="org-constant">/images/favicon.ico</span></span><span class="org-string">'/&gt;</span>
+<span class="org-string">&lt;meta name='</span><span class="org-string"><span class="org-constant">viewport</span></span><span class="org-string">' content='width=device-width, initial-scale=1'&gt;</span>
+<span class="org-string">&lt;link rel='</span><span class="org-string"><span class="org-constant">stylesheet</span></span><span class="org-string">' href='</span><span class="org-string"><span class="org-constant">/css/style.css</span></span><span class="org-string">' type='</span><span class="org-string"><span class="org-constant">text/css</span></span><span class="org-string">'/&gt;</span>
+<span class="org-string">&lt;link rel='</span><span class="org-string"><span class="org-constant">stylesheet</span></span><span class="org-string">' href='</span><span class="org-string"><span class="org-constant">/css/syntax-coloring.css</span></span><span class="org-string">' type='</span><span class="org-string"><span class="org-constant">text/css</span></span><span class="org-string">'/&gt;"</span>)
+
+  (<span class="org-keyword">setq</span> org-export-global-macros
+        '((<span class="org-string">"timestamp"</span> . <span class="org-string">"@@html:&lt;span class=\"timestamp\"&gt;[$1]&lt;/span&gt;@@"</span>)))
+
+  (<span class="org-keyword">require</span> '<span class="org-constant">ox-publish</span>)
+  (<span class="org-keyword">require</span> '<span class="org-constant">ox-md</span> nil t) <span class="org-comment-delimiter">;; </span><span class="org-comment">for markdown export</span>
+  (<span class="org-keyword">setq</span> org-html-divs '((preamble <span class="org-string">"header"</span> <span class="org-string">"top"</span>)
+                        (content <span class="org-string">"main"</span> <span class="org-string">"content"</span>)
+                        (postamble <span class="org-string">"footer"</span> <span class="org-string">"postamble"</span>))
+        org-html-container-element <span class="org-string">"section"</span>
+        org-html-metadata-timestamp-format <span class="org-string">"%b %d, %Y"</span>
+        org-html-checkbox-type 'html
+        org-html-html5-fancy t
+        org-html-validation-link t
+        org-html-doctype <span class="org-string">"html5"</span>
+        org-html-htmlize-output-type 'css
+        org-html-mathjax-options
+        '((path <span class="org-string">"/js/mathjax/tex-chtml.js?config=TeX-MML-AM_CHTML"</span>)
+          (align <span class="org-string">"center"</span>)
+          (indent <span class="org-string">"2em"</span>)
+          (mathml nil))
+
+        org-export-with-toc 3
+        org-export-headline-levels 3
+        org-export-with-section-numbers t
+        org-export-with-smart-quotes t
+        org-export-with-sub-superscripts '{}
+        org-export-allow-bind-keywords t <span class="org-comment-delimiter">;; </span><span class="org-comment">it's dangerous to enable this, anyway.</span>
+        )
+
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my-org-save-hook</span> ()
+    (<span class="org-keyword">when</span> (eq major-mode 'org-mode)
+      (org-html-export-to-html)))
+  <span class="org-builtin">:hook</span>
+  (after-save . my-org-save-hook)
+  )
+</pre>
+</div>
+
+<p>
+用 org mode 写网页 Presentation：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">ox-reveal</span>
+  <span class="org-builtin">:commands</span> (org-export-dispatch)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> org-reveal-root <span class="org-string">"https://cdn.jsdelivr.net/npm/reveal.js"</span>)
+  (<span class="org-keyword">setq</span> org-reveal-mathjax t))
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org599d851" class="outline-3">
+<h3 id="org599d851">Getting Things Done</h3>
+<div class="outline-text-3" id="text-org599d851">
+<p>
+这个是一个 org-capture-templates 的例子，可以研究一下：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> org-capture-templates
+    '((<span class="org-string">"t"</span> <span class="org-string">"Tasks / Projects"</span>)
+      (<span class="org-string">"tt"</span> <span class="org-string">"Task"</span> entry (file+olp <span class="org-string">"~/org/demo/Tasks.org"</span> <span class="org-string">"Inbox"</span>)
+           <span class="org-string">"* TODO %?\n  %U\n  %a\n  %i"</span> <span class="org-builtin">:empty-lines</span> 1)
+
+      (<span class="org-string">"j"</span> <span class="org-string">"Journal Entries"</span>)
+      (<span class="org-string">"jj"</span> <span class="org-string">"Journal"</span> entry
+           (file+olp+datetree <span class="org-string">"~/org/demo/Journal.org"</span>)
+           <span class="org-string">"\n* %&lt;%I:%M %p&gt; - Journal :journal:\n\n%?\n\n"</span>
+           <span class="org-comment-delimiter">;; </span><span class="org-comment">,(dw/read-file-as-string "~/Notes/Templates/Daily.org")</span>
+           <span class="org-builtin">:clock-in</span> <span class="org-builtin">:clock-resume</span>
+           <span class="org-builtin">:empty-lines</span> 1)
+      (<span class="org-string">"jm"</span> <span class="org-string">"Meeting"</span> entry
+           (file+olp+datetree <span class="org-string">"~/org/demo/Journal.org"</span>)
+           <span class="org-string">"* %&lt;%I:%M %p&gt; - %a :meetings:\n\n%?\n\n"</span>
+           <span class="org-builtin">:clock-in</span> <span class="org-builtin">:clock-resume</span>
+           <span class="org-builtin">:empty-lines</span> 1)
+
+      (<span class="org-string">"jd"</span> <span class="org-string">"Daily Journal"</span> entry
+           (file+olp+datetree <span class="org-string">"~/org/demo/Journal.org"</span>)
+           <span class="org-string">"* %&lt;%I:%M %p&gt; - %a :diary:\nTell me your name?\n\n%^{name}\nHow old are you?\n\n%^{age}\nwhat about your moode?\n\n%^{mood}\n\n"</span>
+           <span class="org-builtin">:clock-in</span> <span class="org-builtin">:clock-resume</span>
+           <span class="org-builtin">:empty-lines</span> 1)
+
+      (<span class="org-string">"w"</span> <span class="org-string">"Workflows"</span>)
+      (<span class="org-string">"we"</span> <span class="org-string">"Checking Email"</span> entry (file+olp+datetree <span class="org-string">"~/org/demo/Journal.org"</span>)
+           <span class="org-string">"* Checking Email :email:\n\n%?"</span> <span class="org-builtin">:clock-in</span> <span class="org-builtin">:clock-resume</span> <span class="org-builtin">:empty-lines</span> 1)
+
+      (<span class="org-string">"m"</span> <span class="org-string">"Metrics Capture"</span>)
+      (<span class="org-string">"mw"</span> <span class="org-string">"Weight"</span> table-line (file+headline <span class="org-string">"~/org/demo/Metrics.org"</span> <span class="org-string">"Weight"</span>)
+       <span class="org-string">"| %U | %^{Weight} | %^{Notes} |"</span> <span class="org-builtin">:kill-buffer</span> t)))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">org</span>
+  <span class="org-builtin">:config</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">my personal file, for study notes and diary</span>
+  (<span class="org-keyword">setq</span> org-default-notes-file (concat org-directory <span class="org-string">"/gtd.org"</span>))
+  (<span class="org-keyword">setq</span> my-diary-file (concat org-directory <span class="org-string">"/journals/journals.org"</span>))
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">my work related file</span>
+  (<span class="org-keyword">setq</span> my-work-task-file (concat my-work-notes-directory <span class="org-string">"/work.org"</span>))
+
+  (<span class="org-keyword">setq</span> org-agenda-files (mapcar 'file-truename (list
+                                                 org-default-notes-file
+                                                 my-work-task-file
+                                                 )))
+
+  (<span class="org-keyword">setq</span> org-refile-targets '((org-default-notes-file <span class="org-builtin">:level</span> . 1)
+                             (my-work-task-file <span class="org-builtin">:level</span> . 1)))
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">configure org-capture templates</span>
+  (<span class="org-keyword">setq</span> org-capture-templates
+        '((<span class="org-string">"j"</span> <span class="org-string">"Journal"</span> entry (file+datetree my-diary-file) <span class="org-string">"* %&lt;%H:%M&gt;\n%?\n"</span> <span class="org-builtin">:empty-lines</span> 1 <span class="org-builtin">:kill-buffer</span> t)
+          (<span class="org-string">"i"</span> <span class="org-string">"Inbox"</span> entry (file+headline org-default-notes-file <span class="org-string">"Inbox"</span>) <span class="org-string">"* %?\n"</span> <span class="org-builtin">:empty-lines</span> 1)
+          (<span class="org-string">"t"</span> <span class="org-string">"Tasks"</span> entry (file+headline my-work-task-file <span class="org-string">"Tasks"</span>) <span class="org-string">"* TODO %&lt;%Y-%m-%d %H:%M&gt; %?\n"</span> <span class="org-builtin">:empty-lines</span> 1)))
+  (<span class="org-keyword">setq</span> org-reverse-note-order t)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(setq org-todo-keywords</span>
+  <span class="org-comment-delimiter">;;       </span><span class="org-comment">'((sequence "TODO(t!)" "ON GOING(g!)" "DONE(d@/!)")))</span>
+
+  (<span class="org-keyword">setq</span> org-todo-keywords
+        '((sequence <span class="org-string">"TODO(t!)"</span> <span class="org-string">"ON GOING(g!)"</span> <span class="org-string">"DONE(d!)"</span>)))
+
+  (<span class="org-keyword">setq</span> org-todo-keyword-faces
+        '((<span class="org-string">"TODO"</span> . <span class="org-string">"red"</span>)
+          (<span class="org-string">"ON GOING"</span> . (<span class="org-builtin">:foreground</span> <span class="org-string">"purple"</span> <span class="org-builtin">:weight</span> bold))
+          (<span class="org-string">"DONE"</span> . <span class="org-string">"green"</span>)))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(setq org-tag-alist '(("work" . ?w) ("study" . ?s) ("coding" . ?c)))</span>
+  (<span class="org-keyword">setq</span> org-link-frame-setup '((vm . vm-visit-folder-other-frame)
+                               (vm-imap . vm-visit-imap-folder-other-frame)
+                               (gnus . org-gnus-no-new-news)
+                               (file . find-file)
+                               (wl . wl-other-frame)))
+  <span class="org-builtin">:bind</span>
+  ((<span class="org-string">"C-c d"</span> . org-cycle-agenda-files) <span class="org-comment-delimiter">;; </span><span class="org-comment">make it global</span>
+   (<span class="org-string">"C-c c"</span> . org-capture)
+   <span class="org-builtin">:map</span> org-mode-map
+   (<span class="org-string">"C-c a"</span> . org-agenda)
+   (<span class="org-string">"C-,"</span> . nil)
+   (<span class="org-string">"C-'"</span> . nil)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">gtd-save-org-buffers</span> ()
+  <span class="org-doc">"Save `</span><span class="org-doc"><span class="org-constant">org-agenda-files</span></span><span class="org-doc">' buffers without user confirmation. See also `</span><span class="org-doc"><span class="org-constant">org-save-all-org-buffers</span></span><span class="org-doc">'"</span>
+  (<span class="org-keyword">interactive</span>)
+  (message <span class="org-string">"Saving org-agenda-files buffers..."</span>)
+  (save-some-buffers t (<span class="org-keyword">lambda</span> ()
+                         (<span class="org-keyword">when</span> (member (buffer-file-name) org-agenda-files)
+                           t)))
+  (message <span class="org-string">"Saving org-agenda-files buffers... done"</span>))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">save change after refile</span>
+(advice-add 'org-refile <span class="org-builtin">:after</span>
+            (<span class="org-keyword">lambda</span> (<span class="org-type">&amp;rest</span> _)
+              (gtd-save-org-buffers)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(defun my-org-clock-in-resume ()</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">"Clock in to the last interrupted task, if any."</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(interactive)</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(when (marker-buffer org-clock-interrupted-task)</span>
+<span class="org-comment-delimiter">;;     </span><span class="org-comment">(org-with-point-at org-clock-interrupted-task</span>
+<span class="org-comment-delimiter">;;       </span><span class="org-comment">(org-clock-in))))</span>
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(defun my-org-clock-out-and-resume-previous ()</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">"Clock out of the current task, then resume the interrupted task (if any)"</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(interactive)</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(org-clock-out)</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(my-org-clock-in-resume))</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(define-key org-mode-map (kbd "C-c C-x C-o") 'my-org-clock-out-and-resume-previous)</span>
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">org</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> org-agenda-start-on-weekday nil
+        org-agenda-include-diary t
+        org-agenda-inhibit-startup t <span class="org-comment-delimiter">;; </span><span class="org-comment">~50x speedup</span>
+        org-agenda-use-tag-inheritance nil <span class="org-comment-delimiter">;; </span><span class="org-comment">3-4x speedup</span>
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Change task state to STARTED when clocking in</span>
+        org-clock-in-switch-to-state <span class="org-string">"ON GOING"</span>
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Save clock data and notes in the LOGBOOK drawer</span>
+        org-clock-into-drawer t
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Removes clocked tasks with 0:00 duration</span>
+        org-clock-out-remove-zero-time-clocks t)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Show the clocked-in task - if any - in the header line</span>
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my-show-org-clock-in-header-line</span> ()
+    (<span class="org-keyword">setq-default</span> header-line-format '((<span class="org-string">" "</span> org-mode-line-string <span class="org-string">" "</span>))))
+
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my-hide-org-clock-from-header-line</span> ()
+    (<span class="org-keyword">setq-default</span> header-line-format nil))
+
+  <span class="org-builtin">:hook</span>
+  (org-clock-in-hook . my-show-org-clock-in-header-line)
+  (org-clock-out-hook . my-hide-org-clock-from-header-line)
+  (org-clock-cancel-hook . my-hide-org-clock-from-header-line)
+  )
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">org-pomodoro</span>
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> org-pomodoro-format <span class="org-string">"&#128170;%s"</span>)
+  (<span class="org-keyword">setq</span> org-pomodoro-short-break-format <span class="org-string">"&#128083;%s"</span>)
+  (<span class="org-keyword">setq</span> org-pomodoro-long-break-format <span class="org-string">"&#128167;%s"</span>)
+  (<span class="org-keyword">setq</span> org-pomodoro-play-sounds nil)
+  (<span class="org-keyword">setq</span> org-pomodoro-manual-break t)
+  (<span class="org-keyword">setq</span> org-pomodoro-keep-killed-pomodoro-time t)
+  (<span class="org-keyword">setq</span> org-pomodoro-length 50)
+  (<span class="org-keyword">setq</span> org-pomodoro-short-break-length 10)
+  (<span class="org-keyword">setq</span> org-pomodoro-long-break-length 10)
+  (<span class="org-keyword">setq</span> org-pomodoro-long-break-frequency 1)
+  <span class="org-builtin">:bind</span> (<span class="org-string">"C-c p"</span> . org-pomodoro)
+
+  <span class="org-builtin">:config</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">TODO make a platform independent notification</span>
+  (<span class="org-keyword">defun</span> <span class="org-function-name">notify-osx</span> (title message)
+    (call-process <span class="org-string">"terminal-notifier"</span>
+                  nil 0 nil
+                  <span class="org-string">"-group"</span> <span class="org-string">"Emacs"</span>
+                  <span class="org-string">"-title"</span> title
+                  <span class="org-string">"-sound"</span> <span class="org-string">"default"</span>
+                  <span class="org-string">"-message"</span> message
+                  <span class="org-string">"-activate"</span> <span class="org-string">"org.gnu.Emacs"</span>))
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">as it is stopped manually, hook for '</span><span class="org-comment"><span class="org-constant">org-pomodoro-finished-hook</span></span><span class="org-comment">' is useless.</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">just send a notification for another pomodoro after the break.</span>
+  (add-hook 'org-pomodoro-finished-hook
+            (<span class="org-keyword">lambda</span> ()
+              (notify-osx <span class="org-string">"Pomodoro Finished"</span> <span class="org-string">"Take a rest"</span>)))
+  (add-hook 'org-pomodoro-break-finished-hook
+            (<span class="org-keyword">lambda</span> ()
+              (notify-osx <span class="org-string">"Pomodoro Break Finished"</span> <span class="org-string">"Ready for Another?"</span>)))
+  )
+
+(advice-add 'org-pomodoro <span class="org-builtin">:after</span>
+            (<span class="org-keyword">lambda</span> (<span class="org-type">&amp;rest</span> _)
+              (gtd-save-org-buffers)))
+</pre>
+</div>
+</div>
+</div>
+</section>
+
+
+<section id="outline-container-org7c04d58" class="outline-2">
+<h2 id="org7c04d58">一些有用的工具</h2>
+<div class="outline-text-2" id="text-org7c04d58">
+<p>
+Reading in Emacs:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">pdf-tools</span>
+  <span class="org-builtin">:if</span> (display-graphic-p)
+  <span class="org-builtin">:init</span>
+  (pdf-loader-install)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq-default</span> pdf-view-display-size 'fit-width)
+  (add-hook 'pdf-view-mode-hook (<span class="org-keyword">lambda</span> () (display-line-numbers-mode -1)))
+  <span class="org-builtin">:custom</span>
+  (pdf-annot-activate-created-annotations t <span class="org-string">"automatically annotate highlights"</span>)
+  )
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">pdf-view-restore</span>
+  <span class="org-builtin">:if</span> (display-graphic-p)
+  <span class="org-builtin">:after</span> pdf-tools
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> pdf-view-restore-filename <span class="org-string">"~/.emacs.d/.pdf-view-restore"</span>)
+  (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">emacs</span>
+  <span class="org-builtin">:hook</span>
+  (after-init . pixel-scroll-precision-mode))
+</pre>
+</div>
+
+<p>
+Or use <code>good-scroll</code> if emacs version is lower than 29:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">good-scroll</span>
+  <span class="org-builtin">:ensure</span> t
+  <span class="org-builtin">:if</span> window-system
+  <span class="org-builtin">:init</span> (good-scroll-mode))
+</pre>
+</div>
+</div>
+</section>
+
+<section id="outline-container-orgff1b342" class="outline-2">
+<h2 id="orgff1b342">ERC and Gnus</h2>
+<div class="outline-text-2" id="text-orgff1b342">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">erc</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> erc-nick <span class="org-string">"hexingb"</span> erc-user-full-name user-full-name)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(erc-autojoin-mode 1)</span>
+  (<span class="org-keyword">setq</span> erc-try-new-nick-p nil)
+  (<span class="org-keyword">setq</span> erc-autojoin-channels-alist '((<span class="org-string">"irc.libera.chat"</span> <span class="org-string">"##programming"</span>)))
+  (<span class="org-keyword">setq</span> erc-ignore-list nil)
+  (<span class="org-keyword">setq</span> erc-hide-list '(<span class="org-string">"JOIN"</span> <span class="org-string">"PART"</span> <span class="org-string">"QUIT"</span> <span class="org-string">"MODE"</span>))
+  (<span class="org-keyword">setq</span> erc-server-reconnect-attempts 50
+        erc-server-reconnect-timeout 3
+        erc-fill-static-center 22
+        erc-join-buffer 'bury
+        erc-kill-buffer-on-part t)
+  (<span class="org-keyword">require</span> '<span class="org-constant">erc-log</span>)
+  (erc-log-mode 1)
+  (<span class="org-keyword">setq</span> erc-default-coding-system '(utf-8 . utf-8))
+  (<span class="org-keyword">setq</span> erc-log-channels-directory <span class="org-string">"~/.erc/logs/"</span>
+        erc-save-buffer-on-part t
+        erc-log-file-coding-system 'utf-8
+        erc-log-write-after-send t
+        erc-log-write-after-insert t)
+  (<span class="org-keyword">unless</span> (file-exists-p erc-log-channels-directory)
+    (mkdir erc-log-channels-directory t))
+  (<span class="org-keyword">defadvice</span> <span class="org-function-name">save-buffers-kill-emacs</span> (before save-logs (arg) activate)
+    (save-some-buffers t (<span class="org-keyword">lambda</span> ()
+                           (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> (eq major-mode 'erc-mode)
+                                      (not (null buffer-file-name)))))))
+  )
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> gnus-select-method '(nntp <span class="org-string">"news.eternal-september.org"</span>))
+</pre>
+</div>
+
+<p>
+for authentication, create file ~/.authinfo and add following content:
+</p>
+
+<blockquote>
+<p>
+machine news.eternal-september.org login your_account_name force yes password your_account_password
+</p>
+</blockquote>
+
+<p>
+这里，需要在加载完所有 package 之后再读取以前保存的文件，防止如 elpy 之类出错。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">emacs</span>
+  <span class="org-builtin">:config</span>
+  (desktop-read)
+  (load-theme 'dichromacy))
+
+(<span class="org-keyword">use-package</span> <span class="org-constant">spacious-padding</span>
+  <span class="org-builtin">:custom</span>
+  (spacious-padding-widths
+   '(
+     <span class="org-builtin">:internal-border-width</span> 15
+     <span class="org-builtin">:header-line-width</span> 4
+     <span class="org-builtin">:mode-line-width</span> 3
+     <span class="org-builtin">:tab-width</span> 4
+     <span class="org-builtin">:right-divider-width</span> 30
+     <span class="org-builtin">:scroll-bar-width</span> 8
+     <span class="org-builtin">:fringe-width</span> 8))
+  <span class="org-builtin">:hook</span>
+  (after-init . spacious-padding-mode))
+</pre>
+</div>
+</div>
+</section>
+
+
+<section id="outline-container-org4b6b023" class="outline-2">
+<h2 id="org4b6b023">其他有用的包</h2>
+<div class="outline-text-2" id="text-org4b6b023">
+<ol class="org-ol">
+<li>keycast for key casting</li>
+<li>org-download for image capturing into org documents</li>
+<li>beacon, highlight cursor when jump window/buffer</li>
+<li>rainbow-delimiters and rainbow-identifiers</li>
+<li>call-graph for function calling stack graph</li>
+<li>highlight-indent-guides, Highlight indent guides for programming</li>
+<li>hydra</li>
+</ol>
+</div>
+</section>
+
+
+<section id="outline-container-org3b1f8ea" class="outline-2">
+<h2 id="org3b1f8ea"><span class="todo TODO">TODO</span> 添加更多配置</h2>
+<div class="outline-text-2" id="text-org3b1f8ea">
+<ol class="org-ol">
+<li>flymake</li>
+<li>gpg 配置后，打开 gpg.org 文件总提示编码问题</li>
+<li>irc</li>
+<li>gnus</li>
+<li>想把 org pomodoro 的 notifier 换成多平台支持的工具 (我觉得 Emacs 的 butterfly 不错)</li>
+<li>添加更多编程语言支持</li>
+</ol>
+</div>
+</section>
+
+
+<section id="outline-container-orged54e3d" class="outline-2">
+<h2 id="orged54e3d">遇到的问题</h2>
+<div class="outline-text-2" id="text-orged54e3d">
+</div>
+<div id="outline-container-org98f98d7" class="outline-3">
+<h3 id="org98f98d7">org 文件导出的时候，无法将生成的 html 文件，转移到一个指定的目录去</h3>
+<div class="outline-text-3" id="text-org98f98d7">
+<p>
+目前没有解决方案。如上配置，当保存 org 文件时，自动执行 export。我在自己的笔记项目目录下写了一个 Makefile 来拷贝文件。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgab6c024" class="outline-3">
+<h3 id="orgab6c024">org 文件导出为 markdown 的时候，会生成一些奇奇怪怪的 id，如何去掉这些 id ?</h3>
+<div class="outline-text-3" id="text-orgab6c024">
+<p>
+算了，markdown 文件只为协同沟通，还是直接写吧。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf6caa08" class="outline-3">
+<h3 id="orgf6caa08">org 文件导出为 markdown 的时候，a.md 文件里链接了 b.md， export a.md 的时候，生成的 a.html 里的链接仍是 b.md 而不是 b.html</h3>
+<div class="outline-text-3" id="text-orgf6caa08">
+<p>
+我估计这个要看 pandoc 的支持，目前没有找到解决方案。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb7acf8f" class="outline-3">
+<h3 id="orgb7acf8f">重新配置 emacs 下载了最新版本的 magit-20231014.1408，结果和 emacs 28.2 不适配，导致 magit 切换分支不成功，查看 log 有乱码</h3>
+<div class="outline-text-3" id="text-orgb7acf8f">
+<p>
+回退到 magit-20230723.1601 恢复正常。<a href="https://emacs.stackexchange.com/questions/78977/seq-keep-is-void-when-installing-magit-through-use-package">这里</a>有说明。
+</p>
+</div>
+</div>
+</section>
+
+<section id="outline-container-org72e1b41" class="outline-2">
+<h2 id="org72e1b41">References</h2>
+<div class="outline-text-2" id="text-org72e1b41">
+<p>
+我参考了太多了的网络文章，这里就只感谢，不列举了。你喜欢什么，你就能得到什么。
+</p>
+</div>
+</section>
+</main>
+<footer id="postamble" class="status">
+<br/><hr/>&copy; 2012-2024 All Rights Reserved.<br/><br/>
+</footer>
+</body>
+</html>
