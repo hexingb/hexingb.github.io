@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <!-- Jul 11, 2024 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>学习笔记</title>
+<title>闲聊软件开发中的一些问题</title>
 <meta name="author" content="Bao Hexing" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -204,12 +204,67 @@
 </header>
 <main id="content" class="content">
 <header>
-<h1 class="title">学习笔记</h1>
-</header><ul class="org-ul">
-<li>2024-07-11 <a href="small-talk-software-dev-00.html">闲聊软件开发中的一些问题</a></li>
-<li>2024-06-24 <a href="emacs-config.html">Emacs: configuration</a></li>
-<li>2024-06-23 <a href="gperftools-profiling.html">Cheat Sheet: gperftools usage</a></li>
+<h1 class="title">闲聊软件开发中的一些问题</h1>
+</header><nav id="table-of-contents" role="doc-toc">
+<h2>&#30446;&#24405;</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org417d6cd">两种软件开发理念</a></li>
+<li><a href="#org6904d1e">关于软件的复杂性</a></li>
+<li><a href="#org99ff835">关于职业规划和当前的就业环境</a></li>
 </ul>
+</div>
+</nav>
+<p>
+最近因为工作，整理一下自己其实很多年前就有的一些关于软件开发的想法。
+</p>
+
+<section id="outline-container-org417d6cd" class="outline-2">
+<h2 id="org417d6cd">两种软件开发理念</h2>
+<div class="outline-text-2" id="text-org417d6cd">
+<p>
+隐约记得大概是在一篇说 FreeBSD 的代码质量的文章上，提到了两种开发理念。一种是，代码正常工作，因此它是对的；另一种是，这么写代码是对的，因此它会正常工作。我觉得另外两个表达传递了类似的意思。一个是“如果代码能工作，就不要改它”的说法。另一个是一个漫画，内容大概是：我的代码不能工作，我不知道为什么；我的代码能工作了，我也不知道为什么。可惜我找不到原版的这个漫画了，但是我相信做开发的人应该看到过它。
+</p>
+
+<p>
+我是一直坚持认为把代码写对它就能工作的。我想象不到，如果不懂自己的代码为什么能工作，那代码是不是就真的能正常工作了。有些时候，我只是浏览一些代码就可以发现里面的问题，根本不需要编译、运行和调试。我比较享受这个过程。但是这种情况，基本是针对简单的，或者设计良好的代码。如果代码很复杂，没有一个清晰的设计，我的大脑很快就溢出了。不过反过来看，一个设计不清晰，写得很混乱很复杂的代码，大概率或者大部分，是有人在用想象中的神力或者魔法在编程。他们显然是“代码能工作就是对的”这种理念的持有者。
+</p>
+</div>
+</section>
+
+<section id="outline-container-org6904d1e" class="outline-2">
+<h2 id="org6904d1e">关于软件的复杂性</h2>
+<div class="outline-text-2" id="text-org6904d1e">
+<p>
+似乎软件开发必然和复杂联系起来。类似 software development is hard 这类表达也很常见。谈这个，是因为我现在的领导总是说我们的实现是多么的复杂，多么的有挑战。我觉得这种事情，其实并不是什么值得夸耀的。相反，如果软件开发中不能控制复杂性，代码是很容易失控和加速腐化的。越是复杂的产品和代码，越是需要良好的设计。如果没控制住复杂性，那说明设计没做好。
+</p>
+
+<p>
+软件开发的复杂性，一部分来源于其看得见摸不着的特性。但是我觉得另一种导致软件复杂性的方面经常被忽略，就是软件开发中的管理工作，那些更是看不见摸不着的东西！很多人在用传统的工业流水线的管理方式在管理软件开发工作，那结果不复杂才怪。
+</p>
+
+<p>
+我看到过十倍效率程序员的提法。其他行业我没见到过这种效率差异这么大的情况。十倍效率程序员肯定不是打字比别人快十倍吧。那差异是什么呢？在显示工作场景中，管理者眼里的程序员，恐怕效率其实都是相差不大的。这种很难证明的东西，不是厌恶风险的管理者会考虑的。而十倍效率程序员要证明自己，恐怕按照正常的流程、规范按部就班完成工作是不行的，得去做一个“离经叛道”者才行。这也是团队管理里的大忌。
+</p>
+</div>
+</section>
+
+<section id="outline-container-org99ff835" class="outline-2">
+<h2 id="org99ff835">关于职业规划和当前的就业环境</h2>
+<div class="outline-text-2" id="text-org99ff835">
+<p>
+现在的就业环境不太好啊。我也在毕业的边缘了。2022年其实已经被裁了一次了。现在其实没有多大的情绪。如果想做好事情但是却被限制不能做，那么离开其实也算解脱。
+</p>
+
+<p>
+我会教自己的闺女如何编程，但是不太会建议她把这个当成自己未来的工作。软件开发于我，不仅仅是一个糊口的职业，也是自己的兴趣所在。我希望闺女能体会到我的快乐，不过作为职业就算了。
+</p>
+
+<p>
+整体环境如此，我们能怎么做呢？我觉得还是潜心钻研技术吧。人生总要度过不同的阶段。每个阶段要做每个阶段的事情。能找到一个贯穿始终，无论什么阶段都让自己开心和专注的事情，是人生的意义所在。
+</p>
+</div>
+</section>
 </main>
 <footer id="postamble" class="status">
 <br/><hr/>&copy; 2012-2024 All Rights Reserved.<br/><br/>
