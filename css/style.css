@@ -31,8 +31,8 @@
         --color-text: #ffffff;
         --color-secondary: #eee;
         --color-shadow: #333;
-        --color-link: #00bcff;
-        --color-link-active: #79a8ff;
+        --color-link: #0000bb;
+        --color-link-active: #223fbf;
     }
 }
 
@@ -51,7 +51,7 @@ p {
 
 code {
     font-style: italic;
-    font-family: monospace, serif;
+    font-family: "EnglishFont", monospace, serif;
 }
 
 #content {
