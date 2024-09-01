@@ -5,29 +5,13 @@
 
 @font-face {
     font-family: "EnglishFont";
-    /* noto sans mono, latin-ext */
-    src: url(https://fonts.gstatic.com/s/notosansmono/v30/BngrUXNETWXI6LwhGYvaxZikqZqK6fBq6kPvUce2oAZcdthSBUsYck4-_FNJ09PdU2YVP8c9MMEL.woff)
-        format("woff");
-    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
-        U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-@font-face {
-    font-family: "NumberFont";
-    /* latin Sofia */
-    src: url(https://fonts.gstatic.com/s/sofia/v14/8QIHdirahM3j_su5uI0Orbjl.woff2)
+    /* roboto mono, latin-ext */
+    src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_SuW4Ep0.woff2)
         format("woff2");
-    unicode-range: U+30-39;
-}
-
-:root {
-    --color-background: white;
-    --color-text: black;
-    --color-secondary: #333;
-    --color-shadow: #eee;
-    --color-link: #0000bb;
-    --color-link-active: #223fbf;
-    --border-width: 2px;
+    font-display: swap;
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
+        U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF,
+        U+30-39;
 }
 
 @media (prefers-color-scheme: light) {
@@ -53,35 +37,19 @@
 }
 
 body {
-    font-size: 110%;
+    font-size: 100%;
     margin: 0 auto;
     padding: 2em 1em;
     max-width: calc(90vw);
-    color: var(--color-text);
-    /* I got this background from https://www.digitalocean.com/community/tutorials/how-to-apply-background-styles-to-html-elements-with-css */
-    /* for animated backgrounds, see https://alvarotrigo.com/blog/animated-backgrounds-css/ */
-    background-image: linear-gradient(
-        175deg,
-        navy 0%,
-        dodgerblue 35%,
-        skyblue 50%,
-        gold 50%,
-        orange 51%,
-        saddlebrown 100%
-    );
-    background-attachment: fixed;
-    background-size: cover;
-    font-family: "NumberFont", "EnglishFont", "LXGW WenKai Mono", serif;
-    text-shadow: 1px 1px 1px #d9d9d9;
+    font-family: "EnglishFont", "LXGW WenKai Mono", serif;
     line-height: 1.8;
 }
 
 p {
-    line-height: 150%;
+    line-height: 120%;
 }
 
 code {
-    background-color: #eeeeee;
     font-style: italic;
     font-family: monospace, serif;
 }
@@ -90,7 +58,6 @@ code {
     max-width: calc(90vw);
     min-height: calc(90vh);
     padding: calc(2vh) calc(6vw);
-    background-color: #ffffff;
 }
 
 #postamble {
