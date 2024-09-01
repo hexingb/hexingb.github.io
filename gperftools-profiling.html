@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- Jun 23, 2024 -->
+<!-- Sep 01, 2024 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>C++ 程序性能评测工具 gperftools 简单使用说明</title>
+<title>gperftools 简单使用说明</title>
 <meta name="author" content="Bao Hexing" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -204,21 +204,21 @@
 </header>
 <main id="content" class="content">
 <header>
-<h1 class="title">C++ 程序性能评测工具 gperftools 简单使用说明</h1>
+<h1 class="title">gperftools 简单使用说明</h1>
 </header><nav id="table-of-contents" role="doc-toc">
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orga8c704a">简单使用说明</a></li>
-<li><a href="#org8cd8b2a">疑难问题</a></li>
-<li><a href="#orgfcd6177">References</a></li>
+<li><a href="#org9b23abe">简单使用说明</a></li>
+<li><a href="#org7c1aa8c">疑难问题</a></li>
+<li><a href="#orgf0fa034">References</a></li>
 </ul>
 </div>
 </nav>
 
-<section id="outline-container-orga8c704a" class="outline-2">
-<h2 id="orga8c704a">简单使用说明</h2>
-<div class="outline-text-2" id="text-orga8c704a">
+<section id="outline-container-org9b23abe" class="outline-2">
+<h2 id="org9b23abe">简单使用说明</h2>
+<div class="outline-text-2" id="text-org9b23abe">
 <p>
 官方文档在<a href="https://gperftools.github.io/gperftools/">这里</a>。
 </p>
@@ -301,9 +301,9 @@
 </div>
 </section>
 
-<section id="outline-container-org8cd8b2a" class="outline-2">
-<h2 id="org8cd8b2a">疑难问题</h2>
-<div class="outline-text-2" id="text-org8cd8b2a">
+<section id="outline-container-org7c1aa8c" class="outline-2">
+<h2 id="org7c1aa8c">疑难问题</h2>
+<div class="outline-text-2" id="text-org7c1aa8c">
 <p>
 如果可执行程序的代码里，不调用任何 profiler 里的函数，在 Linux 下链接时，无法将 libprofiler 链接到可执行程序里（编译、链接成功，但是 ldd 发现没有 libprofiler）; MacOS 下看起来没有问题。猜测是两个平台链接器不同（一个是 llvm ld，一个是 gnu ld）导致的，似乎是 gnu ld 做了优化，去掉了没有被使用的动态库链接。
 </p>
@@ -342,9 +342,9 @@ endif()
 </div>
 </section>
 
-<section id="outline-container-orgfcd6177" class="outline-2">
-<h2 id="orgfcd6177">References</h2>
-<div class="outline-text-2" id="text-orgfcd6177">
+<section id="outline-container-orgf0fa034" class="outline-2">
+<h2 id="orgf0fa034">References</h2>
+<div class="outline-text-2" id="text-orgf0fa034">
 <p>
 <a href="https://gperftools.github.io/gperftools/">https://gperftools.github.io/gperftools/</a>
 </p>
