@@ -14,35 +14,28 @@
         U+30-39;
 }
 
-@media (prefers-color-scheme: light) {
-    :root {
-        --color-background: #ffffff;
-        --color-text: #000000;
-        --color-secondary: #333;
-        --color-shadow: #eee;
-        --color-link: #0000bb;
-        --color-link-active: #223fbf;
-    }
+:root {
+    color-scheme: light dark;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-background: #000000;
-        --color-text: #ffffff;
-        --color-secondary: #eee;
-        --color-shadow: #333;
-        --color-link: #0000bb;
-        --color-link-active: #223fbf;
-    }
+html {
+    background-color: light-dark(#eee8d5, #073642);
+    color: light-dark(#657b83, #839496);
 }
 
 body {
     font-size: 100%;
     margin: 0 auto;
-    padding: 2em 1em;
-    max-width: calc(90vw);
     font-family: "EnglishFont", "LXGW WenKai Mono", serif;
     line-height: 1.8;
+}
+
+a {
+    color: light-dark(#b58900, #b58900);
+}
+
+a:hover {
+    color: light-dark(#cb4b16, #cb4b16);
 }
 
 p {
@@ -119,17 +112,6 @@ code {
 .title {
     font-size: 2.8em;
     max-width: 80rem;
-}
-
-a:link,
-a:visited {
-    color: var(--color-link);
-}
-
-a:hover,
-a:active {
-    color: var(--color-link-active);
-    text-decoration: none;
 }
 
 figure {
@@ -253,7 +235,7 @@ footer {
 }
 
 .task-entries {
-    max-width: calc(75vw);
+    max-width: calc(80vw);
     border: 1px solid var(--color-secondary);
     padding: 25px;
     grid-area: task;
@@ -282,7 +264,7 @@ header {
 body > header {
     position: fixed;
     top: calc(20vh);
-    right: calc(6vw); /* keep consistent with #content */
+    right: calc(3vw); /* keep consistent with #content */
 }
 
 #arrow-up {

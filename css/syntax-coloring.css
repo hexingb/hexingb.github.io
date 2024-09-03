@@ -1,12 +1,3 @@
-pre {
-    border: 1px solid #e6e6e6;
-    border-radius: 3px;
-    padding: 8pt;
-    font-family: "Noto Sans Mono", monospace;
-    overflow: auto;
-    margin: 1.2em;
-}
-
 pre.src {
     position: relative;
     overflow: auto;
@@ -21,11 +12,18 @@ pre.src:before {
     color: #9922aa;
 }
 
+pre {
+    color: light-dark(#657b83, #839496);
+    background-color: light-dark(#fdf6e3, #002b36);
+    border: 1pt solid #93a1a1;
+}
+
+pre.src:hover:before {
+    display: inline;
+    margin-top: 14px;
+}
+
 @media (prefers-color-scheme: light) {
-    .src pre {
-        color: #000000;
-        background-color: #ffffff;
-    }
     .org-builtin {
         color: #8f0075;
     }
@@ -95,11 +93,6 @@ pre.src:before {
 }
 
 @media (prefers-color-scheme: dark) {
-    .src pre {
-        color: #ffffff;
-        background-color: #000000;
-    }
-
     .org-builtin {
         color: #f78fe7;
     }
@@ -168,10 +161,6 @@ pre.src:before {
     }
 }
 
-pre.src:hover:before {
-    display: inline;
-    margin-top: 14px;
-}
 /* Languages per Org manual */
 pre.src-asymptote:before {
     content: "Asymptote";
