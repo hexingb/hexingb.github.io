@@ -237,7 +237,6 @@ footer {
 .task-entries {
     max-width: calc(80vw);
     border: 1px solid var(--color-secondary);
-    padding: 25px;
     grid-area: task;
     align-items: center;
 }
