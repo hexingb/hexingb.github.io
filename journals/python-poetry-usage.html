@@ -209,50 +209,58 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org00d6409">Poetry 简介</a></li>
-<li><a href="#org72aa2be">和其他工具的比较</a>
+<li><a href="#org4ea2c82">Poetry 简介</a></li>
+<li><a href="#orgf054269">和其他工具的比较</a>
 <ul>
-<li><a href="#org98b0914">Poetry 和 Conda</a></li>
-<li><a href="#org2d3c8e5">Poetry 和 pip</a></li>
-<li><a href="#org71c51cb">Poetry 和 venv、virtualenv</a></li>
+<li><a href="#orgb53b271">Poetry 和 Conda</a></li>
+<li><a href="#org99c71b2">Poetry 和 pip</a></li>
+<li><a href="#orga30d411">Poetry 和 venv、virtualenv</a></li>
 </ul>
 </li>
-<li><a href="#orgcbd0efc">常用的命令</a></li>
-<li><a href="#orgeb59510">总结</a></li>
-<li><a href="#org13c75e9">References</a></li>
+<li><a href="#org0d6c9f7">常用的命令</a></li>
+<li><a href="#orge81223e">总结</a></li>
+<li><a href="#org4574a2f">References</a></li>
 </ul>
 </div>
 </nav>
 
-<section id="outline-container-org00d6409" class="outline-2">
-<h2 id="org00d6409">Poetry 简介</h2>
-<div class="outline-text-2" id="text-org00d6409">
+<section id="outline-container-org4ea2c82" class="outline-2">
+<h2 id="org4ea2c82">Poetry 简介</h2>
+<div class="outline-text-2" id="text-org4ea2c82">
 <p>
 Poetry 是一个 Python 开发工具，用于管理 Python 项目的虚拟环境、包依赖和打包发布。官网是<a href="https://python-poetry.org/">这里</a>。
 </p>
 </div>
 </section>
 
-<section id="outline-container-org72aa2be" class="outline-2">
-<h2 id="org72aa2be">和其他工具的比较</h2>
-<div class="outline-text-2" id="text-org72aa2be">
+<section id="outline-container-orgf054269" class="outline-2">
+<h2 id="orgf054269">和其他工具的比较</h2>
+<div class="outline-text-2" id="text-orgf054269">
 </div>
-<div id="outline-container-org98b0914" class="outline-3">
-<h3 id="org98b0914">Poetry 和 Conda</h3>
-<div class="outline-text-3" id="text-org98b0914">
+<div id="outline-container-orgb53b271" class="outline-3">
+<h3 id="orgb53b271">Poetry 和 Conda</h3>
+<div class="outline-text-3" id="text-orgb53b271">
 <p>
 Conda 也管理 Python 虚拟环境和软件包。它其实不限于 Python 包。
 </p>
 
 <p>
-如果在 Conda 的虚拟环境下使用 Poetry，Poetry 会直接使用 Conda 的虚拟环境。<a href="https://github.com/python-poetry/poetry/issues/4055">这里</a>有这个问题的说明。我不想安装 poetry-conda，便直接使用 venv 管理虚拟环境。
+如果在 Conda 的虚拟环境下使用 Poetry，Poetry 会直接使用 Conda 的虚拟环境。<a href="https://github.com/python-poetry/poetry/issues/4055">这里</a>有这个问题的说明。我不想安装 poetry-conda，便直接使用 venv 管理虚拟环境。如果要坚持使用 Poetry 自动创建和管理虚拟环境，可以执行：
 </p>
+
+<div class="org-src-container">
+<pre class="src src-shell">pip install --user poetry-conda
+poetry config virtualenvs.create true
+poetry config virtualenvs.in-project true
+poetry config virtualenvs.ignore-conda-env true
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org2d3c8e5" class="outline-3">
-<h3 id="org2d3c8e5">Poetry 和 pip</h3>
-<div class="outline-text-3" id="text-org2d3c8e5">
+<div id="outline-container-org99c71b2" class="outline-3">
+<h3 id="org99c71b2">Poetry 和 pip</h3>
+<div class="outline-text-3" id="text-org99c71b2">
 <p>
 在解决开发项目的软件包依赖方面，pip 最大的问题是，无法在移除一个包时，同时移除其依赖的包，因为其依赖的包可能仍被其他软件依赖着。Poetry 在这方面则能工作很好。因此，我主要用 pip 安装 Python 软件和一些常用的库，例如 numpy、matplotlib 等。如果是项目开发，则用 poetry 添加依赖到项目目录下的 venv 虚拟环境里。
 </p>
@@ -263,9 +271,9 @@ Conda 也管理 Python 虚拟环境和软件包。它其实不限于 Python 包�
 </div>
 </div>
 
-<div id="outline-container-org71c51cb" class="outline-3">
-<h3 id="org71c51cb">Poetry 和 venv、virtualenv</h3>
-<div class="outline-text-3" id="text-org71c51cb">
+<div id="outline-container-orga30d411" class="outline-3">
+<h3 id="orga30d411">Poetry 和 venv、virtualenv</h3>
+<div class="outline-text-3" id="text-orga30d411">
 <p>
 我觉得 Python 内置的 venv 挺方便好用的。因此我一般是直接在项目根目录下执行：
 </p>
@@ -279,9 +287,9 @@ source .venv/bin/activate.fish
 </div>
 </section>
 
-<section id="outline-container-orgcbd0efc" class="outline-2">
-<h2 id="orgcbd0efc">常用的命令</h2>
-<div class="outline-text-2" id="text-orgcbd0efc">
+<section id="outline-container-org0d6c9f7" class="outline-2">
+<h2 id="org0d6c9f7">常用的命令</h2>
+<div class="outline-text-2" id="text-org0d6c9f7">
 <dl class="org-dl">
 <dt><code>poetry init</code></dt><dd>在当前目录下初始化，交互式，需要回答一些项目相关问题</dd>
 <dt><code>poetry shell</code></dt><dd>如果当前没有虚拟环境，则创建虚拟环境；如果有，则使用当前的虚拟环境，开启一个 shell</dd>
@@ -297,9 +305,9 @@ source .venv/bin/activate.fish
 </section>
 
 
-<section id="outline-container-orgeb59510" class="outline-2">
-<h2 id="orgeb59510">总结</h2>
-<div class="outline-text-2" id="text-orgeb59510">
+<section id="outline-container-orge81223e" class="outline-2">
+<h2 id="orge81223e">总结</h2>
+<div class="outline-text-2" id="text-orge81223e">
 <p>
 Python 软件使用和开发过程中，需要解决的问题有：
 </p>
@@ -335,9 +343,9 @@ Poetry 则专注于开发过程中的软件包依赖和构建。
 </div>
 </section>
 
-<section id="outline-container-org13c75e9" class="outline-2">
-<h2 id="org13c75e9">References</h2>
-<div class="outline-text-2" id="text-org13c75e9">
+<section id="outline-container-org4574a2f" class="outline-2">
+<h2 id="org4574a2f">References</h2>
+<div class="outline-text-2" id="text-org4574a2f">
 <ul class="org-ul">
 <li><a href="https://blog.kyomind.tw/python-poetry/">https://blog.kyomind.tw/python-poetry/</a></li>
 <li><a href="https://github.com/python-poetry/poetry/issues/4055">https://github.com/python-poetry/poetry/issues/4055</a></li>
