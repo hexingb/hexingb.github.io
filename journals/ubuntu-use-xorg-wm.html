@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- Sep 05, 2024 -->
+<!-- Sep 06, 2024 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Python Poetry 简要说明</title>
+<title>Ubuntu 切换 Desktop Environment 到 Window Manager</title>
 <meta name="author" content="Bao Hexing" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -204,168 +204,46 @@
 </header>
 <main id="content" class="content">
 <header>
-<h1 class="title">Python Poetry 简要说明</h1>
-</header><nav id="table-of-contents" role="doc-toc">
-<h2>&#30446;&#24405;</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#orgae1471d">Poetry 简介</a></li>
-<li><a href="#orgc0d4903">和其他工具的比较</a>
-<ul>
-<li><a href="#org7c27be9">Poetry 和 Conda</a></li>
-<li><a href="#org15ee01e">Poetry 和 pip</a></li>
-<li><a href="#orgbd56c2d">Poetry 和 venv、virtualenv</a></li>
-</ul>
-</li>
-<li><a href="#org81a1b36">常用的命令和用法</a></li>
-<li><a href="#org5bf7bb8">总结</a></li>
-<li><a href="#org11fe33f">References</a></li>
-</ul>
-</div>
-</nav>
-
-<section id="outline-container-orgae1471d" class="outline-2">
-<h2 id="orgae1471d">Poetry 简介</h2>
-<div class="outline-text-2" id="text-orgae1471d">
-<p>
-Poetry 是一个 Python 开发工具，用于管理 Python 项目的虚拟环境、包依赖和打包发布。官网是<a href="https://python-poetry.org/">这里</a>。
-</p>
-</div>
-</section>
-
-<section id="outline-container-orgc0d4903" class="outline-2">
-<h2 id="orgc0d4903">和其他工具的比较</h2>
-<div class="outline-text-2" id="text-orgc0d4903">
-</div>
-<div id="outline-container-org7c27be9" class="outline-3">
-<h3 id="org7c27be9">Poetry 和 Conda</h3>
-<div class="outline-text-3" id="text-org7c27be9">
-<p>
-Conda 也管理 Python 虚拟环境和软件包。它其实不限于 Python 包。
+<h1 class="title">Ubuntu 切换 Desktop Environment 到 Window Manager</h1>
+</header><p>
+很久很久以前，我是直接使用 Xorg + 窗口管理器的。电脑启动后，直接进入黑乎乎的 Console，login 输入用户名和密码，然后执行 startx，或者先进一点，加一个 lightdm。岁数大了就不想折腾，公司电脑是 Mac，所以家里性能拉垮的笔记本就一直是 Ubuntu Gnome。现在失业了，就简单弄一下，毕竟自己还是习惯平铺窗口和键盘操作。
 </p>
 
 <p>
-如果在 Conda 的虚拟环境下使用 Poetry，Poetry 会直接使用 Conda 的虚拟环境。<a href="https://github.com/python-poetry/poetry/issues/4055">这里</a>有这个问题的说明。我不想安装 poetry-conda，便直接使用 venv 管理虚拟环境。如果要坚持使用 Poetry 自动创建和管理虚拟环境，可以执行：
+直接安装 spectrwm：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">pip install --user poetry-conda
-poetry config virtualenvs.create true
-poetry config virtualenvs.in-project true
-poetry config virtualenvs.ignore-conda-env true
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org15ee01e" class="outline-3">
-<h3 id="org15ee01e">Poetry 和 pip</h3>
-<div class="outline-text-3" id="text-org15ee01e">
-<p>
-在解决开发项目的软件包依赖方面，pip 最大的问题是，无法在移除一个包时，同时移除其依赖的包，因为其依赖的包可能仍被其他软件依赖着。Poetry 在这方面则能工作很好。因此，我主要用 pip 安装 Python 软件和一些常用的库，例如 numpy、matplotlib 等。如果是项目开发，则用 poetry 添加依赖到项目目录下的 venv 虚拟环境里。
-</p>
-
-<p>
-另外，我也用 <code>pip install -e .[dev]</code> 来把正在开发的代码安装到当前的虚拟环境里做测试。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgbd56c2d" class="outline-3">
-<h3 id="orgbd56c2d">Poetry 和 venv、virtualenv</h3>
-<div class="outline-text-3" id="text-orgbd56c2d">
-<p>
-我觉得 Python 内置的 venv 挺方便好用的。因此我一般是直接在项目根目录下执行：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-shell">python -m venv .venv
-source .venv/bin/activate.fish
-</pre>
-</div>
-</div>
-</div>
-</section>
-
-<section id="outline-container-org81a1b36" class="outline-2">
-<h2 id="org81a1b36">常用的命令和用法</h2>
-<div class="outline-text-2" id="text-org81a1b36">
-<dl class="org-dl">
-<dt><code>poetry init</code></dt><dd>在当前目录下初始化，交互式，需要回答一些项目相关问题</dd>
-<dt><code>poetry shell</code></dt><dd>如果当前没有虚拟环境，则创建虚拟环境；如果有，则使用当前的虚拟环境，开启一个 shell</dd>
-<dt><code>poetry add</code></dt><dd>添加依赖包；如果添加 <code>--group dev</code> 则添加开发环境的依赖包</dd>
-<dt><code>poetry show --tree</code></dt><dd>查看依赖路径</dd>
-<dt><code>poetry lock</code></dt><dd>当手动修改 <code>pyproject.toml</code> 文件后，需要用此命令同步修改到 <code>poetry.lock</code></dd>
-<dt><code>poetry install</code></dt><dd>安装依赖包</dd>
-<dt><code>poetry update</code></dt><dd>更新</dd>
-<dt><code>poetry export</code></dt><dd><code>poetry export -f requirements.txt -o requirements.txt --without-hashes --dev</code> 导出 requirements.txt</dd>
-<dt><code>poetry build</code></dt><dd>构建开发项目，生成可安装文件在 dist 目录下</dd>
-</dl>
-
-
-<p>
-<code>pip install</code> 时，代码仓库里的 packages 和 modules 被安装到虚拟环境里的 <code>site-packages</code> 里。如果开发的是一个可执行程序，则需要添加如下配置到 <code>pyproject.toml</code> 里：
-</p>
-
-<div class="org-src-container">
-<pre class="src src-conf">[<span class="org-type">tool.poetry.scripts</span>]
-<span class="org-variable-name">script_name</span> = <span class="org-string">"package_name.module_name:func_name"</span>
+<pre class="src src-shell">sudo apt install spectrwm
+cp /etc/spectrwm.conf ~/.spectrwm.conf
 </pre>
 </div>
 
 <p>
-注意配置里的 "." 和 ":"，以及 <code>package_name</code> 不是目录，比如如果 <code>package_name</code> 在 <code>src</code> 目录下，配置里是不能写 <code>src.package_name</code> 的。
+简单配置一下就能用了。直接在 GDM 登录的时候，选择 spectrwm 即可。
 </p>
+
+<p>
+刚开始没找到输入法。因为自己的输入法快捷键和 spectrwm 的 layout 切换键冲突了。通过 <code>ibus-setup</code> 修改一下即可。一个让我比较开心的是，输入法切换时，在桌面中央有了明显的图标提示，比 Gnome 显示在细小的 top bar 好。
+</p>
+
+<p>
+另外的问题是，触摸板无法点触做单击了。上网搜了一下，找到<a href="https://simpleit.rocks/linux/ubuntu/activate-single-tap-touchpad-ubuntu/#:~:text=How%20to%20activate%20tap%20to%20click%20touchpad%27s%20feature,1%20...%204%204.%20Make%20this%20permament%20">这个</a>。照做，把下面两行写入 <code>/etc/X11/xinit/xinputrc</code> ：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-conf">xinput set-prop 11 306 1                                                 
+xinput set-prop 11 314 1
+</pre>
 </div>
-</section>
-
-<section id="outline-container-org5bf7bb8" class="outline-2">
-<h2 id="org5bf7bb8">总结</h2>
-<div class="outline-text-2" id="text-org5bf7bb8">
-<p>
-Python 软件使用和开发过程中，需要解决的问题有：
-</p>
-
-<ol class="org-ol">
-<li>Python 的版本管理</li>
-<li>虚拟环境管理</li>
-<li>依赖包管理</li>
-<li>软件打包</li>
-<li>软件发布</li>
-</ol>
-
 
 <p>
-Python 生态中，存在太多的工具来解决这些问题了。它们各自解决部分问题，有重叠的部分。因此需要明确理解它们各自的能力和局限。
+分别表示开启 <code>libinput Tapping Enabled</code> 和 <code>libinput Natural Scrolling Enabled</code> 。
 </p>
 
 <p>
-我用 Conda 提供基本的 Python 环境，用来使用不同的 Python 版本和常用的基于 Python 的软件工具及库。
+年轻的时候不懂事，喜欢折腾各种皮毛的技术。还记得上学时折腾各种发行版，配置 fvwm 之类各种窗口管理器。不如踏实学一些实用的东西。
 </p>
-
-<p>
-pip 和 venv 模块基于 Conda 的基础软件环境，用于安装软件和为开发提供虚拟环境。在 Emacs 中使用 pyvenv 可以方便地在 Conda 虚拟环境和 venv 虚拟环境中切换。
-</p>
-
-<p>
-Poetry 则专注于开发过程中的软件包依赖和构建。
-</p>
-
-<p>
-未来也许可以研究一下 rye 的使用。
-</p>
-</div>
-</section>
-
-<section id="outline-container-org11fe33f" class="outline-2">
-<h2 id="org11fe33f">References</h2>
-<div class="outline-text-2" id="text-org11fe33f">
-<ul class="org-ul">
-<li><a href="https://blog.kyomind.tw/python-poetry/">https://blog.kyomind.tw/python-poetry/</a></li>
-<li><a href="https://github.com/python-poetry/poetry/issues/4055">https://github.com/python-poetry/poetry/issues/4055</a></li>
-</ul>
-</div>
-</section>
 </main>
 <footer id="postamble" class="status">
 <br/><hr/>&copy; 2012-2024 All Rights Reserved.<br/><br/>
