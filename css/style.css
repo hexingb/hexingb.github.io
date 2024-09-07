@@ -93,20 +93,15 @@ code {
     margin-left: 5px;
 }
 
-.outline-2 {
-    margin-left: 5px;
-}
-
-.outline-3 {
-    margin-left: 10px;
-}
-
-.outline-4 {
-    margin-left: 15px;
-}
-
-.outline-5 {
-    margin-left: 20px;
+.outline-2,
+.outline-text-2,
+.outline-3,
+.outline-text-3,
+.outline-4,
+.outline-text-4,
+.outline-5,
+.outline-text-5 {
+    padding-left: 20px;
 }
 
 .title {
