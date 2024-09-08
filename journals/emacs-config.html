@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- Sep 07, 2024 -->
+<!-- Sep 08, 2024 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>我的 Emacs 配置</title>
@@ -209,36 +209,36 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgdb0494c">配置 <code>use-package</code></a></li>
-<li><a href="#orge05affa">基本配置</a></li>
-<li><a href="#org01b664e">工具类包</a></li>
-<li><a href="#org2acb2f3">编程</a>
+<li><a href="#orgc0ac1c7">配置 <code>use-package</code></a></li>
+<li><a href="#org6fcd9fc">基本配置</a></li>
+<li><a href="#orgd4462ba">工具类包</a></li>
+<li><a href="#orgc9e575c">编程</a>
 <ul>
-<li><a href="#orgc3beda2">关于 tree-sitter</a></li>
-<li><a href="#org5578eb6">关于 copilot</a></li>
+<li><a href="#org4a549f2">关于 tree-sitter</a></li>
+<li><a href="#org015bdf2">关于 copilot</a></li>
 </ul>
 </li>
-<li><a href="#orgf5399f4">Org Mode</a>
+<li><a href="#org0aabeaa">Org Mode</a>
 <ul>
-<li><a href="#org223bc80">Basic Org Mode Configuration and Appearance</a></li>
-<li><a href="#org2a346ec">Org Mode Babel</a></li>
-<li><a href="#org577e877">Org Mode Export</a></li>
-<li><a href="#orgca5f1bf">Getting Things Done</a></li>
+<li><a href="#org4950c59">Basic Org Mode Configuration and Appearance</a></li>
+<li><a href="#org727afa5">Org Mode Babel</a></li>
+<li><a href="#org0737168">Org Mode Export</a></li>
+<li><a href="#orgd60f474">Getting Things Done</a></li>
 </ul>
 </li>
-<li><a href="#org407d598">一些有用的工具</a></li>
-<li><a href="#org22c3d26">ERC and Gnus</a></li>
-<li><a href="#orgb48ece9">其他有用的包</a></li>
-<li><a href="#orgd6f50bb"><span class="todo TODO">TODO</span> 添加更多配置</a></li>
-<li><a href="#org268f916">遇到的问题</a>
+<li><a href="#orgc113687">一些有用的工具</a></li>
+<li><a href="#org2bdfc4f">ERC and Gnus</a></li>
+<li><a href="#orga471c8c">其他有用的包</a></li>
+<li><a href="#org3044caa"><span class="todo TODO">TODO</span> 添加更多配置</a></li>
+<li><a href="#org9262802">遇到的问题</a>
 <ul>
-<li><a href="#orgc66ebfd">org 文件导出的时候，无法将生成的 html 文件，转移到一个指定的目录去</a></li>
-<li><a href="#orgbc3a9bc">org 文件导出为 markdown 的时候，会生成一些奇奇怪怪的 id，如何去掉这些 id ?</a></li>
-<li><a href="#orgfd617a0">org 文件导出为 markdown 的时候，a.md 文件里链接了 b.md， export a.md 的时候，生成的 a.html 里的链接仍是 b.md 而不是 b.html</a></li>
-<li><a href="#org5d96ee2">重新配置 emacs 下载了最新版本的 magit-20231014.1408，结果和 emacs 28.2 不适配，导致 magit 切换分支不成功，查看 log 有乱码</a></li>
+<li><a href="#org427208f">org 文件导出的时候，无法将生成的 html 文件，转移到一个指定的目录去</a></li>
+<li><a href="#orga91c8ab">org 文件导出为 markdown 的时候，会生成一些奇奇怪怪的 id，如何去掉这些 id ?</a></li>
+<li><a href="#org1db029a">org 文件导出为 markdown 的时候，a.md 文件里链接了 b.md， export a.md 的时候，生成的 a.html 里的链接仍是 b.md 而不是 b.html</a></li>
+<li><a href="#org106eb40">重新配置 emacs 下载了最新版本的 magit-20231014.1408，结果和 emacs 28.2 不适配，导致 magit 切换分支不成功，查看 log 有乱码</a></li>
 </ul>
 </li>
-<li><a href="#org379ce40">References</a></li>
+<li><a href="#orgf862726">References</a></li>
 </ul>
 </div>
 </nav>
@@ -246,9 +246,9 @@
 我用 Emacs 作为自己的开发工具已经有十多年，但是配置其实不复杂，大多是自己从网络上东拼西凑得来。这些配置都写在一个 org 文件里，通过 org babel 源码块得到 el 配置文件。这样，在 <code>~/.emacs.d/init.el</code> 里只要写 <code>(org-babel-load-file "/path/to/this/file")</code> 即可。一些不再用的，或仅做示例的配置通过 <code>:tangle no</code> 禁掉即可。
 </p>
 
-<section id="outline-container-orgdb0494c" class="outline-2">
-<h2 id="orgdb0494c">配置 <code>use-package</code></h2>
-<div class="outline-text-2" id="text-orgdb0494c">
+<section id="outline-container-orgc0ac1c7" class="outline-2">
+<h2 id="orgc0ac1c7">配置 <code>use-package</code></h2>
+<div class="outline-text-2" id="text-orgc0ac1c7">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">package</span>)
 (<span class="org-keyword">setq</span> package-archives '((<span class="org-string">"gnu"</span>    . <span class="org-string">"http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"</span>)
@@ -271,9 +271,9 @@
 </div>
 </section>
 
-<section id="outline-container-orge05affa" class="outline-2">
-<h2 id="orge05affa">基本配置</h2>
-<div class="outline-text-2" id="text-orge05affa">
+<section id="outline-container-org6fcd9fc" class="outline-2">
+<h2 id="org6fcd9fc">基本配置</h2>
+<div class="outline-text-2" id="text-org6fcd9fc">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">benchmark-init</span>
   <span class="org-builtin">:config</span>
@@ -296,8 +296,9 @@
 
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">emacs</span>
-  <span class="org-builtin">:custom</span>
-  (initial-frame-alist (<span class="org-keyword">quote</span> ((fullscreen . fullscreen))))
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">:custom</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">;; fullscreen emacs window get right and bottom white margins in spectrwm</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">(initial-frame-alist (quote ((fullscreen . fullscreen))))</span>
   <span class="org-builtin">:config</span>
   (<span class="org-keyword">setq</span> user-mail-address <span class="org-string">"HexingB@qq.com"</span>)
   (<span class="org-keyword">setq</span> user-full-name <span class="org-string">"Bao Hexing"</span>)
@@ -360,9 +361,9 @@
 </div>
 </section>
 
-<section id="outline-container-org01b664e" class="outline-2">
-<h2 id="org01b664e">工具类包</h2>
-<div class="outline-text-2" id="text-org01b664e">
+<section id="outline-container-orgd4462ba" class="outline-2">
+<h2 id="orgd4462ba">工具类包</h2>
+<div class="outline-text-2" id="text-orgd4462ba">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">exec-path-from-shell</span>
   <span class="org-builtin">:ensure</span> t
@@ -805,9 +806,9 @@ $0
 </section>
 
 
-<section id="outline-container-org2acb2f3" class="outline-2">
-<h2 id="org2acb2f3">编程</h2>
-<div class="outline-text-2" id="text-org2acb2f3">
+<section id="outline-container-orgc9e575c" class="outline-2">
+<h2 id="orgc9e575c">编程</h2>
+<div class="outline-text-2" id="text-orgc9e575c">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">json-mode</span>)
 (<span class="org-keyword">use-package</span> <span class="org-constant">yaml-mode</span>)
@@ -1131,6 +1132,16 @@ EIN 提供了一个 jupyter like 的环境。命令： <code>ein:run</code> 和 
 用来用去，我觉得还是 org mode + python babel 比较好。
 </p>
 
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">rust-mode</span>
+  <span class="org-builtin">:defer</span> t
+  <span class="org-builtin">:custom</span>
+  (rust-format-on-save t)
+  (lsp-rust-server 'rust-analyzer))
+</pre>
+</div>
+
+
 <p>
 下面是 lsp 配置。首先要先安装 lsp server。
 </p>
@@ -1219,9 +1230,9 @@ dumb-jump 是在缺少 language server 的情况下支持定义跳转的工具�
 </div>
 </div>
 
-<div id="outline-container-orgc3beda2" class="outline-3">
-<h3 id="orgc3beda2">关于 tree-sitter</h3>
-<div class="outline-text-3" id="text-orgc3beda2">
+<div id="outline-container-org4a549f2" class="outline-3">
+<h3 id="org4a549f2">关于 tree-sitter</h3>
+<div class="outline-text-3" id="text-org4a549f2">
 <p>
 <a href="https://emacs.liujiacai.net/post/038-hello-treesitter/">这里</a>有比较详细的配置说明。主要过程是：
 </p>
@@ -1257,9 +1268,9 @@ dumb-jump 是在缺少 language server 的情况下支持定义跳转的工具�
 </div>
 </div>
 
-<div id="outline-container-org5578eb6" class="outline-3">
-<h3 id="org5578eb6">关于 copilot</h3>
-<div class="outline-text-3" id="text-org5578eb6">
+<div id="outline-container-org015bdf2" class="outline-3">
+<h3 id="org015bdf2">关于 copilot</h3>
+<div class="outline-text-3" id="text-org015bdf2">
 <p>
 copilot 不能说好用，只能说很上瘾，尤其是问答的时候。
 </p>
@@ -1293,17 +1304,17 @@ copilot 不能说好用，只能说很上瘾，尤其是问答的时候。
 </div>
 </section>
 
-<section id="outline-container-orgf5399f4" class="outline-2">
-<h2 id="orgf5399f4">Org Mode</h2>
-<div class="outline-text-2" id="text-orgf5399f4">
+<section id="outline-container-org0aabeaa" class="outline-2">
+<h2 id="org0aabeaa">Org Mode</h2>
+<div class="outline-text-2" id="text-org0aabeaa">
 <p>
 这个必不可少。
 </p>
 </div>
 
-<div id="outline-container-org223bc80" class="outline-3">
-<h3 id="org223bc80">Basic Org Mode Configuration and Appearance</h3>
-<div class="outline-text-3" id="text-org223bc80">
+<div id="outline-container-org4950c59" class="outline-3">
+<h3 id="org4950c59">Basic Org Mode Configuration and Appearance</h3>
+<div class="outline-text-3" id="text-org4950c59">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">org</span>
   <span class="org-builtin">:config</span>
@@ -1361,9 +1372,9 @@ copilot 不能说好用，只能说很上瘾，尤其是问答的时候。
 </div>
 </div>
 
-<div id="outline-container-org2a346ec" class="outline-3">
-<h3 id="org2a346ec">Org Mode Babel</h3>
-<div class="outline-text-3" id="text-org2a346ec">
+<div id="outline-container-org727afa5" class="outline-3">
+<h3 id="org727afa5">Org Mode Babel</h3>
+<div class="outline-text-3" id="text-org727afa5">
 <p>
 先安装 mermaid：
 </p>
@@ -1400,7 +1411,7 @@ mermaid 生成的 svg 图片正常，但是在 emacs 中展示时，有些文字
 </p>
 
 
-<figure id="org56bf997">
+<figure id="orgc72cf2b">
 <img src="mermaid-demo.png" alt="mermaid-demo.png">
 
 </figure>
@@ -1438,7 +1449,7 @@ mermaid 生成的 svg 图片正常，但是在 emacs 中展示时，有些文字
 </p>
 
 
-<figure id="orgb6b6aaf">
+<figure id="orge21d202">
 <img src="plantuml-sequence-demo.png" alt="plantuml-sequence-demo.png">
 
 </figure>
@@ -1470,7 +1481,7 @@ plt.savefig(fname)
 </div>
 
 
-<figure id="orgc2a4865">
+<figure id="org399418c">
 <img src="python-matplot-demo.jpg" alt="python-matplot-demo.jpg">
 
 </figure>
@@ -1486,9 +1497,9 @@ One hint: every time you make any changes to the file, these code blocks are eva
 </div>
 </div>
 
-<div id="outline-container-org577e877" class="outline-3">
-<h3 id="org577e877">Org Mode Export</h3>
-<div class="outline-text-3" id="text-org577e877">
+<div id="outline-container-org0737168" class="outline-3">
+<h3 id="org0737168">Org Mode Export</h3>
+<div class="outline-text-3" id="text-org0737168">
 <p>
 我主要把 org 文件导出为 html：
 </p>
@@ -1701,9 +1712,9 @@ One hint: every time you make any changes to the file, these code blocks are eva
 </div>
 </div>
 
-<div id="outline-container-orgca5f1bf" class="outline-3">
-<h3 id="orgca5f1bf">Getting Things Done</h3>
-<div class="outline-text-3" id="text-orgca5f1bf">
+<div id="outline-container-orgd60f474" class="outline-3">
+<h3 id="orgd60f474">Getting Things Done</h3>
+<div class="outline-text-3" id="text-orgd60f474">
 <p>
 这个是一个 org-capture-templates 的例子，可以研究一下：
 </p>
@@ -1791,8 +1802,8 @@ One hint: every time you make any changes to the file, these code blocks are eva
   <span class="org-builtin">:bind</span>
   ((<span class="org-string">"C-c d"</span> . org-cycle-agenda-files) <span class="org-comment-delimiter">;; </span><span class="org-comment">make it global</span>
    (<span class="org-string">"C-c c"</span> . org-capture)
-   <span class="org-builtin">:map</span> org-mode-map
    (<span class="org-string">"C-c a"</span> . org-agenda)
+   <span class="org-builtin">:map</span> org-mode-map
    (<span class="org-string">"C-,"</span> . nil)
    (<span class="org-string">"C-'"</span> . nil)))
 
@@ -1810,44 +1821,17 @@ One hint: every time you make any changes to the file, these code blocks are eva
             (<span class="org-keyword">lambda</span> (<span class="org-type">&amp;rest</span> _)
               (gtd-save-org-buffers)))
 
-<span class="org-comment-delimiter">;; </span><span class="org-comment">(defun my-org-clock-in-resume ()</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">"Clock in to the last interrupted task, if any."</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">(interactive)</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">(when (marker-buffer org-clock-interrupted-task)</span>
-<span class="org-comment-delimiter">;;     </span><span class="org-comment">(org-with-point-at org-clock-interrupted-task</span>
-<span class="org-comment-delimiter">;;       </span><span class="org-comment">(org-clock-in))))</span>
-
-<span class="org-comment-delimiter">;; </span><span class="org-comment">(defun my-org-clock-out-and-resume-previous ()</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">"Clock out of the current task, then resume the interrupted task (if any)"</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">(interactive)</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">(org-clock-out)</span>
-<span class="org-comment-delimiter">;;   </span><span class="org-comment">(my-org-clock-in-resume))</span>
-<span class="org-comment-delimiter">;; </span><span class="org-comment">(define-key org-mode-map (kbd "C-c C-x C-o") 'my-org-clock-out-and-resume-previous)</span>
-
 (<span class="org-keyword">use-package</span> <span class="org-constant">org</span>
   <span class="org-builtin">:config</span>
   (<span class="org-keyword">setq</span> org-agenda-start-on-weekday nil
         org-agenda-include-diary t
         org-agenda-inhibit-startup t <span class="org-comment-delimiter">;; </span><span class="org-comment">~50x speedup</span>
         org-agenda-use-tag-inheritance nil <span class="org-comment-delimiter">;; </span><span class="org-comment">3-4x speedup</span>
-        <span class="org-comment-delimiter">;; </span><span class="org-comment">Change task state to STARTED when clocking in</span>
         org-clock-in-switch-to-state <span class="org-string">"ON GOING"</span>
         <span class="org-comment-delimiter">;; </span><span class="org-comment">Save clock data and notes in the LOGBOOK drawer</span>
         org-clock-into-drawer t
         <span class="org-comment-delimiter">;; </span><span class="org-comment">Removes clocked tasks with 0:00 duration</span>
         org-clock-out-remove-zero-time-clocks t)
-
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">Show the clocked-in task - if any - in the header line</span>
-  (<span class="org-keyword">defun</span> <span class="org-function-name">my-show-org-clock-in-header-line</span> ()
-    (<span class="org-keyword">setq-default</span> header-line-format '((<span class="org-string">" "</span> org-mode-line-string <span class="org-string">" "</span>))))
-
-  (<span class="org-keyword">defun</span> <span class="org-function-name">my-hide-org-clock-from-header-line</span> ()
-    (<span class="org-keyword">setq-default</span> header-line-format nil))
-
-  <span class="org-builtin">:hook</span>
-  (org-clock-in-hook . my-show-org-clock-in-header-line)
-  (org-clock-out-hook . my-hide-org-clock-from-header-line)
-  (org-clock-cancel-hook . my-hide-org-clock-from-header-line)
   )
 
 (<span class="org-keyword">use-package</span> <span class="org-constant">org-pomodoro</span>
@@ -1856,46 +1840,63 @@ One hint: every time you make any changes to the file, these code blocks are eva
   (<span class="org-keyword">setq</span> org-pomodoro-short-break-format <span class="org-string">"&#128083;%s"</span>)
   (<span class="org-keyword">setq</span> org-pomodoro-long-break-format <span class="org-string">"&#128167;%s"</span>)
   (<span class="org-keyword">setq</span> org-pomodoro-play-sounds nil)
-  (<span class="org-keyword">setq</span> org-pomodoro-manual-break t)
+  (<span class="org-keyword">setq</span> org-pomodoro-manual-break nil) <span class="org-comment-delimiter">;; </span><span class="org-comment">or t if interruptions is not expected</span>
   (<span class="org-keyword">setq</span> org-pomodoro-keep-killed-pomodoro-time t)
-  (<span class="org-keyword">setq</span> org-pomodoro-length 50)
-  (<span class="org-keyword">setq</span> org-pomodoro-short-break-length 10)
-  (<span class="org-keyword">setq</span> org-pomodoro-long-break-length 10)
-  (<span class="org-keyword">setq</span> org-pomodoro-long-break-frequency 1)
+  (<span class="org-keyword">setq</span> org-pomodoro-length 25)
+  (<span class="org-keyword">setq</span> org-pomodoro-short-break-length 5)
+  (<span class="org-keyword">setq</span> org-pomodoro-long-break-length 20)
+  (<span class="org-keyword">setq</span> org-pomodoro-long-break-frequency 4)
+  (<span class="org-keyword">setq</span> org-clock-clocked-in-display nil) <span class="org-comment-delimiter">;; </span><span class="org-comment">display in header line; see below</span>
   <span class="org-builtin">:bind</span> (<span class="org-string">"C-c p"</span> . org-pomodoro)
 
   <span class="org-builtin">:config</span>
   <span class="org-comment-delimiter">;; </span><span class="org-comment">TODO make a platform independent notification</span>
-  (<span class="org-keyword">defun</span> <span class="org-function-name">notify-osx</span> (title message)
-    (call-process <span class="org-string">"terminal-notifier"</span>
-                  nil 0 nil
-                  <span class="org-string">"-group"</span> <span class="org-string">"Emacs"</span>
-                  <span class="org-string">"-title"</span> title
-                  <span class="org-string">"-sound"</span> <span class="org-string">"default"</span>
-                  <span class="org-string">"-message"</span> message
-                  <span class="org-string">"-activate"</span> <span class="org-string">"org.gnu.Emacs"</span>))
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">as it is stopped manually, hook for '</span><span class="org-comment"><span class="org-constant">org-pomodoro-finished-hook</span></span><span class="org-comment">' is useless.</span>
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">just send a notification for another pomodoro after the break.</span>
+  (<span class="org-keyword">defun</span> <span class="org-function-name">pomodoro-notifier</span> (msg)
+    (split-window-right)
+    (animate-sequence msg 2)
+    (select-window (previous-window))
+    (gtd-save-org-buffers)
+    )
   (add-hook 'org-pomodoro-finished-hook
             (<span class="org-keyword">lambda</span> ()
-              (notify-osx <span class="org-string">"Pomodoro Finished"</span> <span class="org-string">"Take a rest"</span>)))
+              (pomodoro-notifier (list <span class="org-string">"&#24050;&#32463;&#24037;&#20316;&#24456;&#38271;&#26102;&#38388;&#21862;&#65281;"</span> <span class="org-string">"&#27463;&#27463;&#30524;&#30555;&#65292;&#20241;&#24687;&#19968;&#19979;&#21543;&#65281;"</span>))))
   (add-hook 'org-pomodoro-break-finished-hook
             (<span class="org-keyword">lambda</span> ()
-              (notify-osx <span class="org-string">"Pomodoro Break Finished"</span> <span class="org-string">"Ready for Another?"</span>)))
-  )
+              (pomodoro-notifier (list <span class="org-string">"&#21315;&#37324;&#20043;&#34892;&#65292;&#22987;&#20110;&#36275;&#34892;&#12290;"</span> <span class="org-string">"&#19981;&#31215;&#36332;&#27493;&#65292;&#26080;&#20197;&#33267;&#21315;&#37324;&#12290;"</span> <span class="org-string">"&#20241;&#24687;&#23436;&#27605;&#65292;&#24320;&#21551;&#26032;&#30340;&#24449;&#31243;&#21543;&#65281;"</span>))))
 
-(advice-add 'org-pomodoro <span class="org-builtin">:after</span>
-            (<span class="org-keyword">lambda</span> (<span class="org-type">&amp;rest</span> _)
-              (gtd-save-org-buffers)))
+  (<span class="org-keyword">defun</span> <span class="org-function-name">with-face</span> (str <span class="org-type">&amp;rest</span> face-plist)
+    (propertize str 'face face-plist))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Show the clocked-in task - if any - in the header line</span>
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my-show-org-clock-in-header-line</span> ()
+    (<span class="org-keyword">setq-default</span> header-line-format '((<span class="org-string">" Current Task: "</span>
+                                        (<span class="org-builtin">:eval</span> (with-face org-mode-line-string
+                                                          <span class="org-builtin">:background</span> <span class="org-string">"forest green"</span>
+                                                          <span class="org-builtin">:foreground</span> <span class="org-string">"purple"</span>
+                                                          <span class="org-builtin">:weight</span> 'bold
+                                                          ))
+                                        )))
+    (gtd-save-org-buffers)
+    )
+
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my-hide-org-clock-in-header-line</span> ()
+    (<span class="org-keyword">setq-default</span> header-line-format nil)
+    (gtd-save-org-buffers))
+  (add-hook 'org-clock-in-hook 'my-show-org-clock-in-header-line)
+  (add-hook 'org-clock-out-hook 'my-hide-org-clock-in-header-line)
+  (add-hook 'org-clock-cancel-hook 'my-hide-org-clock-in-header-line)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">use C-c C-x C-j to jump back the current org clock entry</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">use C-u C-c p to resume the task</span>
+  )
 </pre>
 </div>
 </div>
 </div>
 </section>
 
-<section id="outline-container-org407d598" class="outline-2">
-<h2 id="org407d598">一些有用的工具</h2>
-<div class="outline-text-2" id="text-org407d598">
+<section id="outline-container-orgc113687" class="outline-2">
+<h2 id="orgc113687">一些有用的工具</h2>
+<div class="outline-text-2" id="text-orgc113687">
 <p>
 Reading in Emacs:
 </p>
@@ -1961,9 +1962,9 @@ Or use <code>good-scroll</code> if emacs version is lower than 29:
 </div>
 </section>
 
-<section id="outline-container-org22c3d26" class="outline-2">
-<h2 id="org22c3d26">ERC and Gnus</h2>
-<div class="outline-text-2" id="text-org22c3d26">
+<section id="outline-container-org2bdfc4f" class="outline-2">
+<h2 id="org2bdfc4f">ERC and Gnus</h2>
+<div class="outline-text-2" id="text-org2bdfc4f">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">erc</span>
   <span class="org-builtin">:config</span>
@@ -2040,9 +2041,9 @@ machine news.eternal-september.org login your_account_name force yes password yo
 </section>
 
 
-<section id="outline-container-orgb48ece9" class="outline-2">
-<h2 id="orgb48ece9">其他有用的包</h2>
-<div class="outline-text-2" id="text-orgb48ece9">
+<section id="outline-container-orga471c8c" class="outline-2">
+<h2 id="orga471c8c">其他有用的包</h2>
+<div class="outline-text-2" id="text-orga471c8c">
 <ol class="org-ol">
 <li>keycast for key casting</li>
 <li>org-download for image capturing into org documents</li>
@@ -2056,9 +2057,9 @@ machine news.eternal-september.org login your_account_name force yes password yo
 </section>
 
 
-<section id="outline-container-orgd6f50bb" class="outline-2">
-<h2 id="orgd6f50bb"><span class="todo TODO">TODO</span> 添加更多配置</h2>
-<div class="outline-text-2" id="text-orgd6f50bb">
+<section id="outline-container-org3044caa" class="outline-2">
+<h2 id="org3044caa"><span class="todo TODO">TODO</span> 添加更多配置</h2>
+<div class="outline-text-2" id="text-org3044caa">
 <ol class="org-ol">
 <li>flymake</li>
 <li>gpg 配置后，打开 gpg.org 文件总提示编码问题</li>
@@ -2071,40 +2072,40 @@ machine news.eternal-september.org login your_account_name force yes password yo
 </section>
 
 
-<section id="outline-container-org268f916" class="outline-2">
-<h2 id="org268f916">遇到的问题</h2>
-<div class="outline-text-2" id="text-org268f916">
+<section id="outline-container-org9262802" class="outline-2">
+<h2 id="org9262802">遇到的问题</h2>
+<div class="outline-text-2" id="text-org9262802">
 </div>
-<div id="outline-container-orgc66ebfd" class="outline-3">
-<h3 id="orgc66ebfd">org 文件导出的时候，无法将生成的 html 文件，转移到一个指定的目录去</h3>
-<div class="outline-text-3" id="text-orgc66ebfd">
+<div id="outline-container-org427208f" class="outline-3">
+<h3 id="org427208f">org 文件导出的时候，无法将生成的 html 文件，转移到一个指定的目录去</h3>
+<div class="outline-text-3" id="text-org427208f">
 <p>
 目前没有解决方案。如上配置，当保存 org 文件时，自动执行 export。我在自己的笔记项目目录下写了一个 Makefile 来拷贝文件。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgbc3a9bc" class="outline-3">
-<h3 id="orgbc3a9bc">org 文件导出为 markdown 的时候，会生成一些奇奇怪怪的 id，如何去掉这些 id ?</h3>
-<div class="outline-text-3" id="text-orgbc3a9bc">
+<div id="outline-container-orga91c8ab" class="outline-3">
+<h3 id="orga91c8ab">org 文件导出为 markdown 的时候，会生成一些奇奇怪怪的 id，如何去掉这些 id ?</h3>
+<div class="outline-text-3" id="text-orga91c8ab">
 <p>
 算了，markdown 文件只为协同沟通，还是直接写吧。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgfd617a0" class="outline-3">
-<h3 id="orgfd617a0">org 文件导出为 markdown 的时候，a.md 文件里链接了 b.md， export a.md 的时候，生成的 a.html 里的链接仍是 b.md 而不是 b.html</h3>
-<div class="outline-text-3" id="text-orgfd617a0">
+<div id="outline-container-org1db029a" class="outline-3">
+<h3 id="org1db029a">org 文件导出为 markdown 的时候，a.md 文件里链接了 b.md， export a.md 的时候，生成的 a.html 里的链接仍是 b.md 而不是 b.html</h3>
+<div class="outline-text-3" id="text-org1db029a">
 <p>
 我估计这个要看 pandoc 的支持，目前没有找到解决方案。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5d96ee2" class="outline-3">
-<h3 id="org5d96ee2">重新配置 emacs 下载了最新版本的 magit-20231014.1408，结果和 emacs 28.2 不适配，导致 magit 切换分支不成功，查看 log 有乱码</h3>
-<div class="outline-text-3" id="text-org5d96ee2">
+<div id="outline-container-org106eb40" class="outline-3">
+<h3 id="org106eb40">重新配置 emacs 下载了最新版本的 magit-20231014.1408，结果和 emacs 28.2 不适配，导致 magit 切换分支不成功，查看 log 有乱码</h3>
+<div class="outline-text-3" id="text-org106eb40">
 <p>
 回退到 magit-20230723.1601 恢复正常。<a href="https://emacs.stackexchange.com/questions/78977/seq-keep-is-void-when-installing-magit-through-use-package">这里</a>有说明。
 </p>
@@ -2112,9 +2113,9 @@ machine news.eternal-september.org login your_account_name force yes password yo
 </div>
 </section>
 
-<section id="outline-container-org379ce40" class="outline-2">
-<h2 id="org379ce40">References</h2>
-<div class="outline-text-2" id="text-org379ce40">
+<section id="outline-container-orgf862726" class="outline-2">
+<h2 id="orgf862726">References</h2>
+<div class="outline-text-2" id="text-orgf862726">
 <p>
 我参考了太多了的网络文章，这里就只感谢，不列举了。你喜欢什么，你就能得到什么。
 </p>
