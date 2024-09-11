@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- Sep 06, 2024 -->
+<!-- Sep 11, 2024 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Ubuntu 切换 Desktop Environment 到 Window Manager</title>
@@ -228,12 +228,12 @@ cp /etc/spectrwm.conf ~/.spectrwm.conf
 </p>
 
 <p>
-另外的问题是，触摸板无法点触做单击了。上网搜了一下，找到<a href="https://simpleit.rocks/linux/ubuntu/activate-single-tap-touchpad-ubuntu/#:~:text=How%20to%20activate%20tap%20to%20click%20touchpad%27s%20feature,1%20...%204%204.%20Make%20this%20permament%20">这个</a>。照做，把下面两行写入 <code>/etc/X11/xinit/xinputrc</code> ：
+另外的问题是，触摸板无法点触做单击了。上网搜了一下，找到<a href="https://simpleit.rocks/linux/ubuntu/activate-single-tap-touchpad-ubuntu/#:~:text=How%20to%20activate%20tap%20to%20click%20touchpad%27s%20feature,1%20...%204%204.%20Make%20this%20permament%20">这个</a>。照做，把下面两行写入 <code>/etc/X11/xinit/xinputrc</code> 或者 <code>~/.xinputrc</code> ：
 </p>
 
 <div class="org-src-container">
-<pre class="src src-conf">xinput set-prop 11 306 1
-xinput set-prop 11 314 1
+<pre class="src src-conf">xinput set-prop 11 <span class="org-string">"libinput Tapping Enabled"</span>  1
+xinput set-prop 11 <span class="org-string">"libinput Natural Scrolling Enabled"</span> 1
 </pre>
 </div>
 
