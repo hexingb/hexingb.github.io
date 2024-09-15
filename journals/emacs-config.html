@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<!-- Sep 12, 2024 -->
+<!-- Sep 13, 2024 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>我的 Emacs 配置</title>
@@ -209,36 +209,36 @@
 <h2>&#30446;&#24405;</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org90b39d8">配置 <code>use-package</code></a></li>
-<li><a href="#org20325da">基本配置</a></li>
-<li><a href="#orgfc87cc2">工具类包</a></li>
-<li><a href="#org6398b52">编程</a>
+<li><a href="#org6beade4">配置 <code>use-package</code></a></li>
+<li><a href="#orgcab8b6a">基本配置</a></li>
+<li><a href="#orgea06699">工具类包</a></li>
+<li><a href="#org2df6362">编程</a>
 <ul>
-<li><a href="#org90a4880">关于 tree-sitter</a></li>
-<li><a href="#org9a8a59e">关于 copilot</a></li>
+<li><a href="#orgd67d7ac">关于 tree-sitter</a></li>
+<li><a href="#org2d374d5">关于 copilot</a></li>
 </ul>
 </li>
-<li><a href="#orgc6517fd">Org Mode</a>
+<li><a href="#org7e7a78f">Org Mode</a>
 <ul>
-<li><a href="#orgeb467c7">Basic Org Mode Configuration and Appearance</a></li>
-<li><a href="#orgc49830d">Org Mode Babel</a></li>
-<li><a href="#orgb816fd4">Org Mode Export</a></li>
-<li><a href="#org1e7fde3">Getting Things Done</a></li>
+<li><a href="#org25093df">Basic Org Mode Configuration and Appearance</a></li>
+<li><a href="#orgc5bcc46">Org Mode Babel</a></li>
+<li><a href="#orgfe668df">Org Mode Export</a></li>
+<li><a href="#orgf7d20a2">Getting Things Done</a></li>
 </ul>
 </li>
-<li><a href="#orga6a04d3">一些有用的工具</a></li>
-<li><a href="#org9a0d14b">ERC and Gnus</a></li>
-<li><a href="#org596050a">其他有用的包</a></li>
-<li><a href="#org2460e81"><span class="todo TODO">TODO</span> 添加更多配置</a></li>
-<li><a href="#orgacd102a">遇到的问题</a>
+<li><a href="#orgb2543c0">一些有用的工具</a></li>
+<li><a href="#org3a4b508">ERC and Gnus</a></li>
+<li><a href="#org632ed97">其他有用的包</a></li>
+<li><a href="#orgae00e9e"><span class="todo TODO">TODO</span> 添加更多配置</a></li>
+<li><a href="#org0bc6450">遇到的问题</a>
 <ul>
-<li><a href="#orgfb94bd0">org 文件导出的时候，无法将生成的 html 文件，转移到一个指定的目录去</a></li>
-<li><a href="#org8483b42">org 文件导出为 markdown 的时候，会生成一些奇奇怪怪的 id，如何去掉这些 id ?</a></li>
-<li><a href="#org3a4ce96">org 文件导出为 markdown 的时候，a.md 文件里链接了 b.md， export a.md 的时候，生成的 a.html 里的链接仍是 b.md 而不是 b.html</a></li>
-<li><a href="#orgad3e8f2">重新配置 emacs 下载了最新版本的 magit-20231014.1408，结果和 emacs 28.2 不适配，导致 magit 切换分支不成功，查看 log 有乱码</a></li>
+<li><a href="#org847fe6f">org 文件导出的时候，无法将生成的 html 文件，转移到一个指定的目录去</a></li>
+<li><a href="#org3b75949">org 文件导出为 markdown 的时候，会生成一些奇奇怪怪的 id，如何去掉这些 id ?</a></li>
+<li><a href="#orgc2d12b6">org 文件导出为 markdown 的时候，a.md 文件里链接了 b.md， export a.md 的时候，生成的 a.html 里的链接仍是 b.md 而不是 b.html</a></li>
+<li><a href="#org09c6d99">重新配置 emacs 下载了最新版本的 magit-20231014.1408，结果和 emacs 28.2 不适配，导致 magit 切换分支不成功，查看 log 有乱码</a></li>
 </ul>
 </li>
-<li><a href="#orgd063b9e">References</a></li>
+<li><a href="#orgdbca8f4">References</a></li>
 </ul>
 </div>
 </nav>
@@ -246,9 +246,9 @@
 我用 Emacs 作为自己的开发工具已经有十多年，但是配置其实不复杂，大多是自己从网络上东拼西凑得来。这些配置都写在一个 org 文件里，通过 org babel 源码块得到 el 配置文件。这样，在 <code>~/.emacs.d/init.el</code> 里只要写 <code>(org-babel-load-file "/path/to/this/file")</code> 即可。一些不再用的，或仅做示例的配置通过 <code>:tangle no</code> 禁掉即可。
 </p>
 
-<section id="outline-container-org90b39d8" class="outline-2">
-<h2 id="org90b39d8">配置 <code>use-package</code></h2>
-<div class="outline-text-2" id="text-org90b39d8">
+<section id="outline-container-org6beade4" class="outline-2">
+<h2 id="org6beade4">配置 <code>use-package</code></h2>
+<div class="outline-text-2" id="text-org6beade4">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">require</span> '<span class="org-constant">package</span>)
 (<span class="org-keyword">setq</span> package-archives '((<span class="org-string">"gnu"</span>    . <span class="org-string">"http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/"</span>)
@@ -271,9 +271,9 @@
 </div>
 </section>
 
-<section id="outline-container-org20325da" class="outline-2">
-<h2 id="org20325da">基本配置</h2>
-<div class="outline-text-2" id="text-org20325da">
+<section id="outline-container-orgcab8b6a" class="outline-2">
+<h2 id="orgcab8b6a">基本配置</h2>
+<div class="outline-text-2" id="text-orgcab8b6a">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">benchmark-init</span>
   <span class="org-builtin">:config</span>
@@ -361,9 +361,9 @@
 </div>
 </section>
 
-<section id="outline-container-orgfc87cc2" class="outline-2">
-<h2 id="orgfc87cc2">工具类包</h2>
-<div class="outline-text-2" id="text-orgfc87cc2">
+<section id="outline-container-orgea06699" class="outline-2">
+<h2 id="orgea06699">工具类包</h2>
+<div class="outline-text-2" id="text-orgea06699">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">exec-path-from-shell</span>
   <span class="org-builtin">:ensure</span> t
@@ -806,9 +806,9 @@ $0
 </section>
 
 
-<section id="outline-container-org6398b52" class="outline-2">
-<h2 id="org6398b52">编程</h2>
-<div class="outline-text-2" id="text-org6398b52">
+<section id="outline-container-org2df6362" class="outline-2">
+<h2 id="org2df6362">编程</h2>
+<div class="outline-text-2" id="text-org2df6362">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">json-mode</span>)
 (<span class="org-keyword">use-package</span> <span class="org-constant">yaml-mode</span>)
@@ -1247,11 +1247,43 @@ dumb-jump 是在缺少 language server 的情况下支持定义跳转的工具�
   )
 </pre>
 </div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">from https://emacs.stackexchange.com/questions/78868/how-to-install-common-lisp-with-emacs-and-slime-when-the-slime-helper-el-is-not</span>
+(<span class="org-keyword">use-package</span> <span class="org-constant">slime</span>
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">progn</span>
+    (<span class="org-keyword">require</span> '<span class="org-constant">slime-autoloads</span>)
+    (add-hook 'slime-mode-hook
+              (<span class="org-keyword">lambda</span> ()
+                (<span class="org-keyword">unless</span> (slime-connected-p)
+                  (<span class="org-keyword">save-excursion</span> (slime))))))
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">progn</span>
+    (<span class="org-keyword">use-package</span> <span class="org-constant">slime-company</span>)
+    (<span class="org-keyword">setf</span> inferior-lisp-program <span class="org-string">"sbcl"</span>)
+    (slime-setup '(slime-fancy slime-company))
+    (<span class="org-keyword">setq</span> slime-net-coding-system 'utf-8-unix)
+    (define-key lisp-mode-map (kbd <span class="org-string">"C-c C-q"</span>) 'slime-close-all-parens-in-sexp)
+    (define-key slime-mode-indirect-map (kbd <span class="org-string">"M-_"</span>) 'paredit-convolute-sexp)
+    (define-key slime-repl-mode-map (kbd <span class="org-string">"C-c C-z"</span>) #'quit-window)
+    ))
+</pre>
 </div>
 
-<div id="outline-container-org90a4880" class="outline-3">
-<h3 id="org90a4880">关于 tree-sitter</h3>
-<div class="outline-text-3" id="text-org90a4880">
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">rime</span>
+  <span class="org-builtin">:custom</span>
+  (default-input-method <span class="org-string">"rime"</span>)
+  (rime-show-candidate 'posframe)
+  )
+</pre>
+</div>
+</div>
+<div id="outline-container-orgd67d7ac" class="outline-3">
+<h3 id="orgd67d7ac">关于 tree-sitter</h3>
+<div class="outline-text-3" id="text-orgd67d7ac">
 <p>
 <a href="https://emacs.liujiacai.net/post/038-hello-treesitter/">这里</a>有比较详细的配置说明。主要过程是：
 </p>
@@ -1287,9 +1319,9 @@ dumb-jump 是在缺少 language server 的情况下支持定义跳转的工具�
 </div>
 </div>
 
-<div id="outline-container-org9a8a59e" class="outline-3">
-<h3 id="org9a8a59e">关于 copilot</h3>
-<div class="outline-text-3" id="text-org9a8a59e">
+<div id="outline-container-org2d374d5" class="outline-3">
+<h3 id="org2d374d5">关于 copilot</h3>
+<div class="outline-text-3" id="text-org2d374d5">
 <p>
 copilot 不能说好用，只能说很上瘾，尤其是问答的时候。
 </p>
@@ -1323,17 +1355,17 @@ copilot 不能说好用，只能说很上瘾，尤其是问答的时候。
 </div>
 </section>
 
-<section id="outline-container-orgc6517fd" class="outline-2">
-<h2 id="orgc6517fd">Org Mode</h2>
-<div class="outline-text-2" id="text-orgc6517fd">
+<section id="outline-container-org7e7a78f" class="outline-2">
+<h2 id="org7e7a78f">Org Mode</h2>
+<div class="outline-text-2" id="text-org7e7a78f">
 <p>
 这个必不可少。
 </p>
 </div>
 
-<div id="outline-container-orgeb467c7" class="outline-3">
-<h3 id="orgeb467c7">Basic Org Mode Configuration and Appearance</h3>
-<div class="outline-text-3" id="text-orgeb467c7">
+<div id="outline-container-org25093df" class="outline-3">
+<h3 id="org25093df">Basic Org Mode Configuration and Appearance</h3>
+<div class="outline-text-3" id="text-org25093df">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">org</span>
   <span class="org-builtin">:config</span>
@@ -1391,9 +1423,9 @@ copilot 不能说好用，只能说很上瘾，尤其是问答的时候。
 </div>
 </div>
 
-<div id="outline-container-orgc49830d" class="outline-3">
-<h3 id="orgc49830d">Org Mode Babel</h3>
-<div class="outline-text-3" id="text-orgc49830d">
+<div id="outline-container-orgc5bcc46" class="outline-3">
+<h3 id="orgc5bcc46">Org Mode Babel</h3>
+<div class="outline-text-3" id="text-orgc5bcc46">
 <p>
 先安装 mermaid：
 </p>
@@ -1430,7 +1462,7 @@ mermaid 生成的 svg 图片正常，但是在 emacs 中展示时，有些文字
 </p>
 
 
-<figure id="org240ecbd">
+<figure id="orgd042e8d">
 <img src="mermaid-demo.png" alt="mermaid-demo.png">
 
 </figure>
@@ -1468,7 +1500,7 @@ mermaid 生成的 svg 图片正常，但是在 emacs 中展示时，有些文字
 </p>
 
 
-<figure id="org9948d85">
+<figure id="org0424307">
 <img src="plantuml-sequence-demo.png" alt="plantuml-sequence-demo.png">
 
 </figure>
@@ -1500,7 +1532,7 @@ plt.savefig(fname)
 </div>
 
 
-<figure id="orgb1b8268">
+<figure id="org58b7bda">
 <img src="python-matplot-demo.jpg" alt="python-matplot-demo.jpg">
 
 </figure>
@@ -1516,9 +1548,9 @@ One hint: every time you make any changes to the file, these code blocks are eva
 </div>
 </div>
 
-<div id="outline-container-orgb816fd4" class="outline-3">
-<h3 id="orgb816fd4">Org Mode Export</h3>
-<div class="outline-text-3" id="text-orgb816fd4">
+<div id="outline-container-orgfe668df" class="outline-3">
+<h3 id="orgfe668df">Org Mode Export</h3>
+<div class="outline-text-3" id="text-orgfe668df">
 <p>
 我主要把 org 文件导出为 html：
 </p>
@@ -1725,22 +1757,15 @@ One hint: every time you make any changes to the file, these code blocks are eva
   <span class="org-builtin">:commands</span> (org-export-dispatch)
   <span class="org-builtin">:config</span>
   (<span class="org-keyword">setq</span> org-reveal-root <span class="org-string">"https://cdn.jsdelivr.net/npm/reveal.js"</span>)
-  (<span class="org-keyword">setq</span> org-reveal-mathjax t)
-  <span class="org-comment-delimiter">;; </span><span class="org-comment">(setq org-reveal-hlevel 1) ;; or use "#+REVEAL_HLEVEL: 1" ;; or use "#+REVEAL: split" to force split</span>
-)
-(<span class="org-keyword">require</span> '<span class="org-constant">ox-reveal</span>)
+  (<span class="org-keyword">setq</span> org-reveal-mathjax t))
 </pre>
 </div>
-
-<p>
-但是，这里存在一个 bug。二级标题及其内容，只显示第一个，其他的不显示内容，就是 vertically 显示的 slide 内容为空。
-</p>
 </div>
 </div>
 
-<div id="outline-container-org1e7fde3" class="outline-3">
-<h3 id="org1e7fde3">Getting Things Done</h3>
-<div class="outline-text-3" id="text-org1e7fde3">
+<div id="outline-container-orgf7d20a2" class="outline-3">
+<h3 id="orgf7d20a2">Getting Things Done</h3>
+<div class="outline-text-3" id="text-orgf7d20a2">
 <p>
 这个是一个 org-capture-templates 的例子，可以研究一下：
 </p>
@@ -1803,7 +1828,7 @@ One hint: every time you make any changes to the file, these code blocks are eva
   (<span class="org-keyword">setq</span> org-capture-templates
         '((<span class="org-string">"d"</span> <span class="org-string">"Diary"</span> entry (file+datetree my-diary-file) <span class="org-string">"* %&lt;%H:%M&gt;\n%?\n"</span> <span class="org-builtin">:empty-lines</span> 1 <span class="org-builtin">:kill-buffer</span> t)
           (<span class="org-string">"t"</span> <span class="org-string">"Trade"</span> entry (file+datetree my-trade-file) <span class="org-string">"* %&lt;%H:%M&gt;\n%?\n"</span> <span class="org-builtin">:empty-lines</span> 1 <span class="org-builtin">:kill-buffer</span> t)
-          (<span class="org-string">"p"</span> <span class="org-string">"Pomodoro"</span> entry (file+headline org-default-notes-file <span class="org-string">"Pomodoro"</span>) <span class="org-string">"* TODO %?\n"</span> <span class="org-builtin">:empty-lines</span> 1 <span class="org-builtin">:prepend</span> t)
+          (<span class="org-string">"p"</span> <span class="org-string">"Pomodoro"</span> entry (file+headline org-default-notes-file <span class="org-string">"Pomodoro"</span>) <span class="org-string">"* TODO %?\n"</span> <span class="org-builtin">:prepend</span> t)
           (<span class="org-string">"i"</span> <span class="org-string">"Inbox"</span> entry (file+headline org-default-notes-file <span class="org-string">"Inbox"</span>) <span class="org-string">"* %?\n"</span> <span class="org-builtin">:empty-lines</span> 1 <span class="org-builtin">:prepend</span> t)
           (<span class="org-string">"j"</span> <span class="org-string">"Journal"</span> item (file+headline my-journal-index-file <span class="org-string">"Journals"</span>) <span class="org-string">"- %&lt;%Y-%m-%d&gt; %?\n"</span> <span class="org-builtin">:empty-lines</span> 1 <span class="org-builtin">:prepend</span> t)
           (<span class="org-string">"w"</span> <span class="org-string">"Work"</span> entry (file+headline my-work-task-file <span class="org-string">"Tasks"</span>) <span class="org-string">"* TODO %&lt;%Y-%m-%d %H:%M&gt; %?\n"</span> <span class="org-builtin">:empty-lines</span> 1)))
@@ -1936,9 +1961,9 @@ One hint: every time you make any changes to the file, these code blocks are eva
 </div>
 </section>
 
-<section id="outline-container-orga6a04d3" class="outline-2">
-<h2 id="orga6a04d3">一些有用的工具</h2>
-<div class="outline-text-2" id="text-orga6a04d3">
+<section id="outline-container-orgb2543c0" class="outline-2">
+<h2 id="orgb2543c0">一些有用的工具</h2>
+<div class="outline-text-2" id="text-orgb2543c0">
 <p>
 Reading in Emacs:
 </p>
@@ -2004,9 +2029,9 @@ Or use <code>good-scroll</code> if emacs version is lower than 29:
 </div>
 </section>
 
-<section id="outline-container-org9a0d14b" class="outline-2">
-<h2 id="org9a0d14b">ERC and Gnus</h2>
-<div class="outline-text-2" id="text-org9a0d14b">
+<section id="outline-container-org3a4b508" class="outline-2">
+<h2 id="org3a4b508">ERC and Gnus</h2>
+<div class="outline-text-2" id="text-org3a4b508">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">erc</span>
   <span class="org-builtin">:config</span>
@@ -2083,9 +2108,9 @@ machine news.eternal-september.org login your_account_name force yes password yo
 </section>
 
 
-<section id="outline-container-org596050a" class="outline-2">
-<h2 id="org596050a">其他有用的包</h2>
-<div class="outline-text-2" id="text-org596050a">
+<section id="outline-container-org632ed97" class="outline-2">
+<h2 id="org632ed97">其他有用的包</h2>
+<div class="outline-text-2" id="text-org632ed97">
 <ol class="org-ol">
 <li>keycast for key casting</li>
 <li>org-download for image capturing into org documents</li>
@@ -2099,9 +2124,9 @@ machine news.eternal-september.org login your_account_name force yes password yo
 </section>
 
 
-<section id="outline-container-org2460e81" class="outline-2">
-<h2 id="org2460e81"><span class="todo TODO">TODO</span> 添加更多配置</h2>
-<div class="outline-text-2" id="text-org2460e81">
+<section id="outline-container-orgae00e9e" class="outline-2">
+<h2 id="orgae00e9e"><span class="todo TODO">TODO</span> 添加更多配置</h2>
+<div class="outline-text-2" id="text-orgae00e9e">
 <ol class="org-ol">
 <li>flymake</li>
 <li>gpg 配置后，打开 gpg.org 文件总提示编码问题</li>
@@ -2113,40 +2138,40 @@ machine news.eternal-september.org login your_account_name force yes password yo
 </section>
 
 
-<section id="outline-container-orgacd102a" class="outline-2">
-<h2 id="orgacd102a">遇到的问题</h2>
-<div class="outline-text-2" id="text-orgacd102a">
+<section id="outline-container-org0bc6450" class="outline-2">
+<h2 id="org0bc6450">遇到的问题</h2>
+<div class="outline-text-2" id="text-org0bc6450">
 </div>
-<div id="outline-container-orgfb94bd0" class="outline-3">
-<h3 id="orgfb94bd0">org 文件导出的时候，无法将生成的 html 文件，转移到一个指定的目录去</h3>
-<div class="outline-text-3" id="text-orgfb94bd0">
+<div id="outline-container-org847fe6f" class="outline-3">
+<h3 id="org847fe6f">org 文件导出的时候，无法将生成的 html 文件，转移到一个指定的目录去</h3>
+<div class="outline-text-3" id="text-org847fe6f">
 <p>
 目前没有解决方案。如上配置，当保存 org 文件时，自动执行 export。我在自己的笔记项目目录下写了一个 Makefile 来拷贝文件。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org8483b42" class="outline-3">
-<h3 id="org8483b42">org 文件导出为 markdown 的时候，会生成一些奇奇怪怪的 id，如何去掉这些 id ?</h3>
-<div class="outline-text-3" id="text-org8483b42">
+<div id="outline-container-org3b75949" class="outline-3">
+<h3 id="org3b75949">org 文件导出为 markdown 的时候，会生成一些奇奇怪怪的 id，如何去掉这些 id ?</h3>
+<div class="outline-text-3" id="text-org3b75949">
 <p>
 算了，markdown 文件只为协同沟通，还是直接写吧。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org3a4ce96" class="outline-3">
-<h3 id="org3a4ce96">org 文件导出为 markdown 的时候，a.md 文件里链接了 b.md， export a.md 的时候，生成的 a.html 里的链接仍是 b.md 而不是 b.html</h3>
-<div class="outline-text-3" id="text-org3a4ce96">
+<div id="outline-container-orgc2d12b6" class="outline-3">
+<h3 id="orgc2d12b6">org 文件导出为 markdown 的时候，a.md 文件里链接了 b.md， export a.md 的时候，生成的 a.html 里的链接仍是 b.md 而不是 b.html</h3>
+<div class="outline-text-3" id="text-orgc2d12b6">
 <p>
 我估计这个要看 pandoc 的支持，目前没有找到解决方案。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgad3e8f2" class="outline-3">
-<h3 id="orgad3e8f2">重新配置 emacs 下载了最新版本的 magit-20231014.1408，结果和 emacs 28.2 不适配，导致 magit 切换分支不成功，查看 log 有乱码</h3>
-<div class="outline-text-3" id="text-orgad3e8f2">
+<div id="outline-container-org09c6d99" class="outline-3">
+<h3 id="org09c6d99">重新配置 emacs 下载了最新版本的 magit-20231014.1408，结果和 emacs 28.2 不适配，导致 magit 切换分支不成功，查看 log 有乱码</h3>
+<div class="outline-text-3" id="text-org09c6d99">
 <p>
 回退到 magit-20230723.1601 恢复正常。<a href="https://emacs.stackexchange.com/questions/78977/seq-keep-is-void-when-installing-magit-through-use-package">这里</a>有说明。
 </p>
@@ -2154,9 +2179,9 @@ machine news.eternal-september.org login your_account_name force yes password yo
 </div>
 </section>
 
-<section id="outline-container-orgd063b9e" class="outline-2">
-<h2 id="orgd063b9e">References</h2>
-<div class="outline-text-2" id="text-orgd063b9e">
+<section id="outline-container-orgdbca8f4" class="outline-2">
+<h2 id="orgdbca8f4">References</h2>
+<div class="outline-text-2" id="text-orgdbca8f4">
 <p>
 我参考了太多了的网络文章，这里就只感谢，不列举了。你喜欢什么，你就能得到什么。
 </p>
