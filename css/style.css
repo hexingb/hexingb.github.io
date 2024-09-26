@@ -131,20 +131,18 @@ li {
 
 table {
     margin: auto;
-    border-collapse: collapse;
-    border: var(--border-width) solid var(--color-text);
     box-shadow: 4px 4px 6px var(--color-shadow);
 }
 
 th {
     color: var(--color-background);
     background-color: var(--color-text);
-    border: 1px solid var(--color-background);
+    border: 1px solid;
     padding: 0.25em;
 }
 
 td {
-    border: 1px solid var(--color-text);
+    border: 1px solid;
     padding: 0.25em;
 }
 
