@@ -217,30 +217,6 @@ footer {
     }
 }
 
-.gtd-post-container {
-    display: grid;
-    grid:
-        "header header"
-        "task task"
-        "inbox finished";
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-}
-
-.task-entries {
-    grid-area: task;
-    align-items: center;
-}
-
-.inbox-entries {
-    grid-area: inbox;
-    max-width: calc(45vw);
-}
-
-.finished-entries {
-    grid-area: finished;
-}
-
 header {
     text-align: center;
     grid-area: header;
@@ -275,4 +251,16 @@ body > header {
 
 .org-svg {
     width: calc(40vw);
+}
+
+.outline-2 h2:before {
+    content: "∮";
+}
+
+.outline-3 h3:before {
+    content: "∯";
+}
+
+.outline-4 h4:before {
+    content: "∰";
 }
