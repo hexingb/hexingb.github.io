@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-<!-- Oct 24, 2024 -->
+<!-- Nov 09, 2024 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
+<title>安装 emacs-rime 和小鹤拼音</title>
 <meta name="author" content="Bao Hexing" />
 <meta name="generator" content="Org Mode" />
 <style>
@@ -198,38 +198,94 @@
 </head>
 <body>
 <header id="top" class="status">
-<nav><a href="#"><div id="arrow-up"></div></a><br>
-     <a href="/index.html"><div id="home"></div></a><br>
-     <a href="/about.html"><div id="link"></div></a></nav>
+<nav><a href="#"><div id="arrow-up"></div></a><br><a href="/index.html"><div id="home"></div></a><br><a href="/about.html"><div id="link"></div></a></nav>
 </header>
 <main id="content" class="content">
+<header>
+<h1 class="title">安装 emacs-rime 和小鹤拼音</h1>
+</header><p>
+参考<a href="https://github.com/DogLooksGood/emacs-rime/blob/master/INSTALLATION.org">这里</a> ：
+</p>
 
-<figure id="orgdb81cea">
-<img src="mermaid-mind.png" alt="mermaid-mind.png">
+<div class="org-src-container">
+<pre class="src src-shell">sudo apt install librime-dev rime-data-double-pinyin
+</pre>
+</div>
 
-</figure>
+<p>
+使用最小配置：
+</p>
 
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> <span class="org-constant">rime</span>
+  <span class="org-builtin">:custom</span>
+  (default-input-method <span class="org-string">"rime"</span>)
+  (rime-show-candidate 'posframe)
+  )
+</pre>
+</div>
 
+<p>
+使用 <code>toggle-input-method</code> （默认快捷键 <code>C-\</code> ）启动 rime。第一次使用会设置 <code>~/.emacs.d/rime</code> 作为 <code>rime-user-data-dir</code> 的值。
+</p>
 
+<p>
+然后执行 <code>rime-open-configuration</code> 打开 <code>rime-user-data-dir</code> 目录下的 <code>default.custom.yaml</code> ，输入下面内容：
+</p>
 
-<figure id="orgf614c2f">
-<img src="mermaid-class-demo.png" alt="mermaid-class-demo.png">
+<div class="org-src-container">
+<pre class="src src-conf">patch:
+  style/horizontal: true
+  switcher:
+    caption: &#12308;&#26041;&#26696;&#36873;&#21333;&#12309;
+    hotkeys: Control+grave
+  <span class="org-comment-delimiter"># </span><span class="org-comment">&#20505;&#36873;&#35789;&#25968;&#37327;</span>
+  menu:
+    page_size: 9
+  <span class="org-comment-delimiter"># </span><span class="org-comment">&#20351;&#29992;&#30340;&#36755;&#20837;&#26041;&#26696;</span>
+  schema_list:
+    <span class="org-comment-delimiter"># </span><span class="org-comment">- schema: luna_pinyin_simp</span>
+    <span class="org-comment-delimiter"># </span><span class="org-comment">- schema: luna_pinyin</span>
+    - schema: double_pinyin_flypy
+  <span class="org-comment-delimiter"># </span><span class="org-comment">&#36755;&#20837;&#27861;&#20013;&#33521;&#25991;&#29366;&#24577;&#24555;&#25463;&#38190;</span>
+  ascii_composer/switch_key:
+    Caps_Lock: commit_code
+    Control_L: noop
+    Control_R: noop
+    <span class="org-comment-delimiter"># </span><span class="org-comment">&#25353;&#19979;&#24038; shift &#33521;&#25991;&#23383;&#31526;&#30452;&#25509;&#19978;&#23631;&#65292;&#19981;&#38656;&#35201;&#20877;&#27425;&#22238;&#36710;&#65292;&#36755;&#20837;&#27861;&#20445;&#25345;&#33521;&#25991;&#29366;&#24577;</span>
+    Shift_L: noop
+    Shift_R: noop
+</pre>
+</div>
 
-</figure>
+<p>
+再打开文件 <code>double_pinyin_flypy.custom.yaml</code> ，输入如下内容：
+</p>
 
+<div class="org-src-container">
+<pre class="src src-conf">patch:
+  <span class="org-comment-delimiter"># </span><span class="org-comment">&#20351;&#29992;&#39069;&#22806;&#30340;&#35789;&#24211;&#65292;&#23545;&#24212;&#30340;&#25991;&#20214;&#26159; luna_pinyin.extended.dict.yaml</span>
+  <span class="org-comment-delimiter"># </span><span class="org-comment">"translator/dictionary": luna_pinyin.extended</span>
+  switches:
+    - name: ascii_mode
+      states: [<span class="org-string">"&#20013;&#25991;"</span>, <span class="org-string">"&#35199;&#25991;"</span>]
+    - name: full_shape
+      states: [<span class="org-string">"&#21322;&#35282;"</span>, <span class="org-string">"&#20840;&#35282;"</span>]
+    - name: simplification
+      reset: 1 <span class="org-comment-delimiter"># </span><span class="org-comment">&#40664;&#35748;&#31616;&#20307;</span>
+      states: [<span class="org-string">"&#28450;&#23383;"</span>, <span class="org-string">"&#27721;&#23383;"</span>]
+    - name: ascii_punct
+      states: [<span class="org-string">"&#12290;&#65292;"</span>, <span class="org-string">"&#65294;&#65292;"</span>]
+</pre>
+</div>
 
+<p>
+重启 emacs 或者执行 <code>rime-deploy</code> ，就生效啦。
+</p>
 
-<figure id="org3141fe2">
-<img src="mermaid-sequence-demo.png" alt="mermaid-sequence-demo.png">
-
-</figure>
-
-
-
-<figure id="orgfd08c0e">
-<img src="mermaid-zenuml-demo.png" alt="mermaid-zenuml-demo.png">
-
-</figure>
+<p>
+具体内容参考<a href="https://whatacold.io/zh-cn/blog/2022-10-04-rime-double-pinyin-flypy/">这里</a>、<a href="https://jdhao.github.io/2019/02/18/rime_configuration_intro/">这里</a>、<a href="https://blog.xiang578.com/post/rime.html#defaultcustomyaml">这里</a>、<a href="https://blog.moe233.net/posts/3c46778c/">这里</a>和<a href="https://manateelazycat.github.io/2020/03/22/emacs-rime/">这里</a>。
+</p>
 </main>
 <footer id="postamble" class="status">
 <br/><hr/>&copy; 2012-2024 All Rights Reserved.<br/><br/>
