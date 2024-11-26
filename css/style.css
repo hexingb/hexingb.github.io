@@ -1,18 +1,18 @@
 /* -*- tab-width: 4 -*- */
 /* @import url("https://fonts.googleapis.com/css?family=Noto+Sans+Mono|Sofia&display=swap"); */
 /* or use this: https://npm.elemecdn.com/lxgw-wenkai-webfont/style.css */
-@import url("https://npm.elemecdn.com/lxgw-wenkai-webfont/lxgwwenkaimono-regular.css?display=swap");
+/* @import url("https://npm.elemecdn.com/lxgw-wenkai-webfont/lxgwwenkaimono-regular.css?display=swap"); */
 
-@font-face {
-    font-family: "EnglishFont";
-    /* roboto mono, latin-ext */
-    src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_SuW4Ep0.woff2)
-        format("woff2");
-    font-display: swap;
-    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
-        U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF,
-        U+30-39;
-}
+/* @font-face { */
+/*     font-family: "EnglishFont"; */
+/*     /\* roboto mono, latin-ext *\/ */
+/*     src: url(https://fonts.gstatic.com/s/robotomono/v23/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_SuW4Ep0.woff2) */
+/*         format("woff2"); */
+/*     font-display: swap; */
+/*     unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, */
+/*         U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF, */
+/*         U+30-39; */
+/* } */
 
 :root {
     color-scheme: light dark;
@@ -26,7 +26,7 @@ html {
 body {
     font-size: 100%;
     margin: 0 auto;
-    font-family: "EnglishFont", "LXGW WenKai Mono", serif;
+    /* font-family: "EnglishFont", "LXGW WenKai Mono", serif; */
     line-height: 1.8;
 }
 
@@ -44,7 +44,7 @@ p {
 
 code {
     font-style: italic;
-    font-family: "EnglishFont", monospace, serif;
+    /* font-family: "EnglishFont", monospace, serif; */
 }
 
 #content {
@@ -258,9 +258,9 @@ body > header {
 }
 
 .outline-3 h3:before {
-    content: "∯";
+    content: "∯  ";
 }
 
 .outline-4 h4:before {
-    content: "∰";
+    content: "∰  ";
 }
